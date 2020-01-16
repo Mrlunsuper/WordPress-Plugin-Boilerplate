@@ -11,6 +11,10 @@
     ],
     "repositories": [
         {
+            "url": "https://github.com/WordPress/wordpress-develop",
+            "type": "git"
+        },
+        {
             "url": "https://github.com/pablo-sg-pacheco/wp-namespace-autoloader",
             "type": "git"
         }
@@ -22,7 +26,8 @@
         "cweagans/composer-patches": "~1.0",
         "coenjacobs/mozart": "^0.4.0",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
-        "wp-coding-standards/wpcs": "*"
+        "wp-coding-standards/wpcs": "*",
+        "wordpress/wordpress": "*"
     },
     "extra": {
         "patches": {
