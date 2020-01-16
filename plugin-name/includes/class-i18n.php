@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -26,7 +25,7 @@ namespace Plugin_Name\includes;
  * @subpackage Plugin_Name/includes
  * @author     Your Name <email@example.com>
  */
-class i18n {
+class I18n {
 
 
 	/**
