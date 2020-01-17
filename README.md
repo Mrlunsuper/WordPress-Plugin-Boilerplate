@@ -1,99 +1,154 @@
-# WordPress Plugin Boilerplate
+# WordPress Plugin Boilerplate – BrianHenryIE Fork
 
-A standardized, organized, object-oriented foundation for building high-quality WordPress Plugins.
+The popular [WordPress Plugin Boilerplate](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate/) with added Composer, namespaces, autoloading, PHP Unit, and WordPress.org deployment.
 
-## Contents
+## Overview
 
-The WordPress Plugin Boilerplate includes the following files:
-
-* `.gitignore`. Used to exclude certain files from the repository.
-* `CHANGELOG.md`. The list of changes to the core project.
-* `README.md`. The file that you’re currently reading.
-* A `plugin-name` directory that contains the source code - a fully executable WordPress plugin.
-
-## Features
-
-* The Boilerplate is based on the [Plugin API](http://codex.wordpress.org/Plugin_API), [Coding Standards](http://codex.wordpress.org/WordPress_Coding_Standards), and [Documentation Standards](https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/php/).
-* All classes, functions, and variables are documented so that you know what you need to change.
-* The Boilerplate uses a strict file organization scheme that corresponds both to the WordPress Plugin Repository structure, and that makes it easy to organize the files that compose the plugin.
-* The project includes a `.pot` file as a starting point for internationalization.
+The WordPress Plugin Boilerplate is a well-documented starting point for WordPress plugins which encourages consistent conventions in plugin development. This fork expands on that base using modern PHP practices and providing a more comprehensive development environment setup. An example plugin where the changes have been tested is [Autologin URLs](https://github.com/BrianHenryIE/BH-WP-Autologin-URLs).
 
 ## Installation
 
-The Boilerplate can be installed directly into your plugins folder "as-is". You will want to rename it and the classes inside of it to fit your needs. For example, if your plugin is named 'example-me' then:
+Open Terminal and set the following variables (note the `\` before spaces):
 
-* rename files from `plugin-name` to `example-me`
-* change `plugin_name` to `example_me`
-* change `plugin-name` to `example-me`
-* change `Plugin_Name` to `Example_Me`
-* change `PLUGIN_NAME_` to `EXAMPLE_ME_`
+```
+plugin_name=Example\ Plugin
+plugin_slug=example-plugin
+plugin_snake=example_plugin
+plugin_package_name=Example_Plugin
+plugin_package_capitalized=EXAMPLE_PLUGIN
+```
 
-It's safe to activate the plugin at this point. Because the Boilerplate has no real functionality there will be no menu items, meta boxes, or custom post types added until you write the code.
+Then this block of commands will take care of most of the downloading and renaming.
 
-## WordPress.org Preparation
+```
+git clone https://github.com/BrianHenryIE/WordPress-Plugin-Boilerplate.git
+mv WordPress-Plugin-Boilerplate $plugin_slug
+cd $plugin_slug
+find . -depth -name '*.txt' -exec sed -i '' 's/Plugin Name/'$plugin_name'/' {} +
+find . -depth -name '*plugin-name*' -execdir bash -c 'git mv "$1" "${1//plugin-name/'$plugin_slug'}"' bash {} \;
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name ".gitignore" \) -exec sed -i '' 's/plugin-name/'$plugin_slug'/' {} +
+find . -depth -name $plugin_slug'.php'  -exec sed -i '' 's/_plugin_name/_'$plugin_snake'/' {} +
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Name/'$plugin_package_name'/g' {} \;
+find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_package_capitalized'/' {} +
+composer install
+```
 
-The original launch of this version of the boilerplate included the folder structure needed for using your plugin on WordPress.org. That folder structure has been moved to its own repo here: https://github.com/DevinVinson/Plugin-Directory-Boilerplate
+The [wordpress-develop](https://github.com/wordpress/wordpress-develop) tests are configured to require a local [MySQL database](https://dev.mysql.com/downloads/mysql/) (which gets wiped each time) and this plugin is set to require a database called `wordpress_tests` and a user named `wordpress-develop` with the password `wordpress-develop`. 
 
-## Recommended Tools
+To setup the database, open MySQL shell:
 
-### i18n Tools
+```
+mysql -u root -p
+```
 
-The WordPress Plugin Boilerplate uses a variable to store the text domain used when internationalizing strings throughout the Boilerplate. To take advantage of this method, there are tools that are recommended for providing correct, translatable files:
+Create the database and user, granting the user full permissions:
 
-* [Poedit](http://www.poedit.net/)
-* [makepot](http://i18n.svn.wordpress.org/tools/trunk/)
-* [i18n](https://github.com/grappler/i18n)
+```
+CREATE DATABASE wordpress_tests;
+CREATE USER 'wordpress-develop'@'%' IDENTIFIED WITH mysql_native_password BY 'wordpress-develop';
+GRANT ALL PRIVILEGES ON wordpress_tests.* TO 'wordpress-develop'@'%';
+```
 
-Any of the above tools should provide you with the proper tooling to internationalize the plugin.
+```
+quit
+```
 
-## License
+Run the tests to confirm it's working:
 
-The WordPress Plugin Boilerplate is licensed under the GPL v2 or later.
+```
+vendor/bin/phpcbf; 
+vendor/bin/phpcs; 
+phpunit -c tests/wordpress-develop/phpunit.xml --coverage-php tests/reports/wordpress-develop.cov --coverage-text; 
+phpunit -c tests/wp-mock/phpunit.xml --coverage-php tests/reports/wp-mock.cov --coverage-text; 
+vendor/bin/phpcov merge --clover tests/reports/clover.xml --html tests/reports/html tests/reports --text
+```
 
-> This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License, version 2, as published by the Free Software Foundation.
+## Usage
 
-> This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+### WordPress Coding Standards
 
-> You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+To see [WordPress Coding Standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards) errors using [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) run:
 
-A copy of the license is included in the root of the plugin’s directory. The file is named `LICENSE`.
+```
+vendor/bin/phpcs
+```
 
-## Important Notes
+Use PHP Code Beautifier and Fixer to automatically correct them where possible:
 
-### Licensing
+```
+vendor/bin/phpcbf
+```
 
-The WordPress Plugin Boilerplate is licensed under the GPL v2 or later; however, if you opt to use third-party code that is not compatible with v2, then you may need to switch to using code that is GPL v3 compatible.
+To configure WPCS checking on GitHub PRs, [generate a Personal Access Token](https://github.com/settings/tokens) with the `public_repo` permission, and under your GitHub repository's Settings's Secrets add it as `GH_BOT_TOKEN`.
 
-For reference, [here's a discussion](http://make.wordpress.org/themes/2013/03/04/licensing-note-apache-and-gpl/) that covers the Apache 2.0 License used by [Bootstrap](http://twitter.github.io/bootstrap/).
+### PHPUnit
 
-### Includes
+[WP_Mock](https://github.com/10up/wp_mock) tests can be run with:
 
-Note that if you include your own classes, or third-party libraries, there are three locations in which said files may go:
+```
+phpunit -c tests/wp-mock/phpunit.xml
+```
 
-* `plugin-name/includes` is where functionality shared between the admin area and the public-facing parts of the site reside
-* `plugin-name/admin` is for all admin-specific functionality
-* `plugin-name/public` is for all public-facing functionality
+The wordpress-develop tests can be run with:
 
-Note that previous versions of the Boilerplate did not include `Plugin_Name_Loader` but this class is used to register all filters and actions with WordPress.
+```
+phpunit -c tests/wordpress-develop/phpunit.xml
+```
 
-The example code provided shows how to register your hooks with the Loader class.
+### Code Coverage
 
-### What About Other Features?
+Code coverage reporting requires [Xdebug](https://xdebug.org/) installed.
 
-The previous version of the WordPress Plugin Boilerplate included support for a number of different projects such as the [GitHub Updater](https://github.com/afragen/github-updater).
+Adding `--coverage-text` to `phpunit` commands displays their individual coverage in the console. 
 
-These tools are not part of the core of this Boilerplate, as I see them as being additions, forks, or other contributions to the Boilerplate.
+Adding `--coverage-php tests/reports/wordpress-develop.cov` to each allows their coverage stats to be merged using:
 
-The same is true of using tools like Grunt, Composer, etc. These are all fantastic tools, but not everyone uses them. In order to  keep the core Boilerplate as light as possible, these features have been removed and will be introduced in other editions, and will be listed and maintained on the project homepage.
+```
+vendor/bin/phpcov merge --clover tests/reports/clover.xml --html tests/reports/html tests/reports
+```
 
-# Credits
+### Minimum PHP Version
 
-The WordPress Plugin Boilerplate was started in 2011 by [Tom McFarlin](http://twitter.com/tommcfarlin/) and has since included a number of great contributions. In March of 2015 the project was handed over by Tom to Devin Vinson.
+Use [PHPCompatibilityWP](https://github.com/PHPCompatibility/PHPCompatibilityWP) to check the minimum PHP version required with: 
 
-The current version of the Boilerplate was developed in conjunction with [Josh Eaton](https://twitter.com/jjeaton), [Ulrich Pogson](https://twitter.com/grapplerulrich), and [Brad Vincent](https://twitter.com/themergency).
+```
+./vendor/bin/phpcs -p ./trunk --standard=PHPCompatibilityWP --runtime-set testVersion 5.7-
+```
 
-The homepage is based on a design as provided by [HTML5Up](http://html5up.net), the Boilerplate logo was designed by Rob McCaskill of [BungaWeb](http://bungaweb.com), and the site `favicon` was created by [Mickey Kay](https://twitter.com/McGuive7).
+### Deployment
 
-## Documentation, FAQs, and More
+To create a .zip archive for uploading to WordPress:
 
-If you’re interested in writing any documentation or creating tutorials please [let me know](http://devinvinson.com/contact/) .
+```
+mv src $(basename "`pwd`"); zip -r $(basename "`pwd`").zip $(basename "`pwd`"); mv $(basename "`pwd`") src;
+```
+
+To configure automatic WordPress.org plugin repository deployment, add your WordPress.org username and password as Secrets `SVN_USERNAME` and `SVN_PASSWORD` in the GitHub repository's settings, then when a Release is created, the plugin will be updated on WordPress.org (from [zerowp.com](https://zerowp.com)'s [Use Github Actions to publish WordPress plugins on WP.org repository](https://zerowp.com/use-github-actions-to-publish-wordpress-plugins-on-wp-org-repository/)).
+
+## Notes
+
+### Symlinks
+
+Composer [Symlink Handler](https://github.com/kporras07/composer-symlinks) is used to create a symlink to WordPress src directory in the project root, for convenience.
+
+### Composer-Patches
+
+[composer-patches](https://github.com/cweagans/composer-patches) is used to apply PRs to composer dependencies while waiting for the repository owners to accept the required changes.
+
+### Minimum WordPress Version
+
+The minimum WordPress version can be determined using [wpseek.com's Plugin Doctor](https://wpseek.com/pluginfilecheck/).
+
+## TODO
+
+* PHP Storm configuration
+* PHP Unit for PRs via GitHub Actions
+* JavaScript unit testing
+* Local Git hooks for WPCS
+* Disable commiting to master
+* Update Git origin instruction
+* Composer command for PHPCS+PHP Unit
+
+## Acknowledgements
+
+The contributors to [WordPress Plugin Boilerplate](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate/) and more.
