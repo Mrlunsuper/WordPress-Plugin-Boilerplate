@@ -40,3 +40,5 @@ cache
 
 /vendor/
 /plugin-name/vendor/
+
+/wordpress

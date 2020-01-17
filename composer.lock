@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c2b695ccc4a895c83f9ab8e1a333efd8",
+    "content-hash": "bf4b8f9ae0db20ee2a8c40ed09a8bd2d",
     "packages": [
         {
             "name": "pablo-sg-pacheco/wp-namespace-autoloader",
@@ -212,6 +212,61 @@
                 "tests"
             ],
             "time": "2018-10-26T13:21:45+00:00"
+        },
+        {
+            "name": "kporras07/composer-symlinks",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kporras07/composer-symlinks.git",
+                "reference": "2e9a3a64e5d737381dea3b0d9684d3e13f139f1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kporras07/composer-symlinks/zipball/2e9a3a64e5d737381dea3b0d9684d3e13f139f1c",
+                "reference": "2e9a3a64e5d737381dea3b0d9684d3e13f139f1c",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/filesystem": "^2.5 || ^3.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.0@dev",
+                "phpunit/phpunit": "^5.5",
+                "vanio/coding-standards": "^0.1@dev"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kporras07\\ComposerSymlinks\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Porras",
+                    "email": "kporras07@gmail.com"
+                }
+            ],
+            "description": "Composer script handling symlinks",
+            "homepage": "https://github.com/kporras07/composer-symlinks",
+            "keywords": [
+                "composer",
+                "script",
+                "symlink"
+            ],
+            "time": "2019-11-22T15:48:21+00:00"
         },
         {
             "name": "league/flysystem",
@@ -474,6 +529,56 @@
             "time": "2019-12-17T10:32:23+00:00"
         },
         {
+            "name": "symfony/filesystem",
+            "version": "v3.4.36",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/filesystem.git",
+                "reference": "00cdad0936d06fab136944bc2342b762b1c3a4a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/00cdad0936d06fab136944bc2342b762b1c3a4a2",
+                "reference": "00cdad0936d06fab136944bc2342b762b1c3a4a2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-11-25T16:36:22+00:00"
+        },
+        {
             "name": "symfony/finder",
             "version": "v4.4.2",
             "source": {
@@ -521,6 +626,64 @@
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
             "time": "2019-11-17T21:56:56+00:00"
+        },
+        {
+            "name": "symfony/polyfill-ctype",
+            "version": "v1.13.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-ctype.git",
+                "reference": "f8f0b461be3385e56d6de3dbb5a0df24c0c275e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/f8f0b461be3385e56d6de3dbb5a0df24c0c275e3",
+                "reference": "f8f0b461be3385e56d6de3dbb5a0df24c0c275e3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-ctype": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.13-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gert de Pagter",
+                    "email": "BackEndTea@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for ctype functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "ctype",
+                "polyfill",
+                "portable"
+            ],
+            "time": "2019-11-27T13:56:44+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -698,6 +861,53 @@
             "time": "2019-10-14T12:27:06+00:00"
         },
         {
+            "name": "wordpress/wordpress",
+            "version": "5.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WordPress/wordpress-develop",
+                "reference": "74214d276c14b63dc868227c7cf96a0c1c0f7e7e"
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "~0.5.0",
+                "phpcompatibility/phpcompatibility-wp": "^2.1.0",
+                "wp-coding-standards/wpcs": "~2.1.0"
+            },
+            "type": "library",
+            "scripts": {
+                "compat": [
+                    "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs --standard=phpcompat.xml.dist --report=summary,source"
+                ],
+                "format": [
+                    "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf --report=summary,source"
+                ],
+                "lint": [
+                    "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs --report=summary,source"
+                ],
+                "lint:errors": [
+                    "@lint -n"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "WordPress is open source software you can use to create a beautiful website, blog, or app.",
+            "homepage": "https://wordpress.org",
+            "keywords": [
+                "blog",
+                "cms",
+                "wordpress",
+                "wp"
+            ],
+            "support": {
+                "issues": "https://core.trac.wordpress.org/"
+            },
+            "time": "2019-12-18T22:15:35+00:00"
+        },
+        {
             "name": "wp-coding-standards/wpcs",
             "version": "2.2.0",
             "source": {
@@ -746,7 +956,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "pablo-sg-pacheco/wp-namespace-autoloader": 20
+        "pablo-sg-pacheco/wp-namespace-autoloader": 20,
+        "kporras07/composer-symlinks": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
