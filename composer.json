@@ -29,7 +29,8 @@
         "wp-coding-standards/wpcs": "*",
         "wordpress/wordpress": "*",
         "kporras07/composer-symlinks": "dev-master",
-        "phpunit/phpunit"     : ">=7.0"
+        "phpunit/phpunit"     : ">=7.0",
+        "10up/wp_mock": "0.4.2"
     },
     "extra": {
         "patches": {

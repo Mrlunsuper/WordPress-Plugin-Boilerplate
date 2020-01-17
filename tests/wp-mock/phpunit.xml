@@ -1,0 +1,23 @@
+<phpunit
+bootstrap="bootstrap.php"
+backupGlobals="false"
+colors="true"
+convertErrorsToExceptions="true"
+convertNoticesToExceptions="true"
+convertWarningsToExceptions="true">
+<testsuites>
+    <testsuite name="wp-mock">
+        <directory suffix="test.php">.</directory>
+    </testsuite>
+</testsuites>
+<filter>
+    <whitelist>
+        <directory suffix=".php">../../plugin-name/</directory>
+        <exclude>
+            <directory suffix=".php">../../plugin-name/lib/</directory>
+            <file>*index.php</file>
+            <file>*plugin-name/autoload.php</file>
+        </exclude>
+    </whitelist>
+</filter>
+</phpunit>
