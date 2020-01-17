@@ -3,7 +3,7 @@
  * Configures the database and db user to use for tests.
  *
  * @package Plugin_Name
- * @author Brian Henry <BrianHenryIE@gmail.com>
+ * @author     Your Name <email@example.com>
  */
 
 // * Path to the WordPress codebase you'd like to test. Add a forward slash in the end. */

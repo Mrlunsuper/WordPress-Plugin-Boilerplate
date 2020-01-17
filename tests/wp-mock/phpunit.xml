@@ -14,7 +14,7 @@ convertWarningsToExceptions="true">
     <whitelist>
         <directory suffix=".php">../../plugin-name/</directory>
         <exclude>
-            <directory suffix=".php">../../plugin-name/lib/</directory>
+            <directory suffix=".php">../../plugin-name/vendor/</directory>
             <file>*index.php</file>
             <file>*plugin-name/autoload.php</file>
         </exclude>

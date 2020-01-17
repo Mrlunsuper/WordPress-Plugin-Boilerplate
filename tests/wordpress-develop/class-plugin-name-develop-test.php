@@ -3,7 +3,7 @@
  * Class Plugin_Test. Tests the root plugin setup.
  *
  * @package Plugin_Name
- * @author Brian Henry <BrianHenryIE@gmail.com>
+ * @author     Your Name <email@example.com>
  */
 
 namespace Plugin_Name;
