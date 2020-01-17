@@ -39,6 +39,7 @@ intermediate
 cache
 
 /vendor/
-/src/vendor/
+
 
 /wordpress
+/src/vendor/
