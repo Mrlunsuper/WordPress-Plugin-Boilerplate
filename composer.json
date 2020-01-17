@@ -40,7 +40,7 @@
         },
         "mozart": {
             "dep_namespace": "Plugin_Name\\",
-            "dep_directory": "/plugin-name/vendor/",
+            "dep_directory": "/src/vendor/",
             "classmap_directory": "/classes/dependencies/",
             "classmap_prefix": "Plugin_Name_"
         },

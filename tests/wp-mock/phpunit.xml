@@ -16,7 +16,7 @@ convertWarningsToExceptions="true">
         <exclude>
             <directory suffix=".php">../../src/vendor/</directory>
             <file>*index.php</file>
-            <file>*plugin-name/autoload.php</file>
+            <file>*src/autoload.php</file>
         </exclude>
     </whitelist>
 </filter>
