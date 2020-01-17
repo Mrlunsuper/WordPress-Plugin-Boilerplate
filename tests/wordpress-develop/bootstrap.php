@@ -3,11 +3,11 @@
  * PHPUnit bootstrap file for wordpress-develop.
  *
  * @package Plugin_Name
- * @author     Your Name <email@example.com>
+ * @author  Your Name <email@example.com>
  */
 
 $project_root_dir = dirname( __FILE__, 3 ); // No trailing slash/.
-$plugin_root_dir  = $project_root_dir . '/plugin-name';
+$plugin_root_dir  = $project_root_dir . '/src';
 $plugin_slug      = basename( $project_root_dir );
 $plugin_slug_php  = $plugin_slug . '.php';
 $plugin_path_php  = $plugin_root_dir . '/' . $plugin_slug_php;
@@ -43,7 +43,7 @@ function _manually_load_plugin() {
 	// Assumes the plugin's directory name is the same as its filename.
 	$plugin_slug = basename( $project_root_dir );
 
-	require_once $project_root_dir . '/plugin-name/' . $plugin_slug . '.php';
+	require_once $project_root_dir . '/src/' . $plugin_slug . '.php';
 
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );

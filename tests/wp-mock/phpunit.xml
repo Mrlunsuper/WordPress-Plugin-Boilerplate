@@ -12,9 +12,9 @@ convertWarningsToExceptions="true">
 </testsuites>
 <filter>
     <whitelist>
-        <directory suffix=".php">../../plugin-name/</directory>
+        <directory suffix=".php">../../src/</directory>
         <exclude>
-            <directory suffix=".php">../../plugin-name/vendor/</directory>
+            <directory suffix=".php">../../src/vendor/</directory>
             <file>*index.php</file>
             <file>*plugin-name/autoload.php</file>
         </exclude>

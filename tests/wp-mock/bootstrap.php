@@ -7,7 +7,7 @@
  */
 
 $project_root_dir   = dirname( __FILE__, 3 );
-$plugin_root_dir    = $project_root_dir . '/plugin-name';
+$plugin_root_dir    = $project_root_dir . '/src';
 $plugin_slug        = basename( $project_root_dir );
 $plugin_slug_php    = $plugin_slug . '.php';
 $plugin_path_php    = $plugin_root_dir . '/' . $plugin_slug_php;
