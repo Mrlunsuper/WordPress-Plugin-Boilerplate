@@ -27,7 +27,8 @@
         "coenjacobs/mozart": "^0.4.0",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "wp-coding-standards/wpcs": "*",
-        "wordpress/wordpress": "*"
+        "wordpress/wordpress": "*",
+        "kporras07/composer-symlinks": "dev-master"
     },
     "extra": {
         "patches": {
@@ -40,14 +41,19 @@
             "dep_directory": "/plugin-name/vendor/",
             "classmap_directory": "/classes/dependencies/",
             "classmap_prefix": "Plugin_Name_"
+        },
+        "symlinks": {
+            "vendor/wordpress/wordpress/src": "wordpress"
         }
     },
     "scripts": {
         "post-install-cmd": [
-            "\"vendor/bin/mozart\" compose"
+            "\"vendor/bin/mozart\" compose",
+            "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks"
         ],
         "post-update-cmd": [
-            "\"vendor/bin/mozart\" compose"
+            "\"vendor/bin/mozart\" compose",
+            "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks"
         ]
     }
 }
