@@ -65,11 +65,6 @@ function deactivate_plugin_name() {
 register_activation_hook( __FILE__, 'Plugin_Name\activate_plugin_name' );
 register_deactivation_hook( __FILE__, 'Plugin_Name\deactivate_plugin_name' );
 
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and frontend-facing site hooks.
- */
-
 
 /**
  * Begins execution of the plugin.
@@ -80,10 +75,16 @@ register_deactivation_hook( __FILE__, 'Plugin_Name\deactivate_plugin_name' );
  *
  * @since    1.0.0
  */
-function run_plugin_name() {
+function instantiate_plugin_name() {
 
 	$plugin = new Plugin_Name();
-	$plugin->run();
 
+	return $plugin;
 }
-run_plugin_name();
+
+/**
+ * The core plugin class that is used to define internationalization,
+ * admin-specific hooks, and frontend-facing site hooks.
+ */
+$GLOBALS['plugin_name'] = $plugin_name = instantiate_plugin_name();
+$plugin_name->run();

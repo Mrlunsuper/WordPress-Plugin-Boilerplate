@@ -14,5 +14,10 @@
     <exclude-pattern>/vendor/*</exclude-pattern>
     <exclude-pattern>/plugin-name/vendor/*</exclude-pattern>
     <exclude-pattern>/wordpress/</exclude-pattern>
-    
+
+    <rule ref="Squiz.PHP.DisallowMultipleAssignments.Found">
+        <exclude-pattern>plugin-name.php</exclude-pattern>
+        <exclude-pattern>class-plugin-name.php</exclude-pattern>
+    </rule>
+
 </ruleset>

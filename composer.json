@@ -28,7 +28,8 @@
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "wp-coding-standards/wpcs": "*",
         "wordpress/wordpress": "*",
-        "kporras07/composer-symlinks": "dev-master"
+        "kporras07/composer-symlinks": "dev-master",
+        "phpunit/phpunit"     : ">=7.0"
     },
     "extra": {
         "patches": {
@@ -49,11 +50,13 @@
     "scripts": {
         "post-install-cmd": [
             "\"vendor/bin/mozart\" compose",
-            "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks"
+            "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
+            "mkdir -p vendor/wordpress/wordpress/src/wp-content/uploads"
         ],
         "post-update-cmd": [
             "\"vendor/bin/mozart\" compose",
-            "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks"
+            "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
+            "mkdir -p vendor/wordpress/wordpress/src/wp-content/uploads"
         ]
     }
 }
