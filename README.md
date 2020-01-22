@@ -125,15 +125,159 @@ mv src $(basename "`pwd`"); zip -r $(basename "`pwd`").zip $(basename "`pwd`"); 
 
 To configure automatic WordPress.org plugin repository deployment, add your WordPress.org username and password as Secrets `SVN_USERNAME` and `SVN_PASSWORD` in the GitHub repository's settings, then when a Release is created, the plugin will be updated on WordPress.org (from [zerowp.com](https://zerowp.com)'s [Use Github Actions to publish WordPress plugins on WP.org repository](https://zerowp.com/use-github-actions-to-publish-wordpress-plugins-on-wp-org-repository/)).
 
-## Notes
+## Composer Notes
 
-### Symlinks
+By convention, WordPress plugins and themes installed by composer get installed into the project's `/wp-content/plugins` and `/wp-content/themes` directory. In a typical PHP project, libraries required by the project during runtime are installed in the `vendor` directory. In the case of this project, libraries are downloaded to the project's `vendor` folder, then their files copied to `src/vendor` and their namespace changed.
 
-Composer [Symlink Handler](https://github.com/kporras07/composer-symlinks) is used to create a symlink to WordPress src directory in the project root, for convenience.
+### Mozart
+
+[Mozart](https://github.com/coenjacobs/mozart) is included in composer.json to prefix libraries' namespaces to avoid clashes with other WordPress plugins. e.g. in this case, [wp-namespace-autoloader](https://github.com/pablo-sg-pacheco/wp-namespace-autoloader) appears in `src/vendor/` with the namespace `Plugin_Name\Pablo_Pacheco\WP_Namespace_Autoloader`.
+
+```
+ "extra": {
+  "mozart": {
+   "dep_namespace": "Plugin_Name\\",
+   "dep_directory": "/src/vendor/",
+   "classmap_directory": "/classes/dependencies/",
+   "classmap_prefix": "Plugin_Name_"
+  }
+ }
+```
 
 ### Composer-Patches
 
-[composer-patches](https://github.com/cweagans/composer-patches) is used to apply PRs to composer dependencies while waiting for the repository owners to accept the required changes.
+[composer-patches](https://github.com/cweagans/composer-patches) is used to apply PRs to composer dependencies (e.g. while waiting for the repository owners to accept the required changes). In this case, Mozart is patched with a PR (which configures Mozart to process all libraries listed in composer.json `require` whereas without the patch, each needs to be specified).[*](https://mindsize.me/blog/development/how-to-backport-woocommerce-security-patches-using-git-and-composer/)
+
+```
+ "extra": {
+  "patches": {
+   "coenjacobs/mozart": {
+    "Allow default packages": "https://github.com/coenjacobs/mozart/pull/34.patch"
+   }
+  }
+ }
+```
+
+### WordPress Packagist
+
+Plugins published on WordPress.org are made available through composer via [wpackagist.org](https://wpackagist.org/). Add to composer.json using:
+
+```
+ "repositories": [
+  {
+   "type":"composer",
+   "url":"https://wpackagist.org"
+  }
+ ]
+```
+
+Then add the plugin or theme 
+
+```
+ "require-dev": {
+  "wpackagist-plugin/bh-wp-autologin-urls":">=1.1",
+  "wpackagist-theme/twentytwenty":"*"
+ }
+```
+
+### GitHub repository containing composer.json
+
+By including plugins direct from GitHub, you may get additional files such as unit tests and JavaScript sources.
+
+```
+ "repositories": [
+ {
+  "url": "https://github.com/johnbillion/user-switching",
+  "type": "git"
+ }
+```
+
+```
+ "require-dev": {
+  "johnbillion/user-switching": "dev-master"
+ }
+```
+
+### GitHub Branch/Fork
+
+When including a fork or branch, the repository may need to be changed, and the branch name should be prefixed with `dev-`.
+
+```
+ "repositories": [
+ {
+  "url": "https://github.com/BrianHenryIE/wp-namespace-autoloader",
+  "type": "git"
+ }
+```
+
+```
+ "require": {
+  "pablo-sg-pacheco/wp-namespace-autoloader": "dev-brianhenryie"
+ }
+```
+
+
+### GitHub repository without composer.json
+
+For GitHub repositories that are not set up for composer:
+
+```
+ "repositories": [
+ {
+  "type": "package",
+  "package": {
+   "name": "enhancedathlete/ea-wp-aws-sns-client-rest-endpoint",
+   "version": "1.0",
+   "source": {
+    "url": "https://github.com/EnhancedAthlete/EA-WP-AWS-SNS-Client-REST-Endpoint",
+    "type": "git",
+    "reference": "master"
+   }
+  }
+ }
+```
+
+```
+ "require-dev": {
+  "enhancedathlete/ea-wp-aws-sns-client-rest-endpoint":"*"
+ }
+```
+
+### SatisPress
+
+[SatisPress](https://github.com/cedaro/satispress) is a WordPress plugin that allows you to expose the plugins and themes installed on your WordPress site via a private Composer repository.
+
+Once installed, plugins need to be whitelisted via checkboxes in the admin UI's plugins.php page, and credentials need to be defined in Settings/SatisPress.
+
+```
+ "repositories": [
+ {
+  "type": "composer",
+  "url": "https://brianhenry.ie/satispress/"
+ }
+```
+
+```
+ "require-dev": {
+  "satispress/my-plugin": "*
+ }  
+```
+
+When running `composer update` you will be prompted (once) for the credentials you created on the site.
+
+### Symlinks
+
+If an included WordPress plugin or theme does not install to the project's `wp-content` folder, it can be symlinked with Composer [Symlink Handler](https://github.com/kporras07/composer-symlinks).
+
+```
+ "extra": {
+  "symlinks": {
+   "./vendor/enhancedathlete/ea-wp-aws-sns-client-rest-endpoint/trunk": "./wp-content/plugins/ea-wp-aws-sns-client-rest-endpoint"
+  }
+```
+
+## Notes
+
 
 ### Minimum WordPress Version
 
