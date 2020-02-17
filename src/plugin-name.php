@@ -48,7 +48,7 @@ define( 'PLUGIN_NAME_VERSION', '1.0.0' );
  * The code that runs during plugin activation.
  * This action is documented in includes/class-activator.php
  */
-function activate_plugin_name() {
+function activate_plugin_snake() {
 
 	Activator::activate();
 }
@@ -57,13 +57,13 @@ function activate_plugin_name() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-deactivator.php
  */
-function deactivate_plugin_name() {
+function deactivate_plugin_snake() {
 
 	Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'Plugin_Name\activate_plugin_name' );
-register_deactivation_hook( __FILE__, 'Plugin_Name\deactivate_plugin_name' );
+register_activation_hook( __FILE__, 'Plugin_Name\activate_plugin_snake' );
+register_deactivation_hook( __FILE__, 'Plugin_Name\deactivate_plugin_snake' );
 
 
 /**
@@ -75,7 +75,7 @@ register_deactivation_hook( __FILE__, 'Plugin_Name\deactivate_plugin_name' );
  *
  * @since    1.0.0
  */
-function instantiate_plugin_name() {
+function instantiate_plugin_snake() {
 
 	$plugin = new Plugin_Name();
 
@@ -86,5 +86,5 @@ function instantiate_plugin_name() {
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and frontend-facing site hooks.
  */
-$GLOBALS['plugin_name'] = $plugin_name = instantiate_plugin_name();
-$plugin_name->run();
+$GLOBALS['plugin_snake'] = $plugin_snake = instantiate_plugin_snake();
+$plugin_snake->run();

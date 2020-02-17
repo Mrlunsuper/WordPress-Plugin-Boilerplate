@@ -27,7 +27,7 @@ cd $plugin_slug
 find . -depth -name '*.txt' -exec sed -i '' 's/Plugin Name/'$plugin_name'/' {} +
 find . -depth -name '*plugin-name*' -execdir bash -c 'git mv "$1" "${1//plugin-name/'$plugin_slug'}"' bash {} \;
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name ".gitignore" \) -exec sed -i '' 's/plugin-name/'$plugin_slug'/' {} +
-find . -depth -name $plugin_slug'.php'  -exec sed -i '' 's/_plugin_name/_'$plugin_snake'/' {} +
+find . -depth -name $plugin_slug'.php'  -exec sed -i '' 's/_plugin_snake/_'$plugin_snake'/' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Name/'$plugin_package_name'/g' {} \;
 find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_package_capitalized'/' {} +
 composer install
@@ -287,11 +287,15 @@ The minimum WordPress version can be determined using [wpseek.com's Plugin Docto
 
 * PHP Storm configuration
 * PHP Unit for PRs via GitHub Actions
+* Code coverage badge
+* Downloads count badge
 * JavaScript unit testing
 * Local Git hooks for WPCS
 * Disable commiting to master
 * Update Git origin instruction
 * Composer command for PHPCS+PHP Unit
+* [PHP 7](https://stitcher.io/blog/php-in-2020) site:github.com inurl:WordPress-Plugin-Boilerplate php 7.3
+
 
 ## Acknowledgements
 
