@@ -43,5 +43,6 @@ cache
 
 /wordpress
 /src/vendor/
-wp-content/plugins/plugin-slug
+/src/dependencies/
+wp-content/plugins
 composer.lock
