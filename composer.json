@@ -27,7 +27,7 @@
         "coenjacobs/mozart": "^0.4.0",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "wp-coding-standards/wpcs": "*",
-        "wordpress/wordpress": "*",
+        "wordpress/wordpress": "^5.0",
         "kporras07/composer-symlinks": "dev-master",
         "phpunit/phpunit"     : ">=7.0",
         "phpunit/phpcov": "^5.0",
