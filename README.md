@@ -8,10 +8,12 @@ The WordPress Plugin Boilerplate is a well-documented starting point for WordPre
 
 ## Installation
 
-Open Terminal and set the name:
+Open Terminal and set the variables:
 
 ```
 plugin_name="Example Plugin"
+your_name="Brian Henry"
+your_email="BrianHenryIE@gmail.com"
 ```
 
 Run these commands to generate other replacements:
@@ -36,6 +38,8 @@ find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.x
 find . -depth -name '*.php'  -exec sed -i '' 's/plugin_snake/'$plugin_snake'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Package_Name/'$plugin_package_name'/g' {} \;
 find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'/' {} +
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/Your Name/$your_name/" {} +
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/email@example.com/$your_email/" {} +
 composer install
 ```
 
