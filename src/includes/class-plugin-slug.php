@@ -74,6 +74,8 @@ class Plugin_Package_Name extends WPPB_Object {
 	 * the frontend-facing side of the site.
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param WPPB_Loader_Interface $loader The WPPB class which adds the hooks and filters to WordPress.
 	 */
 	public function __construct( $loader ) {
 		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
