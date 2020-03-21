@@ -43,3 +43,6 @@ cache
 
 /wordpress
 /src/vendor/
+/src/dependencies/
+wp-content/plugins
+composer.lock

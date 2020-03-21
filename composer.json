@@ -32,9 +32,9 @@
         "coenjacobs/mozart": "^0.4.0",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "wp-coding-standards/wpcs": "*",
-        "wordpress/wordpress": "*",
+        "wordpress/wordpress": "^5.0",
         "kporras07/composer-symlinks": "dev-master",
-        "phpunit/phpunit"     : ">=7.0",
+        "phpunit/phpunit": ">=7.0",
         "phpunit/phpcov": "^5.0",
         "10up/wp_mock": "0.4.2"
     },
@@ -47,10 +47,12 @@
         "mozart": {
             "dep_namespace": "Plugin_Package_Name\\",
             "dep_directory": "/src/vendor/",
-            "classmap_directory": "/classes/dependencies/",
-            "classmap_prefix": "Plugin_Package_Name_"
+            "classmap_prefix": "Plugin_Package_Name_",
+            "classmap_directory": "/src/dependencies/"
         },
         "symlinks": {
+            "wp-content/plugins": "vendor/wordpress/wordpress/src/wp-content/plugins",
+            "src": "wp-content/plugins/plugin-slug",
             "vendor/wordpress/wordpress/src": "wordpress"
         }
     },
@@ -58,12 +60,12 @@
         "post-install-cmd": [
             "\"vendor/bin/mozart\" compose",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
-            "mkdir -p vendor/wordpress/wordpress/src/wp-content/uploads"
+            "mkdir -p wordpress/wp-content/uploads"
         ],
         "post-update-cmd": [
             "\"vendor/bin/mozart\" compose",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
-            "mkdir -p vendor/wordpress/wordpress/src/wp-content/uploads"
+            "mkdir -p wordpress/wp-content/uploads"
         ]
     }
 }
