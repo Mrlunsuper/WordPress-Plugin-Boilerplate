@@ -11,6 +11,8 @@
 
 namespace Plugin_Package_Name\frontend;
 
+use Plugin_Package_Name\WPPB\WPPB_Object;
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -21,39 +23,7 @@ namespace Plugin_Package_Name\frontend;
  * @subpackage Plugin_Package_Name/frontend
  * @author     Your Name <email@example.com>
  */
-class Frontend {
-
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string $plugin_name       The name of the plugin.
-	 * @param      string $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-
-	}
+class Frontend extends WPPB_Object {
 
 	/**
 	 * Register the stylesheets for the frontend-facing side of the site.

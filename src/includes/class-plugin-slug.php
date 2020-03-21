@@ -16,6 +16,8 @@ namespace Plugin_Package_Name\includes;
 
 use Plugin_Package_Name\admin\Admin;
 use Plugin_Package_Name\frontend\Frontend;
+use Plugin_Package_Name\WPPB\WPPB_Loader_Interface;
+use Plugin_Package_Name\WPPB\WPPB_Object;
 
 /**
  * The core plugin class.
@@ -31,7 +33,7 @@ use Plugin_Package_Name\frontend\Frontend;
  * @subpackage Plugin_Package_Name/includes
  * @author     Your Name <email@example.com>
  */
-class Plugin_Package_Name {
+class Plugin_Package_Name extends WPPB_Object {
 
 	/**
 	 * Allow access for testing and unhooking.
@@ -60,27 +62,9 @@ class Plugin_Package_Name {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      WPPB_Loader_Interface    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
-
-	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-	 */
-	protected $plugin_name;
-
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -91,7 +75,7 @@ class Plugin_Package_Name {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct() {
+	public function __construct( $loader ) {
 		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
 			$this->version = PLUGIN_NAME_VERSION;
 		} else {
@@ -99,7 +83,9 @@ class Plugin_Package_Name {
 		}
 		$this->plugin_name = 'plugin-slug';
 
-		$this->loader = new Loader();
+		parent::__construct( $this->plugin_name, $this->version );
+
+		$this->loader = $loader;
 
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -166,34 +152,13 @@ class Plugin_Package_Name {
 	}
 
 	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
-
-	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Loader    Orchestrates the hooks of the plugin.
+	 * @return    WPPB_Loader_Interface    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
-	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
 	}
 
 }

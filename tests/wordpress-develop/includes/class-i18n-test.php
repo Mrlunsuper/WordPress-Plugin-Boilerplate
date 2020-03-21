@@ -60,8 +60,8 @@ class Plugin_Package_Name_I18n_Test extends \WP_UnitTestCase {
 		 *
 		 * @var Plugin_Package_Name $plugin_snake
 		 */
-		$plugin_snake= $GLOBALS['plugin_snake'];
-		$i18n        = $plugin_snake->i18n;
+		$plugin_snake = $GLOBALS['plugin_snake'];
+		$i18n         = $plugin_snake->i18n;
 
 		$i18n->load_plugin_textdomain();
 
