@@ -5,11 +5,11 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
+ * @package    Plugin_Package_Name
+ * @subpackage Plugin_Package_Name/admin
  */
 
-namespace Plugin_Name\admin;
+namespace Plugin_Package_Name\admin;
 
 /**
  * The admin-specific functionality of the plugin.
@@ -17,8 +17,8 @@ namespace Plugin_Name\admin;
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
+ * @package    Plugin_Package_Name
+ * @subpackage Plugin_Package_Name/admin
  * @author     Your Name <email@example.com>
  */
 class Admin {
@@ -74,7 +74,7 @@ class Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-name-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-slug-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -97,7 +97,7 @@ class Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-name-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-slug-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 

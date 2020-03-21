@@ -21,7 +21,7 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
+ * @package    Plugin_Package_Name
  */
 
 // If uninstall not called from WordPress, then exit.

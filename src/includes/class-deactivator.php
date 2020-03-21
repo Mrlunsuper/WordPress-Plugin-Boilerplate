@@ -5,11 +5,11 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Plugin_Package_Name
+ * @subpackage Plugin_Package_Name/includes
  */
 
-namespace Plugin_Name\includes;
+namespace Plugin_Package_Name\includes;
 
 /**
  * Fired during plugin deactivation.
@@ -17,8 +17,8 @@ namespace Plugin_Name\includes;
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Plugin_Package_Name
+ * @subpackage Plugin_Package_Name/includes
  * @author     Your Name <email@example.com>
  */
 class Deactivator {

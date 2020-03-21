@@ -8,14 +8,14 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Plugin_Package_Name
+ * @subpackage Plugin_Package_Name/includes
  */
 
-namespace Plugin_Name\includes;
+namespace Plugin_Package_Name\includes;
 
-use Plugin_Name\admin\Admin;
-use Plugin_Name\frontend\Frontend;
+use Plugin_Package_Name\admin\Admin;
+use Plugin_Package_Name\frontend\Frontend;
 
 /**
  * The core plugin class.
@@ -27,11 +27,11 @@ use Plugin_Name\frontend\Frontend;
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Plugin_Package_Name
+ * @subpackage Plugin_Package_Name/includes
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name {
+class Plugin_Package_Name {
 
 	/**
 	 * Allow access for testing and unhooking.
@@ -97,7 +97,7 @@ class Plugin_Name {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'plugin-name';
+		$this->plugin_name = 'plugin-slug';
 
 		$this->loader = new Loader();
 

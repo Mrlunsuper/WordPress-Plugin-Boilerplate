@@ -2,18 +2,18 @@
 /**
  * Tests for I18n. Tests load_plugin_textdomain.
  *
- * @package Plugin_Name
+ * @package Plugin_Package_Name
  * @author  Your Name <email@example.com>
  */
 
-namespace Plugin_Name\includes;
+namespace Plugin_Package_Name\includes;
 
 /**
- * Class Plugin_Name_Test
+ * Class Plugin_Package_Name_Test
  *
  * @see I18n
  */
-class Plugin_Name_I18n_Test extends \WP_UnitTestCase {
+class Plugin_Package_Name_I18n_Test extends \WP_UnitTestCase {
 
 	/**
 	 * AFAICT, this will fail until a translation has been added.
@@ -30,7 +30,7 @@ class Plugin_Name_I18n_Test extends \WP_UnitTestCase {
 		$this->assertTrue( file_exists( $plugin_root_dir . '/languages/' ), '/languages/ folder does not exist.' );
 
 		// Seems to fail because there are no translations to load.
-		$this->assertTrue( is_textdomain_loaded( 'plugin-name' ), 'i18n text domain not loaded.' );
+		$this->assertTrue( is_textdomain_loaded( 'plugin-slug' ), 'i18n text domain not loaded.' );
 
 	}
 
@@ -58,15 +58,15 @@ class Plugin_Name_I18n_Test extends \WP_UnitTestCase {
 		/**
 		 * Get the main plugin class.
 		 *
-		 * @var Plugin_Name $plugin_name
+		 * @var Plugin_Package_Name $plugin_snake
 		 */
-		$plugin_name = $GLOBALS['plugin_name'];
-		$i18n        = $plugin_name->i18n;
+		$plugin_snake= $GLOBALS['plugin_snake'];
+		$i18n        = $plugin_snake->i18n;
 
 		$i18n->load_plugin_textdomain();
 
 		$this->assertTrue( $called, 'plugin_locale filter not called within load_plugin_textdomain() suggesting it has not been set by the plugin.' );
-		$this->assertEquals( 'plugin-name', $actual_domain );
+		$this->assertEquals( 'plugin-slug', $actual_domain );
 
 	}
 }

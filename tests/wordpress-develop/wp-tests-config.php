@@ -2,7 +2,7 @@
 /**
  * Configures the database and db user to use for tests.
  *
- * @package Plugin_Name
+ * @package Plugin_Package_Name
  * @author     Your Name <email@example.com>
  */
 

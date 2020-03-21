@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file for WP_Mock.
  *
- * @package Plugin_Name
+ * @package Plugin_Package_Name
  * @author  Your Name <email@example.com>
  */
 

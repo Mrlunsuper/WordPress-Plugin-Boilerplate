@@ -1,17 +1,17 @@
 <?php
 /**
- * Tests for Plugin_Name main setup class. Tests the actions are correctly added.
+ * Tests for Plugin_Package_Name main setup class. Tests the actions are correctly added.
  *
- * @package Plugin_Name
+ * @package Plugin_Package_Name
  * @author  Your Name <email@example.com>
  */
 
-namespace Plugin_Name\includes;
+namespace Plugin_Package_Name\includes;
 
 /**
  * Class Develop_Test
  */
-class Plugin_Name_Develop_Test extends \WP_UnitTestCase {
+class Plugin_Package_Name_Develop_Test extends \WP_UnitTestCase {
 
 	/**
 	 * Verify admin_enqueue_scripts action is correctly added for styles, at priority 10.
@@ -21,9 +21,9 @@ class Plugin_Name_Develop_Test extends \WP_UnitTestCase {
 		$action_name       = 'admin_enqueue_scripts';
 		$expected_priority = 10;
 
-		$plugin_name = $GLOBALS['plugin_name'];
+		$plugin_snake = $GLOBALS['plugin_snake'];
 
-		$class = $plugin_name->admin;
+		$class = $plugin_snake->admin;
 
 		$function = array( $class, 'enqueue_styles' );
 
@@ -43,9 +43,9 @@ class Plugin_Name_Develop_Test extends \WP_UnitTestCase {
 		$filter_name       = 'admin_enqueue_scripts';
 		$expected_priority = 10;
 
-		$plugin_name = $GLOBALS['plugin_name'];
+		$plugin_snake = $GLOBALS['plugin_snake'];
 
-		$class = $plugin_name->admin;
+		$class = $plugin_snake->admin;
 
 		$function = array( $class, 'enqueue_scripts' );
 
@@ -65,9 +65,9 @@ class Plugin_Name_Develop_Test extends \WP_UnitTestCase {
 		$action_name       = 'plugins_loaded';
 		$expected_priority = 10;
 
-		$plugin_name = $GLOBALS['plugin_name'];
+		$plugin_snake = $GLOBALS['plugin_snake'];
 
-		$class = $plugin_name->i18n;
+		$class = $plugin_snake->i18n;
 
 		$function = array( $class, 'load_plugin_textdomain' );
 

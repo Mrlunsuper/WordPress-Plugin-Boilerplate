@@ -9,26 +9,26 @@
  *
  * @link              http://example.com
  * @since             1.0.0
- * @package           Plugin_Name
+ * @package           Plugin_Package_Name
  *
  * @wordpress-plugin
- * Plugin Name:       WordPress Plugin Boilerplate
- * Plugin URI:        http://example.com/plugin-name-uri/
+ * Plugin Name:       plugin_title
+ * Plugin URI:        http://github.com/username/plugin-slug/
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
  * Author:            Your Name or Your Company
  * Author URI:        http://example.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       plugin-name
+ * Text Domain:       plugin-slug
  * Domain Path:       /languages
  */
 
-namespace Plugin_Name;
+namespace Plugin_Package_Name;
 
-use Plugin_Name\includes\Activator;
-use Plugin_Name\includes\Deactivator;
-use Plugin_Name\includes\Plugin_Name;
+use Plugin_Package_Name\includes\Activator;
+use Plugin_Package_Name\includes\Deactivator;
+use Plugin_Package_Name\includes\Plugin_Package_Name;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -62,8 +62,8 @@ function deactivate_plugin_snake() {
 	Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'Plugin_Name\activate_plugin_snake' );
-register_deactivation_hook( __FILE__, 'Plugin_Name\deactivate_plugin_snake' );
+register_activation_hook( __FILE__, 'Plugin_Package_Name\activate_plugin_snake' );
+register_deactivation_hook( __FILE__, 'Plugin_Package_Name\deactivate_plugin_snake' );
 
 
 /**
@@ -77,7 +77,7 @@ register_deactivation_hook( __FILE__, 'Plugin_Name\deactivate_plugin_snake' );
  */
 function instantiate_plugin_snake() {
 
-	$plugin = new Plugin_Name();
+	$plugin = new Plugin_Package_Name();
 
 	return $plugin;
 }

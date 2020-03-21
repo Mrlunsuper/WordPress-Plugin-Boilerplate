@@ -2,13 +2,13 @@
 /**
  * Class Plugin_Test. Tests the root plugin setup.
  *
- * @package Plugin_Name
+ * @package Plugin_Package_Name
  * @author     Your Name <email@example.com>
  */
 
-namespace Plugin_Name;
+namespace Plugin_Package_Name;
 
-use Plugin_Name\includes\Plugin_Name;
+use Plugin_Package_Name\includes\Plugin_Package_Name;
 
 /**
  * Verifies the plugin has been instantiated and added to PHP's $GLOBALS variable.
@@ -20,9 +20,9 @@ class Plugin_Develop_Test extends \WP_UnitTestCase {
 	 */
 	public function test_plugin_instantiated() {
 
-		$this->assertArrayHasKey( 'plugin_name', $GLOBALS );
+		$this->assertArrayHasKey( 'plugin_snake', $GLOBALS );
 
-		$this->assertInstanceOf( Plugin_Name::class, $GLOBALS['plugin_name'] );
+		$this->assertInstanceOf( Plugin_Package_Name::class, $GLOBALS['plugin_snake'] );
 	}
 
 }

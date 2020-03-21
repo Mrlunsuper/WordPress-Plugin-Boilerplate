@@ -8,14 +8,19 @@ The WordPress Plugin Boilerplate is a well-documented starting point for WordPre
 
 ## Installation
 
-Open Terminal and set the following variables (note the `\` before spaces):
+Open Terminal and set the name:
 
 ```
-plugin_name=Example\ Plugin
-plugin_slug=example-plugin
-plugin_snake=example_plugin
-plugin_package_name=Example_Plugin
-plugin_package_capitalized=EXAMPLE_PLUGIN
+plugin_name="Example Plugin"
+```
+
+Run these commands to generate other replacements:
+
+```
+plugin_slug=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g') # example-plugin
+plugin_snake=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g') # example_plugin
+plugin_package_name=$(echo $plugin_name | sed 's/ /_/g') # Example_Plugin
+plugin_capitalized=$(echo $plugin_name | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g') # EXAMPLE_PLUGIN
 ```
 
 Then this block of commands will take care of most of the downloading and renaming.
@@ -24,13 +29,13 @@ Then this block of commands will take care of most of the downloading and renami
 git clone https://github.com/BrianHenryIE/WordPress-Plugin-Boilerplate.git
 mv WordPress-Plugin-Boilerplate $plugin_slug
 cd $plugin_slug
-find . -depth -name '*.txt' -exec sed -i '' 's/Plugin Name/'$plugin_name'/' {} +
-find . -depth -name '*plugin-name*' -execdir bash -c 'git mv "$1" "${1//plugin-name/'$plugin_slug'}"' bash {} \;
-find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name ".gitignore" \) -exec sed -i '' 's/plugin-name/'$plugin_slug'/' {} +
-find . -depth -name $plugin_slug'.php'  -exec sed -i '' 's/plugin_snake/'$plugin_snake'/' {} +
-find . -depth -name $plugin_slug'.php'  -exec sed -i '' 's/plugin_snake/'$plugin_snake'/' {} +
-find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Name/'$plugin_package_name'/g' {} \;
-find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_package_capitalized'/' {} +
+find ./src/readme.txt -exec sed -i '' "s/plugin_title/$plugin_name/" {} +
+find ./src/plugin-slug.php -exec sed -i '' "s/plugin_title/$plugin_name/" {} +
+find . -depth -name '*plugin-slug*' -execdir bash -c 'git mv "$1" "${1//plugin-slug/'$plugin_slug'}"' bash {} \;
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name ".gitignore" \) -exec sed -i '' 's/plugin-slug/'$plugin_slug'/' {} +
+find . -depth -name '*.php'  -exec sed -i '' 's/plugin_snake/'$plugin_snake'/g' {} +
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Package_Name/'$plugin_package_name'/g' {} \;
+find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'/' {} +
 composer install
 ```
 

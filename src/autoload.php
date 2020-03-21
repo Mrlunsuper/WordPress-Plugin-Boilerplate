@@ -6,18 +6,18 @@
  *
  * @link              http://example.com
  * @since             1.0.0
- * @package           Plugin_Name
+ * @package           Plugin_Package_Name
  *
  * @see https://github.com/pablo-sg-pacheco/wp-namespace-autoloader/
  */
 
-namespace Plugin_Name;
+namespace Plugin_Package_Name;
 
-use Plugin_Name\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
+use Plugin_Package_Name\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
 
 
 // The plugin-scoped namespace for composer required libraries, as specified in composer.json Mozart config.
-$dep_namespace = 'Plugin_Name';
+$dep_namespace = 'Plugin_Package_Name';
 // The Mozart config `dep_directory` adjusted for relative path.
 $dep_directory = '/vendor/';
 

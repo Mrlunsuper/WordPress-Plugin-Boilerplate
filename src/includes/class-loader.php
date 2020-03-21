@@ -5,11 +5,11 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Plugin_Package_Name
+ * @subpackage Plugin_Package_Name/includes
  */
 
-namespace Plugin_Name\includes;
+namespace Plugin_Package_Name\includes;
 
 /**
  * Register all actions and filters for the plugin.
@@ -18,8 +18,8 @@ namespace Plugin_Name\includes;
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Plugin_Package_Name
+ * @subpackage Plugin_Package_Name/includes
  * @author     Your Name <email@example.com>
  */
 class Loader {

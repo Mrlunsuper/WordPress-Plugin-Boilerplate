@@ -1,5 +1,5 @@
 {
-    "name": "your-domain/plugin-name",
+    "name": "your-domain/plugin-slug",
     "description": "This is a short description of what the plugin does.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+-or-later",
@@ -39,10 +39,10 @@
             }
         },
         "mozart": {
-            "dep_namespace": "Plugin_Name\\",
+            "dep_namespace": "Plugin_Package_Name\\",
             "dep_directory": "/src/vendor/",
             "classmap_directory": "/classes/dependencies/",
-            "classmap_prefix": "Plugin_Name_"
+            "classmap_prefix": "Plugin_Package_Name_"
         },
         "symlinks": {
             "vendor/wordpress/wordpress/src": "wordpress"

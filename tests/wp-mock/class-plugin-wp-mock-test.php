@@ -2,13 +2,13 @@
 /**
  * Tests for the root plugin file.
  *
- * @package Plugin_Name
+ * @package Plugin_Package_Name
  * @author  Your Name <email@example.com>
  */
 
-namespace Plugin_Name;
+namespace Plugin_Package_Name;
 
-use Plugin_Name\includes\Plugin_Name;
+use Plugin_Package_Name\includes\Plugin_Package_Name;
 
 /**
  * Class Plugin_WP_Mock_Test
@@ -40,11 +40,11 @@ class Plugin_WP_Mock_Test extends \WP_Mock\Tools\TestCase {
 			'register_deactivation_hook'
 		);
 
-		require_once $plugin_root_dir . '/plugin-name.php';
+		require_once $plugin_root_dir . '/plugin-slug.php';
 
-		$this->assertArrayHasKey( 'plugin_name', $GLOBALS );
+		$this->assertArrayHasKey( 'plugin_snake', $GLOBALS );
 
-		$this->assertInstanceOf( Plugin_Name::class, $GLOBALS['plugin_name'] );
+		$this->assertInstanceOf( Plugin_Package_Name::class, $GLOBALS['plugin_snake'] );
 
 	}
 
@@ -76,7 +76,7 @@ class Plugin_WP_Mock_Test extends \WP_Mock\Tools\TestCase {
 
 		ob_start();
 
-		require_once $plugin_root_dir . '/plugin-name.php';
+		require_once $plugin_root_dir . '/plugin-slug.php';
 
 		$printed_output = ob_get_contents();
 
