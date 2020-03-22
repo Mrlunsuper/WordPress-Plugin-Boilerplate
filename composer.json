@@ -17,6 +17,10 @@
         {
             "url": "https://github.com/pablo-sg-pacheco/wp-namespace-autoloader",
             "type": "git"
+        },
+        {
+            "url": "https://github.com/BrianHenryIE/composer-phpstorm",
+            "type": "git"
         }
     ],
     "require": {
@@ -32,7 +36,8 @@
         "kporras07/composer-symlinks": "dev-master",
         "phpunit/phpunit": ">=7.0",
         "phpunit/phpcov": "^5.0",
-        "10up/wp_mock": "0.4.2"
+        "10up/wp_mock": "0.4.2",
+        "brianhenryie/composer-phpstorm": "dev-master"
     },
     "extra": {
         "patches": {
@@ -50,18 +55,35 @@
             "wp-content/plugins": "vendor/wordpress/wordpress/src/wp-content/plugins",
             "src": "wp-content/plugins/plugin-slug",
             "vendor/wordpress/wordpress/src": "wordpress"
+        },
+        "phpstorm": {
+            "exclude_folders": {
+                "folders": [
+                    "vendor/wordpress/wordpress/src",
+                    "wordpress/wp-content/plugins",
+                    "wp-content/plugins/plugin-slug"
+                ],
+                "include_folders": [
+                    "vendor/wordpress/wordpress/"
+                ],
+                "composer-symlinks": false
+            }
         }
     },
     "scripts": {
         "post-install-cmd": [
             "\"vendor/bin/mozart\" compose",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
-            "mkdir -p wordpress/wp-content/uploads"
+            "mkdir -p wordpress/wp-content/uploads",
+            "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
+            "BrianHenryIE\\ComposerPhpStorm\\PHPUnitRunConfigurations::update"
         ],
         "post-update-cmd": [
             "\"vendor/bin/mozart\" compose",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
-            "mkdir -p wordpress/wp-content/uploads"
+            "mkdir -p wordpress/wp-content/uploads",
+            "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
+            "BrianHenryIE\\ComposerPhpStorm\\PHPUnitRunConfigurations::update"
         ]
     }
 }
