@@ -41,8 +41,7 @@ cache
 /vendor/
 
 
-/wordpress
-/src/vendor/
-/src/dependencies/
+wordpress
+src/vendor/
+src/dependencies/
 wp-content/plugins
-composer.lock
