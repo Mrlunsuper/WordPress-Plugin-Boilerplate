@@ -19,10 +19,10 @@ your_email="BrianHenryIE@gmail.com"
 Run these commands to generate other replacements:
 
 ```
-plugin_slug=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g') # example-plugin
-plugin_snake=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g') # example_plugin
-plugin_package_name=$(echo $plugin_name | sed 's/ /_/g') # Example_Plugin
-plugin_capitalized=$(echo $plugin_name | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g') # EXAMPLE_PLUGIN
+plugin_slug=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g'); echo $plugin_slug; # example-plugin
+plugin_snake=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g'); echo $plugin_snake; # example_plugin
+plugin_package_name=$(echo $plugin_name | sed 's/ /_/g'); echo $plugin_package_name; # Example_Plugin
+plugin_capitalized=$(echo $plugin_name | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g'); echo $plugin_capitalized; # EXAMPLE_PLUGIN
 ```
 
 Then this block of commands will take care of most of the downloading and renaming.
