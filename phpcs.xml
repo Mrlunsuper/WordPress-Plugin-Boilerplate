@@ -14,6 +14,7 @@
     <exclude-pattern>/vendor/*</exclude-pattern>
     <exclude-pattern>/src/vendor/*</exclude-pattern>
     <exclude-pattern>/wordpress/</exclude-pattern>
+    <exclude-pattern>/wp-content/</exclude-pattern>
 
     <rule ref="Squiz.PHP.DisallowMultipleAssignments.Found">
         <exclude-pattern>plugin-slug.php</exclude-pattern>
