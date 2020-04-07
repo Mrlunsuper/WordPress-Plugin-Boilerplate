@@ -68,8 +68,8 @@ Run the tests to confirm it's working:
 ```
 vendor/bin/phpcbf; 
 vendor/bin/phpcs; 
-phpunit -c tests/wordpress-develop/phpunit.xml --coverage-php tests/reports/wordpress-develop.cov --coverage-text; 
-phpunit -c tests/wp-mock/phpunit.xml --coverage-php tests/reports/wp-mock.cov --coverage-text; 
+vendor/bin/phpunit -c tests/wordpress-develop/phpunit.xml --coverage-php tests/reports/wordpress-develop.cov --coverage-text; 
+vendor/bin/phpunit -c tests/wp-mock/phpunit.xml --coverage-php tests/reports/wp-mock.cov --coverage-text; 
 vendor/bin/phpcov merge --clover tests/reports/clover.xml --html tests/reports/html tests/reports --text
 ```
 
