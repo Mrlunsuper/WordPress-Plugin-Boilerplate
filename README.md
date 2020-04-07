@@ -189,6 +189,24 @@ Then add the plugin or theme
   "wpackagist-theme/twentytwenty":"*"
  }
 ```
+### Local Projects
+
+To add a project in another local directory, ensure it has its own `composer.json` with `"name": "brianhenryie/local-lib"`
+
+```
+ "repositories": [
+  {
+   "type": "path",
+   "url": "../phpunit-github-actions-printer"
+  }
+ ]
+```
+
+```
+ "require": {
+  "brianhenryie/local-lib":"*",
+ }
+```
 
 ### GitHub repository containing composer.json
 
