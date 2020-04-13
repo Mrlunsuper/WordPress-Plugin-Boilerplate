@@ -13,7 +13,7 @@ use Plugin_Package_Name\includes\Plugin_Package_Name;
 /**
  * Verifies the plugin has been instantiated and added to PHP's $GLOBALS variable.
  */
-class Plugin_Develop_Test extends \WP_UnitTestCase {
+class Plugin_Develop_Test extends \Codeception\TestCase\WPTestCase {
 
 	/**
 	 * Test the main plugin object is added to PHP's GLOBALS and that it is the correct class.

@@ -24,7 +24,7 @@
         }
     ],
     "require": {
-        "php": ">=5.6.0",
+        "php": ">=7.2",
         "pablo-sg-pacheco/wp-namespace-autoloader": "dev-master"
     },
     "require-dev": {
@@ -37,22 +37,37 @@
         "phpunit/phpunit": ">=7.0",
         "phpunit/phpcov": "^5.0",
         "10up/wp_mock": "0.4.2",
-        "brianhenryie/composer-phpstorm": "dev-master"
+        "brianhenryie/composer-phpstorm": "dev-master",
+        "lucatume/wp-browser": "2.4.2",
+        "codeception/module-asserts": "^1.0",
+        "voku/portable-ascii": "dev-master",
+        "codeception/module-db": "^1.0.0",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "codeception/module-webdriver": "^1.0",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/module-cli": "^1.0",
+        "codeception/util-universalframework": "^1.0"
     },
     "extra": {
         "patches": {
             "coenjacobs/mozart": {
-                "Allow default packages": "https://github.com/coenjacobs/mozart/pull/34.patch"
+                "Allow default packages": "https://github.com/coenjacobs/mozart/pull/34.patch",
+                "Add config option to disable deleting vendor directories": "https://github.com/coenjacobs/mozart/pull/38.patch",
+                "Classmap replacing change str_replace to regex": "https://github.com/coenjacobs/mozart/pull/39.patch",
+                "Fixed escaping of backslash": "https://github.com/coenjacobs/mozart/pull/40.patch",
+                "Override Autoload": "https://github.com/coenjacobs/mozart/pull/41.patch",
+                "Run wide update for classmap": "https://github.com/coenjacobs/mozart/pull/42.patch"
             }
         },
         "mozart": {
             "dep_namespace": "Plugin_Package_Name\\",
             "dep_directory": "/src/vendor/",
             "classmap_prefix": "Plugin_Package_Name_",
-            "classmap_directory": "/src/dependencies/"
+            "classmap_directory": "/src/dependencies/",
+            "delete_vendor_directories": false
         },
         "symlinks": {
-            "wp-content/plugins": "vendor/wordpress/wordpress/src/wp-content/plugins",
+            "wp-content/plugins": "vendor/wordpress/wordpress/build/wp-content/plugins",
             "src": "wp-content/plugins/plugin-slug",
             "vendor/wordpress/wordpress/src": "wordpress"
         },
@@ -60,6 +75,7 @@
             "exclude_folders": {
                 "folders": [
                     "vendor/wordpress/wordpress/src",
+                    "vendor/wordpress/wordpress/build",
                     "wordpress/wp-content/plugins",
                     "wp-content/plugins/plugin-slug"
                 ],
@@ -87,3 +103,6 @@
         ]
     }
 }
+
+
+

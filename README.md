@@ -20,12 +20,15 @@ This was written for a local environment with:
 
 ## Installation
 
-Open Terminal and set the variables:
+Open Terminal and set the variables and your local MySQL credentials:
 
 ```
 plugin_name="Example Plugin"
 your_name="Brian Henry"
 your_email="BrianHenryIE@gmail.com"
+
+mysql_username="root"
+mysql_password="secret"
 ```
 
 Run these commands to generate other replacements:
@@ -35,6 +38,10 @@ plugin_slug=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g'); e
 plugin_snake=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g'); echo $plugin_snake; # example_plugin
 plugin_package_name=$(echo $plugin_name | sed 's/ /_/g'); echo $plugin_package_name; # Example_Plugin
 plugin_capitalized=$(echo $plugin_name | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g'); echo $plugin_capitalized; # EXAMPLE_PLUGIN
+test_site_db_name=$plugin_snake"_tests" # example_plugin_tests
+test_db_name=$plugin_snake"_integration" # example_plugin_integration
+plugin_db_username=$plugin_slug # 32 character max for username 
+plugin_db_password=$plugin_slug
 ```
 
 Then this block of commands will take care of most of the downloading and renaming.
@@ -43,46 +50,39 @@ Then this block of commands will take care of most of the downloading and renami
 git clone https://github.com/BrianHenryIE/WordPress-Plugin-Boilerplate.git
 mv WordPress-Plugin-Boilerplate $plugin_slug
 cd $plugin_slug
-find ./src/readme.txt -exec sed -i '' "s/plugin_title/$plugin_name/" {} +
-find ./src/plugin-slug.php -exec sed -i '' "s/plugin_title/$plugin_name/" {} +
+
+# Branches can be merged here.
+
+find ./src/readme.txt -exec sed -i '' "s/plugin_title/$plugin_name/g" {} +
+find ./src/plugin-slug.php -exec sed -i '' "s/plugin_title/$plugin_name/g" {} +
 find . -depth -name '*plugin-slug*' -execdir bash -c 'git mv "$1" "${1//plugin-slug/'$plugin_slug'}"' bash {} \;
-find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name ".gitignore" \) -exec sed -i '' 's/plugin-slug/'$plugin_slug'/' {} +
-find . -depth -name '*.php'  -exec sed -i '' 's/plugin_snake/'$plugin_snake'/g' {} +
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name '*.testing'  -o -name '*.yml' -o -name '.gitignore' \) -exec sed -i '' 's/plugin-slug/'$plugin_slug'/g' {} +
+find . -depth \( -name '*.php' -o -name '*.testing' \) -exec sed -i '' 's/plugin_snake/'$plugin_snake'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Package_Name/'$plugin_package_name'/g' {} \;
-find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'/' {} +
-find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/Your Name/$your_name/" {} +
-find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/email@example.com/$your_email/" {} +
+find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'/g' {} +
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/Your Name/$your_name/g" {} +
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/email@example.com/$your_email/g" {} +
+
+mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$plugin_db_username"'@'%' IDENTIFIED WITH mysql_native_password BY '"$plugin_db_password"';"
+mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_site_db_name"; USE "$test_site_db_name"; GRANT ALL PRIVILEGES ON "$test_site_db_name".* TO '"$plugin_db_username"'@'%';"
+mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_db_name"; USE "$test_db_name"; GRANT ALL PRIVILEGES ON "$test_db_name".* TO '"$plugin_db_username"'@'%';"
+mysql -u $mysql_username -p$mysql_password -e "USE "$test_site_db_name"; GRANT ALL PRIVILEGES ON "$test_site_db_name".* TO '"$plugin_db_username"'@'%';"
+mysql -u $mysql_username -p$mysql_password -e "USE "$test_db_name"; GRANT ALL PRIVILEGES ON "$test_db_name".* TO '"$plugin_db_username"'@'%';"
+
 composer install
-```
 
-The [wordpress-develop](https://github.com/wordpress/wordpress-develop) tests are configured to require a local [MySQL database](https://dev.mysql.com/downloads/mysql/) (which gets wiped each time) and this plugin is set to require a database called `wordpress_tests` and a user named `wordpress-develop` with the password `wordpress-develop`. 
+cd vendor/wordpress/wordpress/; npm install; npm run build; cd ../../..
 
-To setup the database, open MySQL shell:
+wp config create --dbname=$test_site_db_name --dbuser=$plugin_db_username --dbpass=$plugin_db_password --path=vendor/wordpress/wordpress/build
+wp core install --url="localhost/$plugin_slug" --title="$plugin_name" --admin_user=admin --admin_password=password --admin_email=$your_email --path=vendor/wordpress/wordpress/build
 
-```
-mysql -u root -p
-```
-
-Create the database and user, granting the user full permissions:
-
-```
-CREATE DATABASE wordpress_tests;
-CREATE USER 'wordpress-develop'@'%' IDENTIFIED WITH mysql_native_password BY 'wordpress-develop';
-GRANT ALL PRIVILEGES ON wordpress_tests.* TO 'wordpress-develop'@'%';
-```
-
-```
-quit
+mysqldump -u $mysql_username -p$mysql_password $test_site_db_name > tests/_data/dump.sql
 ```
 
 Run the tests to confirm it's working:
 
 ```
-vendor/bin/phpcbf; 
-vendor/bin/phpcs; 
-vendor/bin/phpunit -c tests/wordpress-develop/phpunit.xml --coverage-php tests/reports/wordpress-develop.cov --coverage-text; 
-vendor/bin/phpunit -c tests/wp-mock/phpunit.xml --coverage-php tests/reports/wp-mock.cov --coverage-text; 
-vendor/bin/phpcov merge --clover tests/reports/clover.xml --html tests/reports/html tests/reports --text
+vendor/bin/codecept run acceptance
 ```
 
 ## Usage
@@ -103,39 +103,15 @@ vendor/bin/phpcbf
 
 To configure WPCS checking on GitHub PRs, [generate a Personal Access Token](https://github.com/settings/tokens) with the `public_repo` permission, and under your GitHub repository's Settings's Secrets add it as `GH_BOT_TOKEN`.
 
-### PHPUnit
-
-[WP_Mock](https://github.com/10up/wp_mock) tests can be run with:
+### Testing
 
 ```
-phpunit -c tests/wp-mock/phpunit.xml
-```
-
-The wordpress-develop tests can be run with:
-
-```
-phpunit -c tests/wordpress-develop/phpunit.xml
-```
-
-### Code Coverage
-
-Code coverage reporting requires [Xdebug](https://xdebug.org/) installed.
-
-Adding `--coverage-text` to `phpunit` commands displays their individual coverage in the console. 
-
-Adding `--coverage-php tests/reports/wordpress-develop.cov` to each allows their coverage stats to be merged using:
+vendor/bin/codecept run acceptance
+vendor/bin/codecept run unit
+vendor/bin/codecept run wpunit
 
 ```
-vendor/bin/phpcov merge --clover tests/reports/clover.xml --html tests/reports/html tests/reports
-```
 
-### Minimum PHP Version
-
-Use [PHPCompatibilityWP](https://github.com/PHPCompatibility/PHPCompatibilityWP) to check the minimum PHP version required with: 
-
-```
-./vendor/bin/phpcs -p ./trunk --standard=PHPCompatibilityWP --runtime-set testVersion 5.7-
-```
 
 ### Deployment
 

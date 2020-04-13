@@ -13,16 +13,19 @@ use Plugin_Package_Name\includes\Plugin_Package_Name;
 /**
  * Class Plugin_WP_Mock_Test
  */
-class Plugin_WP_Mock_Test extends \WP_Mock\Tools\TestCase {
+class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
+
+	protected function _before() {
+		\WP_Mock::bootstrap();
+		\WP_Mock::setUp();
+	}
 
 	/**
 	 * Verifies the plugin initialization.
-	 *
-	 * @runInSeparateProcess
 	 */
 	public function test_plugin_include() {
 
-		global $plugin_root_dir;
+		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
 
 		\WP_Mock::userFunction(
 			'plugin_dir_path',
@@ -51,12 +54,10 @@ class Plugin_WP_Mock_Test extends \WP_Mock\Tools\TestCase {
 
 	/**
 	 * Verifies the plugin does not output anything to screen.
-	 *
-	 * @runInSeparateProcess
 	 */
 	public function test_plugin_include_no_output() {
 
-		global $plugin_root_dir;
+		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
 
 		\WP_Mock::userFunction(
 			'plugin_dir_path',

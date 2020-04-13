@@ -11,7 +11,7 @@ namespace Plugin_Package_Name\includes;
 /**
  * Class Develop_Test
  */
-class Plugin_Package_Name_Develop_Test extends \WP_UnitTestCase {
+class Plugin_Package_Name_Develop_Test extends \Codeception\TestCase\WPTestCase {
 
 	/**
 	 * Verify admin_enqueue_scripts action is correctly added for styles, at priority 10.
