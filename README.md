@@ -6,6 +6,18 @@ The popular [WordPress Plugin Boilerplate](https://github.com/DevinVinson/WordPr
 
 The WordPress Plugin Boilerplate is a well-documented starting point for WordPress plugins which encourages consistent conventions in plugin development. This fork expands on that base using modern PHP practices and providing a more comprehensive development environment setup. An example plugin where the changes have been tested is [Autologin URLs](https://github.com/BrianHenryIE/BH-WP-Autologin-URLs).
 
+### Environment
+
+This was written for a local environment with:
+
+* MacOS Catalina
+* Built-in Apache serving to localhost:80 from your projects directory (probably ~/Sites/)
+* PHP 7.4 [setup guide](https://getgrav.org/blog/macos-catalina-apache-multiple-php-versions)
+* Xdebug
+* MySQL 8
+* WP CLI
+* NPM
+
 ## Installation
 
 Open Terminal and set the variables:
