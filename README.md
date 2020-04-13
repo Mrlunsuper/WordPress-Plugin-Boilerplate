@@ -40,7 +40,7 @@ plugin_package_name=$(echo $plugin_name | sed 's/ /_/g'); echo $plugin_package_n
 plugin_capitalized=$(echo $plugin_name | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g'); echo $plugin_capitalized; # EXAMPLE_PLUGIN
 test_site_db_name=$plugin_snake"_tests" # example_plugin_tests
 test_db_name=$plugin_snake"_integration" # example_plugin_integration
-plugin_db_username=$plugin_slug # 32 character max for username 
+plugin_db_username=${plugin_slug:0:31} # 32 character max for username 
 plugin_db_password=$plugin_slug
 ```
 
@@ -56,7 +56,7 @@ cd $plugin_slug
 find ./src/readme.txt -exec sed -i '' "s/plugin_title/$plugin_name/g" {} +
 find ./src/plugin-slug.php -exec sed -i '' "s/plugin_title/$plugin_name/g" {} +
 find . -depth -name '*plugin-slug*' -execdir bash -c 'git mv "$1" "${1//plugin-slug/'$plugin_slug'}"' bash {} \;
-find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name '*.testing'  -o -name '*.yml' -o -name '.gitignore' \) -exec sed -i '' 's/plugin-slug/'$plugin_slug'/g' {} +
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name '.env.testing'  -o -name '*.yml' -o -name '.gitignore' -o -name '.htaccess' \) -exec sed -i '' 's/plugin-slug/'$plugin_slug'/g' {} +
 find . -depth \( -name '*.php' -o -name '*.testing' \) -exec sed -i '' 's/plugin_snake/'$plugin_snake'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Package_Name/'$plugin_package_name'/g' {} \;
 find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'/g' {} +
@@ -66,8 +66,6 @@ find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed 
 mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$plugin_db_username"'@'%' IDENTIFIED WITH mysql_native_password BY '"$plugin_db_password"';"
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_site_db_name"; USE "$test_site_db_name"; GRANT ALL PRIVILEGES ON "$test_site_db_name".* TO '"$plugin_db_username"'@'%';"
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_db_name"; USE "$test_db_name"; GRANT ALL PRIVILEGES ON "$test_db_name".* TO '"$plugin_db_username"'@'%';"
-mysql -u $mysql_username -p$mysql_password -e "USE "$test_site_db_name"; GRANT ALL PRIVILEGES ON "$test_site_db_name".* TO '"$plugin_db_username"'@'%';"
-mysql -u $mysql_username -p$mysql_password -e "USE "$test_db_name"; GRANT ALL PRIVILEGES ON "$test_db_name".* TO '"$plugin_db_username"'@'%';"
 
 composer install
 

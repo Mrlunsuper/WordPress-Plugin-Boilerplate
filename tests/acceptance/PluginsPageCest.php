@@ -17,7 +17,7 @@ class PluginsPageCest
 
     	$I->amOnPluginsPage();
 
-    	$I->canSee('Plugin Name' );
+    	$I->canSee('plugin_title' );
     }
 
 }

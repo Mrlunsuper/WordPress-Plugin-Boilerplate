@@ -1,6 +1,6 @@
 {
     "name": "your-domain/plugin-slug",
-    "description": "This is a short description of what the plugin does.",
+    "description": "This is a short description of what plugin_title does.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+-or-later",
     "authors": [
