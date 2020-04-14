@@ -29,7 +29,7 @@
     },
     "require-dev": {
         "cweagans/composer-patches": "~1.0",
-        "coenjacobs/mozart": "^0.4.0",
+        "coenjacobs/mozart": "0.5.1",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "wp-coding-standards/wpcs": "*",
         "wordpress/wordpress": "^5.0",
