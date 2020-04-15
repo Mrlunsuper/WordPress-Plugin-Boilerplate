@@ -10,12 +10,11 @@ The WordPress Plugin Boilerplate is a well-documented starting point for WordPre
 
 This was written for a local environment with:
 
-* MacOS Catalina
+* MacOS Catalina (Bash)
 * Built-in Apache serving to localhost:80 from your projects directory (probably ~/Sites/)
 * PHP 7.4 [setup guide](https://getgrav.org/blog/macos-catalina-apache-multiple-php-versions)
 * Xdebug
-* MySQL 8
-* WP CLI
+* MySQL 8 – `export PATH="$PATH:/usr/local/mysql/bin"`
 * NPM
 
 ## Installation
@@ -71,8 +70,8 @@ composer install
 
 cd vendor/wordpress/wordpress/; npm install; npm run build; cd ../../..
 
-wp config create --dbname=$test_site_db_name --dbuser=$plugin_db_username --dbpass=$plugin_db_password --path=vendor/wordpress/wordpress/build
-wp core install --url="localhost/$plugin_slug" --title="$plugin_name" --admin_user=admin --admin_password=password --admin_email=$your_email --path=vendor/wordpress/wordpress/build
+vendor/bin/wp config create --dbname=$test_site_db_name --dbuser=$plugin_db_username --dbpass=$plugin_db_password --path=vendor/wordpress/wordpress/build
+vendor/bin/wp core install --url="localhost/$plugin_slug" --title="$plugin_name" --admin_user=admin --admin_password=password --admin_email=$your_email --path=vendor/wordpress/wordpress/build
 
 mysqldump -u $mysql_username -p$mysql_password $test_site_db_name > tests/_data/dump.sql
 ```
