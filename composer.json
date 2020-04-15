@@ -21,6 +21,10 @@
         {
             "url": "https://github.com/BrianHenryIE/composer-phpstorm",
             "type": "git"
+        },
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
         }
     ],
     "require": {
@@ -28,6 +32,7 @@
         "pablo-sg-pacheco/wp-namespace-autoloader": "dev-master"
     },
     "require-dev": {
+        "wpackagist-theme/twentytwenty":"*",
         "cweagans/composer-patches": "~1.0",
         "coenjacobs/mozart": "0.5.1",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
@@ -67,7 +72,8 @@
             "delete_vendor_directories": false
         },
         "symlinks": {
-            "wp-content/plugins": "vendor/wordpress/wordpress/build/wp-content/plugins",
+            "wp-content": "vendor/wordpress/wordpress/build/wp-content",
+            "wp-content/plugins": "vendor/wordpress/wordpress/src/wp-content/plugins",
             "src": "wp-content/plugins/plugin-slug",
             "vendor/wordpress/wordpress/src": "wordpress"
         },
