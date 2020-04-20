@@ -52,9 +52,12 @@ cd $plugin_slug
 
 # Branches can be merged here.
 
-find ./src/readme.txt -exec sed -i '' "s/plugin_title/$plugin_name/g" {} +
-find ./src/plugin-slug.php -exec sed -i '' "s/plugin_title/$plugin_name/g" {} +
+
 find . -depth -name '*plugin-slug*' -execdir bash -c 'git mv "$1" "${1//plugin-slug/'$plugin_slug'}"' bash {} \;
+
+# This should work... yet to be tested.
+find . -depth \( -name '*.php' -o -name '*.txt' \) -exec sed -i '' "s/plugin_title/$plugin_name/g" {} +
+
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name '.env.testing'  -o -name '*.yml' -o -name '.gitignore' -o -name '.htaccess' \) -exec sed -i '' 's/plugin-slug/'$plugin_slug'/g' {} +
 find . -depth \( -name '*.php' -o -name '*.testing' \) -exec sed -i '' 's/plugin_snake/'$plugin_snake'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Package_Name/'$plugin_package_name'/g' {} \;
