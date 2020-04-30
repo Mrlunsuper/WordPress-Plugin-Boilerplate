@@ -76,6 +76,10 @@ cd vendor/wordpress/wordpress/; npm install; npm run build; cd ../../..
 vendor/bin/wp config create --dbname=$test_site_db_name --dbuser=$plugin_db_username --dbpass=$plugin_db_password --path=vendor/wordpress/wordpress/build
 vendor/bin/wp core install --url="localhost/$plugin_slug" --title="$plugin_name" --admin_user=admin --admin_password=password --admin_email=$your_email --path=vendor/wordpress/wordpress/build
 
+vendor/bin/wp plugin activate $plugin_snake --path=vendor/wordpress/wordpress/build --path=vendor/wordpress/wordpress/build
+
+vendor/bin/wp user create bob bob@example.com --path=vendor/wordpress/wordpress/build
+
 mysqldump -u $mysql_username -p$mysql_password $test_site_db_name > tests/_data/dump.sql
 ```
 
@@ -83,6 +87,32 @@ Run the tests to confirm it's working:
 
 ```
 vendor/bin/codecept run acceptance
+```
+
+If this is a WooCommerce plugin:
+
+```
+composer require woocommerce/woocommerce --dev
+composer require wpackagist-theme/storefront:* --dev
+
+composer update
+
+vendor/bin/wp plugin activate woocommerce --path=vendor/wordpress/wordpress/build
+vendor/bin/wp theme activate storefront --path=vendor/wordpress/wordpress/build
+
+vendor/bin/wp wc tool run install_pages --user=admin --path=vendor/wordpress/wordpress/build
+
+vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin --path=vendor/wordpress/wordpress/build
+
+vendor/bin/wp wc custome create: https://github.com/woocommerce/woocommerce/wiki/WC-CLI-Overview#examples
+
+# Create dump after changing site.
+mysqldump -u $mysql_username -p$mysql_password $test_site_db_name > tests/_data/dump.sql
+```
+
+```
+# Import a dump (after messing up!)
+mysql -u $mysql_username -p$mysql_password $test_site_db_name < tests/_data/dump.sql
 ```
 
 ## Usage
