@@ -16,7 +16,6 @@ use Plugin_Package_Name\includes\Plugin_Package_Name;
 class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 
 	protected function _before() {
-		\WP_Mock::bootstrap();
 		\WP_Mock::setUp();
 	}
 
