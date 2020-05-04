@@ -9,6 +9,8 @@
             "email": "email@example.com"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "repositories": [
         {
             "url": "https://github.com/WordPress/wordpress-develop",

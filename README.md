@@ -66,18 +66,22 @@ find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed 
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/email@example.com/$your_email/g" {} +
 find . -type f \( -name '.env.testing' \) -exec sed -i '' 's/plugin-db-username/'$plugin_db_username'/g' {} +
 
+# export PATH=${PATH}:/usr/local/mysql/bin
+
 mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$plugin_db_username"'@'%' IDENTIFIED WITH mysql_native_password BY '"$plugin_db_password"';"
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_site_db_name"; USE "$test_site_db_name"; GRANT ALL PRIVILEGES ON "$test_site_db_name".* TO '"$plugin_db_username"'@'%';"
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_db_name"; USE "$test_db_name"; GRANT ALL PRIVILEGES ON "$test_db_name".* TO '"$plugin_db_username"'@'%';"
 
-composer install
+open -a PhpStorm ./
+
+composer update
 
 cd vendor/wordpress/wordpress/; npm install; npm run build; cd ../../..
 
 vendor/bin/wp config create --dbname=$test_site_db_name --dbuser=$plugin_db_username --dbpass=$plugin_db_password --path=vendor/wordpress/wordpress/build
 vendor/bin/wp core install --url="localhost/$plugin_slug" --title="$plugin_name" --admin_user=admin --admin_password=password --admin_email=$your_email --path=vendor/wordpress/wordpress/build
 
-vendor/bin/wp plugin activate $plugin_snake --path=vendor/wordpress/wordpress/build --path=vendor/wordpress/wordpress/build
+vendor/bin/wp plugin activate $plugin_slug --path=vendor/wordpress/wordpress/build 
 
 vendor/bin/wp user create bob bob@example.com --path=vendor/wordpress/wordpress/build
 
@@ -93,6 +97,8 @@ vendor/bin/codecept run acceptance
 If this is a WooCommerce plugin:
 
 ```
+# seems there'll be a requirements version clash with twenty-tewenty theme, so maybe remove that first, otherwise manually editing composer.json and updating works fine.
+
 composer require woocommerce/woocommerce --dev
 composer require wpackagist-theme/storefront:* --dev
 
