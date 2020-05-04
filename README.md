@@ -64,6 +64,7 @@ find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.x
 find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/Your Name/$your_name/g" {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/email@example.com/$your_email/g" {} +
+find . -type f \( -name '.env.testing' \) -exec sed -i '' 's/plugin-db-username/'$plugin_db_username'/g' {} +
 
 mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$plugin_db_username"'@'%' IDENTIFIED WITH mysql_native_password BY '"$plugin_db_password"';"
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_site_db_name"; USE "$test_site_db_name"; GRANT ALL PRIVILEGES ON "$test_site_db_name".* TO '"$plugin_db_username"'@'%';"
