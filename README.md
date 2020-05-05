@@ -51,7 +51,7 @@ mv WordPress-Plugin-Boilerplate $plugin_slug
 cd $plugin_slug
 
 # Branches can be merged here.
-
+git merge origin/codeception-wp-browser
 
 find . -depth -name '*plugin-slug*' -execdir bash -c 'git mv "$1" "${1//plugin-slug/'$plugin_slug'}"' bash {} \;
 
