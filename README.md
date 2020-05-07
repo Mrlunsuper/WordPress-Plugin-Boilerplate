@@ -43,7 +43,7 @@ plugin_db_username=${plugin_slug:0:31} # 32 character max for username
 plugin_db_password=$plugin_slug
 ```
 
-Then this block of commands will take care of most of the downloading and renaming.
+Then this block of commands will take care of most of the downloading:
 
 ```
 git clone https://github.com/BrianHenryIE/WordPress-Plugin-Boilerplate.git
@@ -52,10 +52,13 @@ cd $plugin_slug
 
 # Branches can be merged here.
 git merge origin/codeception-wp-browser
+```
 
+This the renaming:
+
+```
 find . -depth -name '*plugin-slug*' -execdir bash -c 'git mv "$1" "${1//plugin-slug/'$plugin_slug'}"' bash {} \;
 
-# This should work... yet to be tested.
 find . -depth \( -name '*.php' -o -name '*.txt' \) -exec sed -i '' "s/plugin_title/$plugin_name/g" {} +
 
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name '.env.testing'  -o -name '*.yml' -o -name '.gitignore' -o -name '.htaccess' \) -exec sed -i '' 's/plugin-slug/'$plugin_slug'/g' {} +
@@ -65,18 +68,27 @@ find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/Your Name/$your_name/g" {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/email@example.com/$your_email/g" {} +
 find . -type f \( -name '.env.testing' \) -exec sed -i '' 's/plugin-db-username/'$plugin_db_username'/g' {} +
+```
 
+This creates two databases:
+
+```
 # export PATH=${PATH}:/usr/local/mysql/bin
 
 mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$plugin_db_username"'@'%' IDENTIFIED WITH mysql_native_password BY '"$plugin_db_password"';"
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_site_db_name"; USE "$test_site_db_name"; GRANT ALL PRIVILEGES ON "$test_site_db_name".* TO '"$plugin_db_username"'@'%';"
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_db_name"; USE "$test_db_name"; GRANT ALL PRIVILEGES ON "$test_db_name".* TO '"$plugin_db_username"'@'%';"
+```
 
-open -a PhpStorm ./
+Install everything + setup WordPress
 
+```
 composer update
 
+# Remove a symlink defined in composer.json which causes npm build to fail
+rm vendor/wordpress/wordpress/build/wp-content
 cd vendor/wordpress/wordpress/; npm install; npm run build; cd ../../..
+composer install
 
 vendor/bin/wp config create --dbname=$test_site_db_name --dbuser=$plugin_db_username --dbpass=$plugin_db_password --path=vendor/wordpress/wordpress/build
 vendor/bin/wp core install --url="localhost/$plugin_slug" --title="$plugin_name" --admin_user=admin --admin_password=password --admin_email=$your_email --path=vendor/wordpress/wordpress/build
@@ -86,6 +98,13 @@ vendor/bin/wp plugin activate $plugin_slug --path=vendor/wordpress/wordpress/bui
 vendor/bin/wp user create bob bob@example.com --path=vendor/wordpress/wordpress/build
 
 mysqldump -u $mysql_username -p$mysql_password $test_site_db_name > tests/_data/dump.sql
+
+```
+
+```
+# create the symlink again + PhpStorm config
+open -a PhpStorm ./
+composer install
 ```
 
 Run the tests to confirm it's working:
