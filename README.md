@@ -97,11 +97,8 @@ vendor/bin/codecept run acceptance
 If this is a WooCommerce plugin:
 
 ```
-# seems there'll be a requirements version clash with twenty-tewenty theme, so maybe remove that first, otherwise manually editing composer.json and updating works fine.
-
-composer require woocommerce/woocommerce --dev
-composer require wpackagist-theme/storefront:* --dev
-
+composer require woocommerce/woocommerce --dev --no-update
+composer require wpackagist-theme/storefront:* --dev --no-update
 composer update
 
 vendor/bin/wp plugin activate woocommerce --path=vendor/wordpress/wordpress/build
@@ -111,7 +108,7 @@ vendor/bin/wp wc tool run install_pages --user=admin --path=vendor/wordpress/wor
 
 vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin --path=vendor/wordpress/wordpress/build
 
-vendor/bin/wp wc custome create: https://github.com/woocommerce/woocommerce/wiki/WC-CLI-Overview#examples
+# vendor/bin/wp wc customer create: https://github.com/woocommerce/woocommerce/wiki/WC-CLI-Overview#examples
 
 # Create dump after changing site.
 mysqldump -u $mysql_username -p$mysql_password $test_site_db_name > tests/_data/dump.sql
