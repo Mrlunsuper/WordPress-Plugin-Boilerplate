@@ -76,6 +76,7 @@
         },
         "symlinks": {
             "wp-content": "vendor/wordpress/wordpress/build/wp-content",
+            "wp-content/plugins": "vendor/wordpress/wordpress/src/wp-content/plugins",
             "src": "wp-content/plugins/plugin-slug",
             "vendor/wordpress/wordpress/src": "wordpress"
         },
@@ -84,7 +85,8 @@
                 "folders": [
                     "vendor/wordpress/wordpress/src",
                     "vendor/wordpress/wordpress/build",
-                    "wp-content/plugins/plugin-slug"
+                    "wp-content/plugins/plugin-slug",
+                    "wordpress/wp-content/plugins"
                 ],
                 "include_folders": [
                     "vendor/wordpress/wordpress/"

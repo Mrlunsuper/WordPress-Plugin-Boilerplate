@@ -30,7 +30,7 @@ mysql_username="root"
 mysql_password="secret"
 ```
 
-Run these commands to generate other replacements:
+Run these commands to generate replacements:
 
 ```
 plugin_slug=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g'); echo $plugin_slug; # example-plugin
