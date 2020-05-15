@@ -75,9 +75,12 @@ This creates two databases:
 ```
 # export PATH=${PATH}:/usr/local/mysql/bin
 
-mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$plugin_db_username"'@'%' IDENTIFIED WITH mysql_native_password BY '"$plugin_db_password"';"
-mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_site_db_name"; USE "$test_site_db_name"; GRANT ALL PRIVILEGES ON "$test_site_db_name".* TO '"$plugin_db_username"'@'%';"
-mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$test_db_name"; USE "$test_db_name"; GRANT ALL PRIVILEGES ON "$test_db_name".* TO '"$plugin_db_username"'@'%';"
+# Make .env available to bash
+export $(grep -v '^#' .env.testing | xargs)
+
+mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED WITH mysql_native_password BY '"$TEST_DB_PASSWORD"';"
+mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_SITE_DB_NAME"; USE "$TEST_SITE_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_SITE_DB_NAME".* TO '"$TEST_DB_USER"'@'%';"
+mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_DB_NAME"; USE "$TEST_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_DB_NAME".* TO '"$TEST_DB_USER"'@'%';"
 ```
 
 Install everything + setup WordPress
@@ -90,10 +93,13 @@ rm vendor/wordpress/wordpress/build/wp-content
 cd vendor/wordpress/wordpress/; npm install; npm run build; cd ../../..
 composer install
 
-vendor/bin/wp config create --dbname=$test_site_db_name --dbuser=$plugin_db_username --dbpass=$plugin_db_password --path=vendor/wordpress/wordpress/build
-vendor/bin/wp core install --url="localhost/$plugin_slug" --title="$plugin_name" --admin_user=admin --admin_password=password --admin_email=$your_email --path=vendor/wordpress/wordpress/build
+# Make .env available to bash
+export $(grep -v '^#' .env.testing | xargs)
 
-vendor/bin/wp plugin activate $plugin_slug --path=vendor/wordpress/wordpress/build 
+vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=vendor/wordpress/wordpress/build
+vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org --path=vendor/wordpress/wordpress/build
+
+vendor/bin/wp plugin activate $PLUGIN_SLUG --path=vendor/wordpress/wordpress/build 
 
 vendor/bin/wp user create bob bob@example.com --path=vendor/wordpress/wordpress/build
 
@@ -208,6 +214,8 @@ By convention, WordPress plugins and themes installed by composer get installed 
   }
  }
 ```
+
+https://github.com/cweagans/composer-patches/issues/286
 
 ### WordPress Packagist
 
