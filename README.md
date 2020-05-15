@@ -136,7 +136,7 @@ vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user
 # vendor/bin/wp wc customer create: https://github.com/woocommerce/woocommerce/wiki/WC-CLI-Overview#examples
 
 # Create dump after changing site.
-mysqldump -u $mysql_username -p$mysql_password $test_site_db_name > tests/_data/dump.sql
+mysqldump -u $mysql_username -p$mysql_password $TEST_SITE_DB_NAME > tests/_data/dump.sql
 ```
 
 ```
