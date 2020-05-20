@@ -2,7 +2,7 @@
 /**
  * Loads all required classes
  *
- * Uses PSR4 & wp-namespace-autoloader.
+ * Uses classmap, PSR4 & wp-namespace-autoloader.
  *
  * @link              http://example.com
  * @since             1.0.0
@@ -15,6 +15,23 @@ namespace Plugin_Package_Name;
 
 use Plugin_Package_Name\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
 
+
+$class_map_file = __DIR__ . '/autoload_classmap.php';
+if ( file_exists( $class_map_file ) ) {
+
+	$class_map = include $class_map_file;
+
+	if ( is_array( $class_map ) ) {
+		spl_autoload_register(
+			function ( $classname ) use ( $class_map ) {
+
+				if ( array_key_exists( $classname, $class_map ) && file_exists( $class_map[ $classname ] ) ) {
+					require_once $class_map[ $classname ];
+				}
+			}
+		);
+	}
+}
 
 // The plugin-scoped namespace for composer required libraries, as specified in composer.json Mozart config.
 $dep_namespace = 'Plugin_Package_Name';
