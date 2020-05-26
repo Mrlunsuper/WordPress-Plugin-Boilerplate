@@ -39,7 +39,7 @@
     "require-dev": {
         "wpackagist-theme/twentytwenty":"*",
         "cweagans/composer-patches": "~1.0",
-        "coenjacobs/mozart": "0.5.1",
+        "coenjacobs/mozart": "0.6.0-beta-2",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "wp-coding-standards/wpcs": "*",
         "wordpress/wordpress": "^5.4",
@@ -60,16 +60,6 @@
         "codeception/util-universalframework": "^1.0"
     },
     "extra": {
-        "patches": {
-            "coenjacobs/mozart": {
-                "Allow default packages": "https://github.com/coenjacobs/mozart/pull/34.patch",
-                "Add config option to disable deleting vendor directories": "https://github.com/coenjacobs/mozart/pull/38.patch",
-                "Classmap replacing change str_replace to regex": "https://github.com/coenjacobs/mozart/pull/39.patch",
-                "Fixed escaping of backslash": "https://github.com/coenjacobs/mozart/pull/40.patch",
-                "Override Autoload": "https://github.com/coenjacobs/mozart/pull/41.patch",
-                "Run wide update for classmap": "https://github.com/coenjacobs/mozart/pull/42.patch"
-            }
-        },
         "mozart": {
             "dep_namespace": "Plugin_Package_Name\\",
             "dep_directory": "/src/vendor/",
