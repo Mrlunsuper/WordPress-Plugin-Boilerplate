@@ -11,6 +11,9 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "config": {
+        "process-timeout": 0
+    },
     "repositories": [
         {
             "url": "https://github.com/WordPress/wordpress-develop",
@@ -98,6 +101,8 @@
     "scripts": {
         "post-install-cmd": [
             "\"vendor/bin/mozart\" compose",
+            "rm vendor/wordpress/wordpress/build/wp-content || true",
+            "cd vendor/wordpress/wordpress; npm install; npm run build; cd ../../..",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "mkdir -p wordpress/wp-content/uploads",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
@@ -105,6 +110,8 @@
         ],
         "post-update-cmd": [
             "\"vendor/bin/mozart\" compose",
+            "rm vendor/wordpress/wordpress/build/wp-content || true",
+            "cd vendor/wordpress/wordpress; npm install; npm run build; cd ../../..",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "mkdir -p wordpress/wp-content/uploads",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
