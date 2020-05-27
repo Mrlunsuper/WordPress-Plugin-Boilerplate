@@ -88,11 +88,6 @@ Install everything + setup WordPress
 ```
 composer update
 
-# Remove a symlink defined in composer.json which causes npm build to fail
-rm vendor/wordpress/wordpress/build/wp-content
-cd vendor/wordpress/wordpress/; npm install; npm run build; cd ../../..
-composer install
-
 # Make .env available to bash
 export $(grep -v '^#' .env.testing | xargs)
 
