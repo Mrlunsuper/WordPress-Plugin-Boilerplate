@@ -96,10 +96,9 @@ vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME"
 
 vendor/bin/wp plugin activate $PLUGIN_SLUG --path=vendor/wordpress/wordpress/build 
 
-vendor/bin/wp user create bob bob@example.com --path=vendor/wordpress/wordpress/build
+vendor/bin/wp user create bob bob@example.org --path=vendor/wordpress/wordpress/build
 
-mysqldump -u $mysql_username -p$mysql_password $test_site_db_name > tests/_data/dump.sql
-
+mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql
 ```
 
 ```
@@ -131,12 +130,23 @@ vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user
 # vendor/bin/wp wc customer create: https://github.com/woocommerce/woocommerce/wiki/WC-CLI-Overview#examples
 
 # Create dump after changing site.
-mysqldump -u $mysql_username -p$mysql_password $TEST_SITE_DB_NAME > tests/_data/dump.sql
+export $(grep -v '^#' .env.testing | xargs);
+mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
 
 ```
 # Import a dump (after messing up!)
+export $(grep -v '^#' .env.testing | xargs);
 mysql -u $mysql_username -p$mysql_password $test_site_db_name < tests/_data/dump.sql
+```
+
+```
+rm -rf .git
+rm README.md
+mv README-rename.md README.md
+git init
+git checkout -b dev
+git commit -am "Initial commit"
 ```
 
 ## Usage
