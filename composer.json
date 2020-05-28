@@ -60,6 +60,11 @@
         "codeception/util-universalframework": "^1.0"
     },
     "extra": {
+        "patches": {
+            "coenjacobs/mozart": {
+                "Allow default packages": "https://github.com/coenjacobs/mozart/pull/49.patch"
+            }
+        },
         "mozart": {
             "dep_namespace": "Plugin_Package_Name\\",
             "dep_directory": "/src/vendor/",
