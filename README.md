@@ -52,6 +52,8 @@ cd $plugin_slug
 
 # Branches can be merged here.
 git merge origin/codeception-wp-browser
+
+open -a PhpStorm ./
 ```
 
 This the renaming:
@@ -89,43 +91,42 @@ Install everything + setup WordPress
 composer update
 
 # Make .env available to bash
-export $(grep -v '^#' .env.testing | xargs)
+export $(grep -v '^#' .env.testing | xargs);
 
-vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=vendor/wordpress/wordpress/build
-vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org --path=vendor/wordpress/wordpress/build
+# vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=vendor/wordpress/wordpress/build
+vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org --path=vendor/wordpress/wordpress/build;
 
-vendor/bin/wp plugin activate $PLUGIN_SLUG --path=vendor/wordpress/wordpress/build 
+vendor/bin/wp plugin activate $PLUGIN_SLUG --path=vendor/wordpress/wordpress/build;
 
-vendor/bin/wp user create bob bob@example.org --path=vendor/wordpress/wordpress/build
+vendor/bin/wp user create bob bob@example.org --path=vendor/wordpress/wordpress/build;
 
-mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql
+mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
 
-```
-# create the symlink again + PhpStorm config
-open -a PhpStorm ./
-composer install
-```
 
 Run the tests to confirm it's working:
 
 ```
-vendor/bin/codecept run acceptance
+vendor/bin/codecept run acceptance;
 ```
 
 If this is a WooCommerce plugin:
 
 ```
-composer require woocommerce/woocommerce --dev --no-update
-composer require wpackagist-theme/storefront:* --dev --no-update
-composer update
 
-vendor/bin/wp plugin activate woocommerce --path=vendor/wordpress/wordpress/build
-vendor/bin/wp theme activate storefront --path=vendor/wordpress/wordpress/build
+composer require wpackagist-theme/woocommerce --dev --no-update;
+# or
+# composer require woocommerce/woocommerce --dev --no-update;
 
-vendor/bin/wp wc tool run install_pages --user=admin --path=vendor/wordpress/wordpress/build
+composer require wpackagist-theme/storefront:* --dev --no-update;
+composer update;
 
-vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin --path=vendor/wordpress/wordpress/build
+vendor/bin/wp plugin activate woocommerce --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp theme activate storefront --path=vendor/wordpress/wordpress/build;
+
+vendor/bin/wp wc tool run install_pages --user=admin --path=vendor/wordpress/wordpress/build;
+
+vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin --path=vendor/wordpress/wordpress/build;
 
 # vendor/bin/wp wc customer create: https://github.com/woocommerce/woocommerce/wiki/WC-CLI-Overview#examples
 
@@ -146,6 +147,7 @@ rm README.md
 mv README-rename.md README.md
 git init
 git checkout -b dev
+git add .
 git commit -am "Initial commit"
 ```
 
