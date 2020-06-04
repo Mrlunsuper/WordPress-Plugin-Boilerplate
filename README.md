@@ -1,10 +1,27 @@
 # WordPress Plugin Boilerplate – BrianHenryIE Fork
 
-The popular [WordPress Plugin Boilerplate](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate/) with added Composer, namespaces, autoloading, PHP Unit, and WordPress.org deployment.
+The popular [WordPress Plugin Boilerplate](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate/) with added Composer, namespaces, autoloading, Codeception testing, and GitHub Actions WordPress.org deployment.
 
 ## Overview
 
-The WordPress Plugin Boilerplate is a well-documented starting point for WordPress plugins which encourages consistent conventions in plugin development. This fork expands on that base using modern PHP practices and providing a more comprehensive development environment setup. An example plugin where the changes have been tested is [Autologin URLs](https://github.com/BrianHenryIE/BH-WP-Autologin-URLs).
+The WordPress Plugin Boilerplate is a well-documented starting point for WordPress plugins which encourages consistent conventions in plugin development. This fork adds:
+
+* PHP namespacing
+* PHP autoloading
+* Acceptance, integration & unit tests
+* WordPress Coding Standards (PHPCBF/PHPCS)
+* Composer namespace prefixing
+* Local copy of WordPress in development environment
+* Symlinks to make a sensible directory layout
+* Configuration of PhpStorm
+* Base README.md with Contributing section for new repos
+* GitHub Actions for WordPress.org deployment
+
+The documentation is typically a little behind the code, but what's going on should be understandable to most developers.
+
+The ultimate goal would be to have all WordPress plugins understandable by convention, unit tested, and in a repo thay can be contributed to.
+
+For now, this is just the best way to start a new plugin. Even if the plugin is just a single filter, test it. Maybe add an admin notice if the plugin it relies on is absent. Use the conventional structure so someone else can add a settings page. Use GitHub actions to lint the code and run tests before easily releasing to WordPress.org.
 
 ### Environment
 
@@ -14,10 +31,17 @@ This was written for a local environment with:
 * Built-in Apache serving to localhost:80 from your projects directory (probably ~/Sites/)
 * PHP 7.4 [setup guide](https://getgrav.org/blog/macos-catalina-apache-multiple-php-versions)
 * Xdebug
-* MySQL 8 – `export PATH="$PATH:/usr/local/mysql/bin"`
+* MySQL 8
 * NPM
 
-## Installation
+There are some differences between `sed` on MacOS and Linux. See [PR6](https://github.com/BrianHenryIE/WordPress-Plugin-Boilerplate/pull/6/files). 
+
+### Result
+
+
+
+
+## Setup a New Plugin
 
 Open Terminal and set the variables and your local MySQL credentials:
 
@@ -60,9 +84,7 @@ This the renaming:
 
 ```
 find . -depth -name '*plugin-slug*' -execdir bash -c 'git mv "$1" "${1//plugin-slug/'$plugin_slug'}"' bash {} \;
-
 find . -depth \( -name '*.php' -o -name '*.txt' -o -name '.env.testing' -o -name '*.md' \) -exec sed -i '' "s/plugin_title/$plugin_name/g" {} +
-
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name '.env.testing'  -o -name '*.yml' -o -name '.gitignore' -o -name '.htaccess' -o -name '*.md' \) -exec sed -i '' 's/plugin-slug/'$plugin_slug'/g' {} +
 find . -depth \( -name '*.php' -o -name '*.testing' \) -exec sed -i '' 's/plugin_snake/'$plugin_snake'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Package_Name/'$plugin_package_name'/g' {} \;
@@ -72,7 +94,7 @@ find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '.en
 find . -type f \( -name '.env.testing' \) -exec sed -i '' 's/plugin-db-username/'$plugin_db_username'/g' {} +
 ```
 
-This creates two databases:
+Create two local databases for tests:
 
 ```
 # export PATH=${PATH}:/usr/local/mysql/bin
@@ -85,7 +107,7 @@ mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_SITE_DB_NA
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_DB_NAME"; USE "$TEST_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
 ```
 
-Install everything + setup WordPress
+Install everything, setup WordPress, save a copy of the database:
 
 ```
 composer update
@@ -93,7 +115,6 @@ composer update
 # Make .env available to bash
 export $(grep -v '^#' .env.testing | xargs);
 
-# vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=vendor/wordpress/wordpress/build
 vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org --path=vendor/wordpress/wordpress/build;
 
 vendor/bin/wp plugin activate $PLUGIN_SLUG --path=vendor/wordpress/wordpress/build;
@@ -113,33 +134,30 @@ vendor/bin/codecept run acceptance;
 If this is a WooCommerce plugin:
 
 ```
-
-composer require wpackagist-theme/woocommerce --dev --no-update;
-# or
+composer require wpackagist-plugin/woocommerce --dev --no-update;
+# or if you need the WooCommerce test helpers:
 # composer require woocommerce/woocommerce --dev --no-update;
 
 composer require wpackagist-theme/storefront:* --dev --no-update;
-composer update;
+composer update --no-scripts;
 
 vendor/bin/wp plugin activate woocommerce --path=vendor/wordpress/wordpress/build;
 vendor/bin/wp theme activate storefront --path=vendor/wordpress/wordpress/build;
 
 vendor/bin/wp wc tool run install_pages --user=admin --path=vendor/wordpress/wordpress/build;
 
+# Create a product
 vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin --path=vendor/wordpress/wordpress/build;
 
-# vendor/bin/wp wc customer create: https://github.com/woocommerce/woocommerce/wiki/WC-CLI-Overview#examples
+# Create a customer
+vendor/bin/wp wc customer create --email='woo@woo.local' --billing='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --shipping='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --password='hunter2' --username='mrbob' --first_name='Bob' --last_name='Tester' --user=admin --path=vendor/wordpress/wordpress/build;
 
 # Create dump after changing site.
 export $(grep -v '^#' .env.testing | xargs);
 mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
 
-```
-# Import a dump (after messing up!)
-export $(grep -v '^#' .env.testing | xargs);
-mysql -u $mysql_username -p$mysql_password $test_site_db_name < tests/_data/dump.sql
-```
+Discard this repo's .git and README and start fresh:
 
 ```
 rm -rf .git
@@ -150,8 +168,27 @@ git checkout -b dev
 git add .
 git commit -am "Initial commit"
 ```
-
+ 
 ## Usage
+
+### Misc
+
+```
+composer require brianhenryie/wppb-lib --dev --no-scripts
+composer upddate --no-scripts
+``` 
+
+
+```
+# Import a dump (after messing up!)
+export $(grep -v '^#' .env.testing | xargs);
+mysql -u $mysql_username -p$mysql_password $test_site_db_name < tests/_data/dump.sql
+```
+
+```
+vendor%2Fwordpress%2Fwordpress%2Fbuild%2F
+```
+
 
 ### WordPress Coding Standards
 
@@ -216,7 +253,7 @@ By convention, WordPress plugins and themes installed by composer get installed 
  "extra": {
   "patches": {
    "coenjacobs/mozart": {
-    "Allow default packages": "https://github.com/coenjacobs/mozart/pull/34.patch"
+    "Allow default packages": "https://github.com/coenjacobs/mozart/pull/49.patch"
    }
   }
  }

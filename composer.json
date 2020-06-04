@@ -96,8 +96,7 @@
     "scripts": {
         "post-install-cmd": [
             "\"vendor/bin/mozart\" compose",
-            "rm vendor/wordpress/wordpress/build/wp-content || true",
-            "cd vendor/wordpress/wordpress; npm install; npm run build; cd ../../..",
+            "cd vendor/wordpress/wordpress; rm build/wp-content || true; npm install; npm run build; cd ../../..",
             "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=vendor/wordpress/wordpress/build || true",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "mkdir -p wordpress/wp-content/uploads",
@@ -106,8 +105,7 @@
         ],
         "post-update-cmd": [
             "\"vendor/bin/mozart\" compose",
-            "rm vendor/wordpress/wordpress/build/wp-content || true",
-            "cd vendor/wordpress/wordpress; npm install; npm run build; cd ../../..",
+            "cd vendor/wordpress/wordpress; rm build/wp-content || true; npm install; npm run build; cd ../../..",
             "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=vendor/wordpress/wordpress/build || true",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "mkdir -p wordpress/wp-content/uploads",

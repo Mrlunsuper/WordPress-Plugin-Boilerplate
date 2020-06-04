@@ -39,7 +39,7 @@ vendor/bin/phpcbf; vendor/bin/phpcs
 
 ### Tests
 
-Tests use the [Codeception](https://codeception.com/) add-on [WP-Browser](https://github.com/lucatume/wp-browser) and inlclude vanilla PHPUnit tests with [WP_Mock](https://github.com/10up/wp_mock). 
+Tests use the [Codeception](https://codeception.com/) add-on [WP-Browser](https://github.com/lucatume/wp-browser) and include vanilla PHPUnit tests with [WP_Mock](https://github.com/10up/wp_mock). 
 
 Run tests with:
 
