@@ -19,9 +19,7 @@ The WordPress Plugin Boilerplate is a well-documented starting point for WordPre
 
 The documentation is typically a little behind the code, but what's going on should be understandable to most developers.
 
-The ultimate goal would be to have all WordPress plugins understandable by convention, unit tested, and in a repo thay can be contributed to.
-
-For now, this is just the best way to start a new plugin. Even if the plugin is just a single filter, test it. Maybe add an admin notice if the plugin it relies on is absent. Use the conventional structure so someone else can add a settings page. Use GitHub actions to lint the code and run tests before easily releasing to WordPress.org.
+The ultimate dream would be to have all WordPress plugins understandable by convention, unit tested, and in a repo thay can be contributed to with CI/CD to WordPress.org.
 
 ### Environment
 
@@ -35,10 +33,6 @@ This was written for a local environment with:
 * NPM
 
 There are some differences between `sed` on MacOS and Linux. See [PR6](https://github.com/BrianHenryIE/WordPress-Plugin-Boilerplate/pull/6/files). 
-
-### Result
-
-
 
 
 ## Setup a New Plugin
@@ -75,7 +69,7 @@ mv WordPress-Plugin-Boilerplate $plugin_slug
 cd $plugin_slug
 
 # Branches can be merged here.
-git merge origin/codeception-wp-browser
+# git merge origin/codeception-wp-browser
 
 open -a PhpStorm ./
 ```
@@ -171,25 +165,6 @@ git commit -am "Initial commit"
  
 ## Usage
 
-### Misc
-
-```
-composer require brianhenryie/wppb-lib --dev --no-scripts
-composer upddate --no-scripts
-``` 
-
-
-```
-# Import a dump (after messing up!)
-export $(grep -v '^#' .env.testing | xargs);
-mysql -u $mysql_username -p$mysql_password $test_site_db_name < tests/_data/dump.sql
-```
-
-```
-vendor%2Fwordpress%2Fwordpress%2Fbuild%2F
-```
-
-
 ### WordPress Coding Standards
 
 To see [WordPress Coding Standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards) errors using [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) run:
@@ -208,12 +183,42 @@ To configure WPCS checking on GitHub PRs, [generate a Personal Access Token](htt
 
 ### Testing
 
-```
-vendor/bin/codecept run acceptance
-vendor/bin/codecept run unit
-vendor/bin/codecept run wpunit
+Tests are handled with [WP-Browser](https://github.com/lucatume/wp-browser),
 
 ```
+vendor/bin/codecept run unit
+vendor/bin/codecept run wpunit
+vendor/bin/codecept run integration
+vendor/bin/codecept run acceptance
+```
+
+When making changes to the local WordPress installation to prep for acceptance tests, it needs to be saved because it is restored each time:
+
+```
+mysql_username="root"
+mysql_password="secret"
+
+# export PATH=${PATH}:/usr/local/mysql/bin
+
+export $(grep -v '^#' .env.testing | xargs)
+mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD $TEST_SITE_DB_NAME > tests/_data/dump.sql
+```
+
+If you need to manually restore it:
+
+```
+mysql -u $mysql_username -p$mysql_password $test_site_db_name < tests/_data/dump.sql
+```
+
+#### NB
+
+The first time you log in as admin on the local install, the redirect URL is pointing to the symlinked subdirectory and logging in does not work without editing the redirect URL in your browser's location bar:
+
+```
+vendor%2Fwordpress%2Fwordpress%2Fbuild%2F
+```
+
+Maybe this could be fixed in `.htaccess`.
 
 
 ### Deployment
@@ -234,12 +239,21 @@ By convention, WordPress plugins and themes installed by composer get installed 
 
 [Mozart](https://github.com/coenjacobs/mozart) is included in composer.json to prefix libraries' namespaces to avoid clashes with other WordPress plugins. e.g. in this case, [wp-namespace-autoloader](https://github.com/pablo-sg-pacheco/wp-namespace-autoloader) appears in `src/vendor/` with the namespace `Plugin_Name\Pablo_Pacheco\WP_Namespace_Autoloader`.
 
+To use e.g. a [.ics parser](https://github.com/u01jmg3/ics-parser) in your project:
+
+```
+composer require johngrogg/ics-parser --dev --no-scripts
+vendor/bin/mozart compose
+``` 
+
+The Mozart configuration in composer.json:
+
 ```
  "extra": {
   "mozart": {
    "dep_namespace": "Plugin_Name\\",
    "dep_directory": "/src/vendor/",
-   "classmap_directory": "/classes/dependencies/",
+   "classmap_directory": "/src/dependencies/",
    "classmap_prefix": "Plugin_Name_"
   }
  }
@@ -247,7 +261,9 @@ By convention, WordPress plugins and themes installed by composer get installed 
 
 ### Composer-Patches
 
-[composer-patches](https://github.com/cweagans/composer-patches) is used to apply PRs to composer dependencies (e.g. while waiting for the repository owners to accept the required changes). In this case, Mozart is patched with a PR (which configures Mozart to process all libraries listed in composer.json `require` whereas without the patch, each needs to be specified).[*](https://mindsize.me/blog/development/how-to-backport-woocommerce-security-patches-using-git-and-composer/)
+[composer-patches](https://github.com/cweagans/composer-patches) is used to apply PRs to composer dependencies (e.g. while waiting for the repository owners to accept the required changes). Currently nothing is being patched, but for hte majoriity of this project's life some thing or another has needed patching.
+
+When you make a PR against a library, or see an existing unmerged PR that you need, add `.patch` to the end of the PR's URL and add it to your project's composer.json like:
 
 ```
  "extra": {
@@ -277,11 +293,16 @@ Plugins published on WordPress.org are made available through composer via [wpac
 Then add the plugin or theme 
 
 ```
+composer require wpackagist-theme/twentytwenty --dev --no-scripts
+```
+
+```
  "require-dev": {
   "wpackagist-plugin/bh-wp-autologin-urls":">=1.1",
   "wpackagist-theme/twentytwenty":"*"
  }
 ```
+
 ### Local Projects
 
 To add a project in another local directory, ensure it has its own `composer.json` with `"name": "brianhenryie/local-lib"`
@@ -399,6 +420,9 @@ If an included WordPress plugin or theme does not install to the project's `wp-c
 
 ## Notes
 
+#### WPPB-Lib
+
+The WordPress Plugin Boilerplate as-is passes the plugin name and version to every class. This code and the loader code are better suited to a library than every plugin's own code, so a branch exists wppb-lib that can be merged. I haven't see where the reason to pass the name and version to every class is. Maybe it can be handled better in the root plugin file in namespaced methods?
 
 ### Minimum WordPress Version
 
@@ -414,10 +438,12 @@ The minimum WordPress version can be determined using [wpseek.com's Plugin Docto
 * Local Git hooks for WPCS
 * Disable commiting to master
 * Update Git origin instruction
-* Composer command for PHPCS+PHP Unit
-* [PHP 7](https://stitcher.io/blog/php-in-2020) site:github.com inurl:WordPress-Plugin-Boilerplate php 7.3
+* Composer scripts
 
+I have made some progress on a lot of these open an issue with changes you propose working on and I'll tidy up what I have and hopefully save you some time
 
 ## Acknowledgements
 
 The contributors to [WordPress Plugin Boilerplate](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate/) and more.
+
+WP-Browser, Mozart and SatisPress are three tools that really take this project to another level.
