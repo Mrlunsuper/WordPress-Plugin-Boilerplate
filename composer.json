@@ -1,6 +1,6 @@
 {
     "name": "your-domain/plugin-slug",
-    "description": "This is a short description of what the plugin does.",
+    "description": "This is a short description of what plugin_title does.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+-or-later",
     "authors": [
@@ -9,6 +9,11 @@
             "email": "email@example.com"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "process-timeout": 0
+    },
     "repositories": [
         {
             "url": "https://github.com/WordPress/wordpress-develop",
@@ -21,37 +26,49 @@
         {
             "url": "https://github.com/BrianHenryIE/composer-phpstorm",
             "type": "git"
+        },
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
         }
     ],
     "require": {
-        "php": ">=5.6.0",
+        "php": ">=7.2",
         "pablo-sg-pacheco/wp-namespace-autoloader": "dev-master"
     },
     "require-dev": {
+        "wpackagist-theme/twentytwenty":"*",
         "cweagans/composer-patches": "~1.0",
-        "coenjacobs/mozart": "^0.4.0",
+        "coenjacobs/mozart": "0.6.0-beta-3",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "wp-coding-standards/wpcs": "*",
-        "wordpress/wordpress": "^5.0",
+        "wordpress/wordpress": "^5.4",
         "kporras07/composer-symlinks": "dev-master",
         "phpunit/phpunit": ">=7.0",
         "phpunit/phpcov": "^5.0",
         "10up/wp_mock": "0.4.2",
-        "brianhenryie/composer-phpstorm": "dev-master"
+        "brianhenryie/composer-phpstorm": "dev-master",
+        "phpcompatibility/phpcompatibility-wp": "*",
+        "lucatume/wp-browser": "*",
+        "codeception/module-asserts": "^1.0",
+        "voku/portable-ascii": "dev-master",
+        "codeception/module-db": "^1.0.0",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "codeception/module-webdriver": "^1.0",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/module-cli": "^1.0",
+        "codeception/util-universalframework": "^1.0"
     },
     "extra": {
-        "patches": {
-            "coenjacobs/mozart": {
-                "Allow default packages": "https://github.com/coenjacobs/mozart/pull/34.patch"
-            }
-        },
         "mozart": {
             "dep_namespace": "Plugin_Package_Name\\",
             "dep_directory": "/src/vendor/",
             "classmap_prefix": "Plugin_Package_Name_",
-            "classmap_directory": "/src/dependencies/"
+            "classmap_directory": "/src/dependencies/",
+            "delete_vendor_directories": false
         },
         "symlinks": {
+            "wp-content": "vendor/wordpress/wordpress/build/wp-content",
             "wp-content/plugins": "vendor/wordpress/wordpress/src/wp-content/plugins",
             "src": "wp-content/plugins/plugin-slug",
             "vendor/wordpress/wordpress/src": "wordpress"
@@ -60,8 +77,9 @@
             "exclude_folders": {
                 "folders": [
                     "vendor/wordpress/wordpress/src",
-                    "wordpress/wp-content/plugins",
-                    "wp-content/plugins/plugin-slug"
+                    "vendor/wordpress/wordpress/build",
+                    "wp-content/plugins/plugin-slug",
+                    "wordpress/wp-content/plugins"
                 ],
                 "include_folders": [
                     "vendor/wordpress/wordpress/"
@@ -73,6 +91,8 @@
     "scripts": {
         "post-install-cmd": [
             "\"vendor/bin/mozart\" compose",
+            "cd vendor/wordpress/wordpress; rm build/wp-content || true; npm install; npm run build; cd ../../..",
+            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=vendor/wordpress/wordpress/build || true",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "mkdir -p wordpress/wp-content/uploads",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
@@ -80,6 +100,8 @@
         ],
         "post-update-cmd": [
             "\"vendor/bin/mozart\" compose",
+            "cd vendor/wordpress/wordpress; rm build/wp-content || true; npm install; npm run build; cd ../../..",
+            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=vendor/wordpress/wordpress/build || true",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "mkdir -p wordpress/wp-content/uploads",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
@@ -87,3 +109,6 @@
         ]
     }
 }
+
+
+
