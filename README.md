@@ -195,9 +195,6 @@ vendor/bin/codecept run acceptance
 When making changes to the local WordPress installation to prep for acceptance tests, it needs to be saved because it is restored each time:
 
 ```
-mysql_username="root"
-mysql_password="secret"
-
 # export PATH=${PATH}:/usr/local/mysql/bin
 
 export $(grep -v '^#' .env.testing | xargs)
