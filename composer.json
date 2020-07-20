@@ -28,7 +28,6 @@
         }
     ],
     "require": {
-        "php": ">=5.6.0",
         "brianhenryie/wppb-lib": "dev-master",
         "pablo-sg-pacheco/wp-namespace-autoloader": "dev-master"
     },
