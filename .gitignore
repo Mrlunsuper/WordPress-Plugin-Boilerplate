@@ -44,4 +44,4 @@ cache
 wordpress
 src/vendor/
 src/dependencies/
-wp-content/plugins
+wp-content/
