@@ -135,16 +135,16 @@ composer require wpackagist-plugin/woocommerce --dev --no-scripts;
 composer require wpackagist-theme/storefront:* --dev --no-scripts;
 
 
-vendor/bin/wp plugin activate woocommerce --path=vendor/wordpress/wordpress/build;
-vendor/bin/wp theme activate storefront --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp plugin activate woocommerce --path=wordpress;
+vendor/bin/wp theme activate storefront --path=wordpress;
 
-vendor/bin/wp wc tool run install_pages --user=admin --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp wc tool run install_pages --user=admin --path=wordpress;
 
 # Create a product
-vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin --path=wordpress;
 
 # Create a customer
-vendor/bin/wp wc customer create --email='woo@woo.local' --billing='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --shipping='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --password='hunter2' --username='mrbob' --first_name='Bob' --last_name='Tester' --user=admin --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp wc customer create --email='woo@woo.local' --billing='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --shipping='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --password='hunter2' --username='mrbob' --first_name='Bob' --last_name='Tester' --user=admin --path=wordpress;
 
 # Create dump after changing site.
 export $(grep -v '^#' .env.testing | xargs);
