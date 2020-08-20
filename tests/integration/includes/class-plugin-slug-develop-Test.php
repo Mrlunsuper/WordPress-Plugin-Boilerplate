@@ -8,6 +8,8 @@
 
 namespace Plugin_Package_Name\includes;
 
+use Plugin_Package_Name\admin\Admin;
+
 /**
  * Class Develop_Test
  */
@@ -20,18 +22,30 @@ class Plugin_Package_Name_Develop_Test extends \Codeception\TestCase\WPTestCase 
 
 		$action_name       = 'admin_enqueue_scripts';
 		$expected_priority = 10;
+		$class_type        = Admin::class;
+		$method_name       = 'enqueue_styles';
 
-		$plugin_snake = $GLOBALS['plugin_snake'];
+		global $wp_filter;
 
-		$class = $plugin_snake->admin;
+		$this->assertArrayHasKey( $action_name, $wp_filter, "$method_name definitely not hooked to $action_name" );
 
-		$function = array( $class, 'enqueue_styles' );
+		$actions_hooked = $wp_filter[ $action_name ];
 
-		$actual_action_priority = has_action( $action_name, $function );
+		$this->assertArrayHasKey( $expected_priority, $actions_hooked, "$method_name definitely not hooked to $action_name priority $expected_priority" );
 
-		$this->assertNotFalse( $actual_action_priority );
+		$hooked_methods = array();
+		foreach ( $actions_hooked[ $expected_priority ] as $action ) {
+			$action_function = $action['function'];
+			if ( is_array( $action_function ) ) {
+				if ( $action_function[0] instanceof $class_type ) {
+					$hooked_methods[] = $action_function[1];
+				}
+			}
+		}
 
-		$this->assertEquals( $expected_priority, $actual_action_priority );
+		$this->assertNotEmpty( $hooked_methods, "No methods on an instance of $class_type hooked to $action_name" );
+
+		$this->assertContains( $method_name, $hooked_methods, "$method_name for $class_type class not hooked to $action_name" );
 
 	}
 
@@ -40,22 +54,35 @@ class Plugin_Package_Name_Develop_Test extends \Codeception\TestCase\WPTestCase 
 	 */
 	public function test_action_admin_enqueue_scripts_scripts() {
 
-		$filter_name       = 'admin_enqueue_scripts';
+		$action_name       = 'admin_enqueue_scripts';
 		$expected_priority = 10;
+		$class_type        = Admin::class;
+		$method_name       = 'enqueue_scripts';
 
-		$plugin_snake = $GLOBALS['plugin_snake'];
+		global $wp_filter;
 
-		$class = $plugin_snake->admin;
+		$this->assertArrayHasKey( $action_name, $wp_filter, "$method_name definitely not hooked to $action_name" );
 
-		$function = array( $class, 'enqueue_scripts' );
+		$actions_hooked = $wp_filter[ $action_name ];
 
-		$actual_filter_priority = has_filter( $filter_name, $function );
+		$this->assertArrayHasKey( $expected_priority, $actions_hooked, "$method_name definitely not hooked to $action_name priority $expected_priority" );
 
-		$this->assertNotFalse( $actual_filter_priority );
+		$hooked_method = null;
+		foreach ( $actions_hooked[ $expected_priority ] as $action ) {
+			$action_function = $action['function'];
+			if ( is_array( $action_function ) ) {
+				if ( $action_function[0] instanceof $class_type ) {
+					$hooked_method = $action_function[1];
+				}
+			}
+		}
 
-		$this->assertEquals( $expected_priority, $actual_filter_priority );
+		$this->assertNotNull( $hooked_method, "No methods on an instance of $class_type hooked to $action_name" );
+
+		$this->assertEquals( $method_name, $hooked_method, "Unexpected method name for $class_type class hooked to $action_name" );
 
 	}
+
 
 	/**
 	 * Verify action to call load textdomain is added.
@@ -64,18 +91,30 @@ class Plugin_Package_Name_Develop_Test extends \Codeception\TestCase\WPTestCase 
 
 		$action_name       = 'plugins_loaded';
 		$expected_priority = 10;
+		$class_type        = I18n::class;
+		$method_name       = 'load_plugin_textdomain';
 
-		$plugin_snake = $GLOBALS['plugin_snake'];
+		global $wp_filter;
 
-		$class = $plugin_snake->i18n;
+		$this->assertArrayHasKey( $action_name, $wp_filter, "$method_name definitely not hooked to $action_name" );
 
-		$function = array( $class, 'load_plugin_textdomain' );
+		$actions_hooked = $wp_filter[ $action_name ];
 
-		$actual_action_priority = has_action( $action_name, $function );
+		$this->assertArrayHasKey( $expected_priority, $actions_hooked, "$method_name definitely not hooked to $action_name priority $expected_priority" );
 
-		$this->assertNotFalse( $actual_action_priority );
+		$hooked_method = null;
+		foreach ( $actions_hooked[ $expected_priority ] as $action ) {
+			$action_function = $action['function'];
+			if ( is_array( $action_function ) ) {
+				if ( $action_function[0] instanceof $class_type ) {
+					$hooked_method = $action_function[1];
+				}
+			}
+		}
 
-		$this->assertEquals( $expected_priority, $actual_action_priority );
+		$this->assertNotNull( $hooked_method, "No methods on an instance of $class_type hooked to $action_name" );
+
+		$this->assertEquals( $method_name, $hooked_method, "Unexpected method name for $class_type class hooked to $action_name" );
 
 	}
 }
