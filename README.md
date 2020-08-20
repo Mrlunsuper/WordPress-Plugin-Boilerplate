@@ -109,11 +109,11 @@ composer update
 # Make .env available to bash
 export $(grep -v '^#' .env.testing | xargs);
 
-vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org --path=wordpress;
 
-vendor/bin/wp plugin activate $PLUGIN_SLUG --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp plugin activate $PLUGIN_SLUG --path=wordpress;
 
-vendor/bin/wp user create bob bob@example.org --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp user create bob bob@example.org --path=wordpress;
 
 mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
@@ -128,12 +128,12 @@ vendor/bin/codecept run acceptance;
 If this is a WooCommerce plugin:
 
 ```
-composer require wpackagist-plugin/woocommerce --dev --no-update;
+composer require wpackagist-plugin/woocommerce --dev --no-scripts;
 # or if you need the WooCommerce test helpers:
-# composer require woocommerce/woocommerce --dev --no-update;
+# composer require woocommerce/woocommerce --dev --no-scripts;
 
-composer require wpackagist-theme/storefront:* --dev --no-update;
-composer update --no-scripts;
+composer require wpackagist-theme/storefront:* --dev --no-scripts;
+
 
 vendor/bin/wp plugin activate woocommerce --path=vendor/wordpress/wordpress/build;
 vendor/bin/wp theme activate storefront --path=vendor/wordpress/wordpress/build;
@@ -414,6 +414,12 @@ If an included WordPress plugin or theme does not install to the project's `wp-c
    "./vendor/enhancedathlete/ea-wp-aws-sns-client-rest-endpoint/trunk": "./wp-content/plugins/ea-wp-aws-sns-client-rest-endpoint"
   }
 ```
+
+### More
+
+https://github.com/wikimedia/composer-merge-plugin
+
+https://github.com/wikimedia/composer-merge-plugin
 
 ## Notes
 

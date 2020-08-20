@@ -68,10 +68,8 @@
             "delete_vendor_directories": false
         },
         "symlinks": {
-            "wp-content": "vendor/wordpress/wordpress/build/wp-content",
-            "wp-content/plugins": "vendor/wordpress/wordpress/src/wp-content/plugins",
-            "src": "wp-content/plugins/plugin-slug",
-            "vendor/wordpress/wordpress/src": "wordpress"
+            "wp-content": "wordpress/wp-content",
+            "src": "wp-content/plugins/plugin-slug"
         },
         "phpstorm": {
             "exclude_folders": {
@@ -91,8 +89,8 @@
     "scripts": {
         "post-install-cmd": [
             "\"vendor/bin/mozart\" compose",
-            "cd vendor/wordpress/wordpress; rm build/wp-content || true; npm install; npm run build; cd ../../..",
-            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=vendor/wordpress/wordpress/build || true",
+            "vendor/bin/wp core download --path=wordpress || true;",
+            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=wordpress || true",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "mkdir -p wordpress/wp-content/uploads",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
@@ -100,8 +98,8 @@
         ],
         "post-update-cmd": [
             "\"vendor/bin/mozart\" compose",
-            "cd vendor/wordpress/wordpress; rm build/wp-content || true; npm install; npm run build; cd ../../..",
-            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=vendor/wordpress/wordpress/build || true",
+            "vendor/bin/wp core download --path=wordpress || true;",
+            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --path=wordpress || true",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "mkdir -p wordpress/wp-content/uploads",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
