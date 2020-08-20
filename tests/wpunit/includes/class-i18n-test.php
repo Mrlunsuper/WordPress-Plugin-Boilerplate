@@ -35,13 +35,7 @@ class I18n_Test extends \Codeception\TestCase\WPTestCase {
 
 		add_filter( 'plugin_locale', $filter, 10, 2 );
 
-		/**
-		 * Get the main plugin class.
-		 *
-		 * @var Plugin_Package_Name $plugin_snake
-		 */
-		$plugin_snake= $GLOBALS['plugin_snake'];
-		$i18n        = $plugin_snake->i18n;
+		$i18n         = new I18n();
 
 		$i18n->load_plugin_textdomain();
 
