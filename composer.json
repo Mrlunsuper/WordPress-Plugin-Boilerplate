@@ -57,9 +57,19 @@
         "codeception/module-webdriver": "^1.0",
         "codeception/module-filesystem": "^1.0",
         "codeception/module-cli": "^1.0",
-        "codeception/util-universalframework": "^1.0"
+        "codeception/util-universalframework": "^1.0",
+        "jaschilz/php-coverage-badger": "^2.0"
     },
     "extra": {
+        "patches": {
+            "coenjacobs/mozart": {
+                "DIRECTORY_SEPARATOR": "https://github.com/coenjacobs/mozart/pull/61.patch",
+                "Delete empty directories": "https://github.com/coenjacobs/mozart/pull/59.patch"
+            },
+            "jaschilz/php-coverage-badger": {
+                "Allow customising the text": "https://github.com/JASchilz/PHPCoverageBadge/pull/1.patch"
+            }
+        },
         "mozart": {
             "dep_namespace": "Plugin_Package_Name\\",
             "dep_directory": "/src/vendor/",
