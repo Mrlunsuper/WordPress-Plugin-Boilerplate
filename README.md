@@ -109,11 +109,14 @@ composer update
 # Make .env available to bash
 export $(grep -v '^#' .env.testing | xargs);
 
-vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org --path=wordpress;
+vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org;
 
-vendor/bin/wp plugin activate $PLUGIN_SLUG --path=wordpress;
+wp option set home http://localhost/$PLUGIN_SLUG
+wp option set siteurl http://localhost/$PLUGIN_SLUG
 
-vendor/bin/wp user create bob bob@example.org --path=wordpress;
+vendor/bin/wp plugin activate $PLUGIN_SLUG;
+
+vendor/bin/wp user create bob bob@example.org;
 
 mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
@@ -135,16 +138,16 @@ composer require wpackagist-plugin/woocommerce --dev --no-scripts;
 composer require wpackagist-theme/storefront:* --dev --no-scripts;
 
 
-vendor/bin/wp plugin activate woocommerce --path=wordpress;
-vendor/bin/wp theme activate storefront --path=wordpress;
+vendor/bin/wp plugin activate woocommerce;
+vendor/bin/wp theme activate storefront;
 
-vendor/bin/wp wc tool run install_pages --user=admin --path=wordpress;
+vendor/bin/wp wc tool run install_pages --user=admin;
 
 # Create a product
-vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin --path=wordpress;
+vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin;
 
 # Create a customer
-vendor/bin/wp wc customer create --email='woo@woo.local' --billing='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --shipping='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --password='hunter2' --username='mrbob' --first_name='Bob' --last_name='Tester' --user=admin --path=wordpress;
+vendor/bin/wp wc customer create --email='woo@woo.local' --billing='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --shipping='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --password='hunter2' --username='mrbob' --first_name='Bob' --last_name='Tester' --user=admin;
 
 # Create dump after changing site.
 export $(grep -v '^#' .env.testing | xargs);
@@ -206,16 +209,6 @@ If you need to manually restore it:
 ```
 mysql -u $mysql_username -p$mysql_password $test_site_db_name < tests/_data/dump.sql
 ```
-
-#### NB
-
-The first time you log in as admin on the local install, the redirect URL is pointing to the symlinked subdirectory and logging in does not work without editing the redirect URL in your browser's location bar:
-
-```
-vendor%2Fwordpress%2Fwordpress%2Fbuild%2F
-```
-
-Maybe this could be fixed in `.htaccess`.
 
 
 ### Deployment
