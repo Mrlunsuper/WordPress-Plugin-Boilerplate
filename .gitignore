@@ -46,6 +46,8 @@ src/vendor/
 src/dependencies/
 wp-content/
 
+scratch
+
 .env.secret
 
 .github/coverage.svg
