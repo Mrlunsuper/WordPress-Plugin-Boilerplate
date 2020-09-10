@@ -89,7 +89,7 @@ class Plugin_Package_Name_Integration_Test extends \Codeception\TestCase\WPTestC
 	 */
 	public function test_action_enqueue_scripts_styles() {
 
-		$action_name       = 'enqueue_scripts';
+		$action_name       = 'wp_enqueue_scripts';
 		$expected_priority = 10;
 		$class_type        = Frontend::class;
 		$method_name       = 'enqueue_styles';
@@ -123,7 +123,7 @@ class Plugin_Package_Name_Integration_Test extends \Codeception\TestCase\WPTestC
 	 */
 	public function test_action_enqueue_scripts_scripts() {
 
-		$action_name       = 'enqueue_scripts';
+		$action_name       = 'wp_enqueue_scripts';
 		$expected_priority = 10;
 		$class_type        = Frontend::class;
 		$method_name       = 'enqueue_scripts';
