@@ -55,8 +55,8 @@ plugin_slug=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g'); e
 plugin_snake=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g'); echo $plugin_snake; # example_plugin
 plugin_package_name=$(echo $plugin_name | sed 's/ /_/g'); echo $plugin_package_name; # Example_Plugin
 plugin_capitalized=$(echo $plugin_name | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g'); echo $plugin_capitalized; # EXAMPLE_PLUGIN
-test_site_db_name=$plugin_snake"_tests" # example_plugin_tests
-test_db_name=$plugin_snake"_integration" # example_plugin_integration
+test_site_db_name=${plugin_snake:0:57}"_tests" # example_plugin_tests
+test_db_name=${plugin_snake:0:51}"_integration" # example_plugin_integration
 plugin_db_username=${plugin_slug:0:31} # 32 character max for username 
 plugin_db_password=$plugin_slug
 ```
