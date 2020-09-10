@@ -40,7 +40,6 @@ cache
 
 /vendor/
 
-
 wordpress
 src/vendor/
 src/dependencies/
@@ -48,6 +47,8 @@ wp-content/
 
 scratch
 
+# Generated from GitHub Secrets in the workflows.
 .env.secret
+auth.json
 
-.github/coverage.svg
+*.zip

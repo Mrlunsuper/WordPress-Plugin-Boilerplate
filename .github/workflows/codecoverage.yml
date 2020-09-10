@@ -2,6 +2,10 @@ name: Codecoverage
 
 # Runs codeception unit and wpunit tests, merges the code coverage, commits the html report to
 # GitHub Pages, generates a README badge with the coverage percentage.
+#
+# Requires a gh-pages branch already created.
+#
+# @author BrianHenryIE
 
 on:
   push:
@@ -27,16 +31,21 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v2
 
+      # Fails here when pages branch does not exist.
+
       - uses: actions/checkout@v2
         with:
           ref: gh-pages
           path: tests/_output/html
 
-#      - name: Make envfile from secrets
+#      - name: Make envfile from Secrets
 #        uses: SpicyPizza/create-envfile@v1
 #        with:
 #          envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
 #          file_name: .env.secret
+
+#      - name: Create Composer auth.json from Secrets
+#        run: php -r "file_put_contents( 'auth.json', json_encode( [ 'http-basic' => [ 'blog.brianhenry.ie' => [ 'username' => '"${{ secrets.COMPOSER_AUTH_SECRET }}"', 'password' => 'satispress' ] ] ] ) );"
 
       - name: Read .env.testing
         uses: c-py/action-dotenv-to-setenv@v1
@@ -49,8 +58,11 @@ jobs:
           mysql -h 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -u root -ppassword -e "CREATE DATABASE "$TEST_SITE_DB_NAME"; USE "$TEST_SITE_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_SITE_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
           mysql -h 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -u root -ppassword -e "CREATE DATABASE "$TEST_DB_NAME"; USE "$TEST_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
 
-      - name: Add MySQL port to .env.testing
-        run: find . -depth \( -name '.env.testing' \) -exec sed -i "s/=\"127.0.0.1\"/=\"127.0.0.1:${{ job.services.mysql.ports['3306'] }}\"/g" {} +
+      - name: Update configs for GA
+        run: |
+          find . -depth \( -name '.env.testing' \) -exec sed -i "s/=\"127.0.0.1\"/=\"127.0.0.1:${{ job.services.mysql.ports['3306'] }}\"/g" {} +
+          find . -depth \( -name 'composer.json' \) -exec sed -i "s/127.0.0.1/127.0.0.1:${{ job.services.mysql.ports['3306'] }}/g" {} +
+          find . -depth \( -name '.env.testing' \) -exec sed -i "s/localhost:8080\/$PLUGIN_SLUG/localhost:8080/g" {} +
 
       - name: Run composer install
         uses: php-actions/composer@v1
@@ -99,4 +111,5 @@ jobs:
       - name: Commit code coverage badge
         uses: stefanzweifel/git-auto-commit-action@v4.1.1
         with:
+          file_pattern: .github/coverage.svg
           commit_message: "Commit code coverage badge"

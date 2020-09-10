@@ -26,7 +26,7 @@ The ultimate dream would be to have all WordPress plugins understandable by conv
 This was written for a local environment with:
 
 * MacOS Catalina (Bash)
-* Built-in Apache serving to localhost:80 from your projects directory (probably ~/Sites/)
+* Built-in Apache serving to localhost:8080 from your projects directory (probably ~/Sites/)
 * PHP 7.4 [setup guide](https://getgrav.org/blog/macos-catalina-apache-multiple-php-versions)
 * Xdebug
 * MySQL 8
@@ -111,8 +111,8 @@ export $(grep -v '^#' .env.testing | xargs);
 
 vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org;
 
-wp option set home http://localhost/$PLUGIN_SLUG
-wp option set siteurl http://localhost/$PLUGIN_SLUG
+wp option set home http://localhost:8080/$PLUGIN_SLUG
+wp option set siteurl http://localhost:8080/$PLUGIN_SLUG
 
 vendor/bin/wp plugin activate $PLUGIN_SLUG;
 
@@ -134,6 +134,7 @@ If this is a WooCommerce plugin:
 composer require wpackagist-plugin/woocommerce --dev --no-scripts;
 # or if you need the WooCommerce test helpers:
 # composer require woocommerce/woocommerce --dev --no-scripts;
+# ... although this requires extra setup commands not included here.
 
 composer require wpackagist-theme/storefront:* --dev --no-scripts;
 
@@ -224,6 +225,8 @@ To configure automatic WordPress.org plugin repository deployment, add your Word
 ## Composer Notes
 
 By convention, WordPress plugins and themes installed by composer get installed into the project's `/wp-content/plugins` and `/wp-content/themes` directory. In a typical PHP project, libraries required by the project during runtime are installed in the `vendor` directory. In the case of this project, libraries are downloaded to the project's `vendor` folder, then their files copied to `src/vendor` and their namespace changed.
+
+https://stackoverflow.com/a/32407670/336146
 
 ### Mozart
 

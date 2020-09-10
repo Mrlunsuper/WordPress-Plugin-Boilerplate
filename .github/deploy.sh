@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # https://zerowp.com/?p=55
 
+# Requires your WordPress.org username and password added to the repo's GitHub Secrets as:
+# SVN_USERNAME
+# SVN_PASSWORD
+
 # Get the plugin slug from this git repository + convert to lowercase.
 PLUGIN_SLUG="`echo "${PWD##*/}" | perl -ne 'print lc'`"
 
@@ -19,7 +23,7 @@ svn update --set-depth infinity ./svn/assets
 svn update --set-depth infinity ./svn/tags/$TAG
 
 # Copy files from `src` to `svn/trunk`
-cp -R ./trunk/* ./svn/trunk
+cp -R ./src/* ./svn/trunk
 
 # Copy the images from `assets` to `svn/assets`
 cp -R ./assets/* ./svn/assets
