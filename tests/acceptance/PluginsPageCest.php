@@ -21,7 +21,7 @@ class PluginsPageCest
 	 */
 	public function testPluginsPageForName( AcceptanceTester $I ) {
 
-		$I->canSee( 'IP Address Condition for WooCommerce Conditional Shipping and Payments' );
+		$I->canSee( 'plugin_title' );
 	}
 
 	/**
