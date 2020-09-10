@@ -9,11 +9,12 @@
 namespace Plugin_Package_Name\includes;
 
 use Plugin_Package_Name\admin\Admin;
+use Plugin_Package_Name\frontend\Frontend;
 
 /**
  * Class Develop_Test
  */
-class Plugin_Package_Name_Develop_Test extends \Codeception\TestCase\WPTestCase {
+class Plugin_Package_Name_Integration_Test extends \Codeception\TestCase\WPTestCase {
 
 	/**
 	 * Verify admin_enqueue_scripts action is correctly added for styles, at priority 10.
@@ -57,6 +58,74 @@ class Plugin_Package_Name_Develop_Test extends \Codeception\TestCase\WPTestCase 
 		$action_name       = 'admin_enqueue_scripts';
 		$expected_priority = 10;
 		$class_type        = Admin::class;
+		$method_name       = 'enqueue_scripts';
+
+		global $wp_filter;
+
+		$this->assertArrayHasKey( $action_name, $wp_filter, "$method_name definitely not hooked to $action_name" );
+
+		$actions_hooked = $wp_filter[ $action_name ];
+
+		$this->assertArrayHasKey( $expected_priority, $actions_hooked, "$method_name definitely not hooked to $action_name priority $expected_priority" );
+
+		$hooked_method = null;
+		foreach ( $actions_hooked[ $expected_priority ] as $action ) {
+			$action_function = $action['function'];
+			if ( is_array( $action_function ) ) {
+				if ( $action_function[0] instanceof $class_type ) {
+					$hooked_method = $action_function[1];
+				}
+			}
+		}
+
+		$this->assertNotNull( $hooked_method, "No methods on an instance of $class_type hooked to $action_name" );
+
+		$this->assertEquals( $method_name, $hooked_method, "Unexpected method name for $class_type class hooked to $action_name" );
+
+	}
+
+	/**
+	 * Verify enqueue_scripts action is correctly added for styles, at priority 10, on class Frontend
+	 */
+	public function test_action_enqueue_scripts_styles() {
+
+		$action_name       = 'enqueue_scripts';
+		$expected_priority = 10;
+		$class_type        = Frontend::class;
+		$method_name       = 'enqueue_styles';
+
+		global $wp_filter;
+
+		$this->assertArrayHasKey( $action_name, $wp_filter, "$method_name definitely not hooked to $action_name" );
+
+		$actions_hooked = $wp_filter[ $action_name ];
+
+		$this->assertArrayHasKey( $expected_priority, $actions_hooked, "$method_name definitely not hooked to $action_name priority $expected_priority" );
+
+		$hooked_methods = array();
+		foreach ( $actions_hooked[ $expected_priority ] as $action ) {
+			$action_function = $action['function'];
+			if ( is_array( $action_function ) ) {
+				if ( $action_function[0] instanceof $class_type ) {
+					$hooked_methods[] = $action_function[1];
+				}
+			}
+		}
+
+		$this->assertNotEmpty( $hooked_methods, "No methods on an instance of $class_type hooked to $action_name" );
+
+		$this->assertContains( $method_name, $hooked_methods, "$method_name for $class_type class not hooked to $action_name" );
+
+	}
+
+	/**
+	 * Verify enqueue_scripts action is added for scripts, at priority 10, on class Frontend.
+	 */
+	public function test_action_enqueue_scripts_scripts() {
+
+		$action_name       = 'enqueue_scripts';
+		$expected_priority = 10;
+		$class_type        = Frontend::class;
 		$method_name       = 'enqueue_scripts';
 
 		global $wp_filter;
