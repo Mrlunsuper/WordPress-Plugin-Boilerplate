@@ -109,7 +109,7 @@ composer update
 # Make .env available to bash
 export $(grep -v '^#' .env.testing | xargs);
 
-vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org;
+vendor/bin/wp core install --url="localhost:8080/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org;
 
 vendor/bin/wp option set home http://localhost:8080/$PLUGIN_SLUG
 vendor/bin/wp option set siteurl http://localhost:8080/$PLUGIN_SLUG
