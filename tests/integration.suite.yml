@@ -20,3 +20,4 @@ modules:
             title: "plugin-slug"
             plugins: ['plugin-slug/plugin-slug.php']
             activatePlugins: ['plugin-slug/plugin-slug.php']
+bootstrap: _bootstrap.php

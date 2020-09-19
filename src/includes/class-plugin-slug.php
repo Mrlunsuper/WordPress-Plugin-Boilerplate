@@ -36,27 +36,6 @@ use Plugin_Package_Name\WPPB\WPPB_Object;
 class Plugin_Package_Name extends WPPB_Object {
 
 	/**
-	 * Allow access for testing and unhooking.
-	 *
-	 * @var Admin The plugin Admin object instance.
-	 */
-	public $admin;
-
-	/**
-	 * Allow access for testing and unhooking.
-	 *
-	 * @var I18n The plugin I18n object instance.
-	 */
-	public $i18n;
-
-	/**
-	 * Allow access for testing and unhooking.
-	 *
-	 * @var Frontend The plugin Frontend object instance.
-	 */
-	public $frontend;
-
-	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
@@ -104,9 +83,9 @@ class Plugin_Package_Name extends WPPB_Object {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function set_locale() {
+	protected function set_locale() {
 
-		$this->i18n = $plugin_i18n = new I18n();
+		$plugin_i18n = new I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -119,9 +98,9 @@ class Plugin_Package_Name extends WPPB_Object {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_admin_hooks() {
+	protected function define_admin_hooks() {
 
-		$this->admin = $plugin_admin = new Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -135,9 +114,9 @@ class Plugin_Package_Name extends WPPB_Object {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_frontend_hooks() {
+	protected function define_frontend_hooks() {
 
-		$this->frontend = $plugin_frontend = new Frontend( $this->get_plugin_name(), $this->get_version() );
+		$plugin_frontend = new Frontend( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'enqueue_scripts' );

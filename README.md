@@ -26,7 +26,7 @@ The ultimate dream would be to have all WordPress plugins understandable by conv
 This was written for a local environment with:
 
 * MacOS Catalina (Bash)
-* Built-in Apache serving to localhost:80 from your projects directory (probably ~/Sites/)
+* Built-in Apache serving to localhost:8080 from your projects directory (probably ~/Sites/)
 * PHP 7.4 [setup guide](https://getgrav.org/blog/macos-catalina-apache-multiple-php-versions)
 * Xdebug
 * MySQL 8
@@ -48,15 +48,15 @@ mysql_username="root"
 mysql_password="secret"
 ```
 
-Run these commands to generate replacements:
+Run these commands to generate replacements (or define them yourself):
 
 ```
 plugin_slug=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g'); echo $plugin_slug; # example-plugin
 plugin_snake=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g'); echo $plugin_snake; # example_plugin
 plugin_package_name=$(echo $plugin_name | sed 's/ /_/g'); echo $plugin_package_name; # Example_Plugin
 plugin_capitalized=$(echo $plugin_name | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g'); echo $plugin_capitalized; # EXAMPLE_PLUGIN
-test_site_db_name=$plugin_snake"_tests" # example_plugin_tests
-test_db_name=$plugin_snake"_integration" # example_plugin_integration
+test_site_db_name=${plugin_snake:0:57}"_tests" # example_plugin_tests
+test_db_name=${plugin_snake:0:51}"_integration" # example_plugin_integration
 plugin_db_username=${plugin_slug:0:31} # 32 character max for username 
 plugin_db_password=$plugin_slug
 ```
@@ -109,11 +109,14 @@ composer update
 # Make .env available to bash
 export $(grep -v '^#' .env.testing | xargs);
 
-vendor/bin/wp core install --url="localhost/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp core install --url="localhost:8080/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org;
 
-vendor/bin/wp plugin activate $PLUGIN_SLUG --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp option set home http://localhost:8080/$PLUGIN_SLUG
+vendor/bin/wp option set siteurl http://localhost:8080/$PLUGIN_SLUG
 
-vendor/bin/wp user create bob bob@example.org --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp plugin activate $PLUGIN_SLUG;
+
+vendor/bin/wp user create bob bob@example.org;
 
 mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
@@ -128,23 +131,24 @@ vendor/bin/codecept run acceptance;
 If this is a WooCommerce plugin:
 
 ```
-composer require wpackagist-plugin/woocommerce --dev --no-update;
+composer require wpackagist-plugin/woocommerce --dev --no-scripts;
 # or if you need the WooCommerce test helpers:
-# composer require woocommerce/woocommerce --dev --no-update;
+# composer require woocommerce/woocommerce --dev --no-scripts;
+# ... although this requires extra setup commands not included here.
 
-composer require wpackagist-theme/storefront:* --dev --no-update;
-composer update --no-scripts;
+composer require wpackagist-theme/storefront:* --dev --no-scripts;
 
-vendor/bin/wp plugin activate woocommerce --path=vendor/wordpress/wordpress/build;
-vendor/bin/wp theme activate storefront --path=vendor/wordpress/wordpress/build;
 
-vendor/bin/wp wc tool run install_pages --user=admin --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp plugin activate woocommerce;
+vendor/bin/wp theme activate storefront;
+
+vendor/bin/wp wc tool run install_pages --user=admin;
 
 # Create a product
-vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin;
 
 # Create a customer
-vendor/bin/wp wc customer create --email='woo@woo.local' --billing='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --shipping='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --password='hunter2' --username='mrbob' --first_name='Bob' --last_name='Tester' --user=admin --path=vendor/wordpress/wordpress/build;
+vendor/bin/wp wc customer create --email='woo@woo.local' --billing='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --shipping='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --password='hunter2' --username='mrbob' --first_name='Bob' --last_name='Tester' --user=admin;
 
 # Create dump after changing site.
 export $(grep -v '^#' .env.testing | xargs);
@@ -195,9 +199,6 @@ vendor/bin/codecept run acceptance
 When making changes to the local WordPress installation to prep for acceptance tests, it needs to be saved because it is restored each time:
 
 ```
-mysql_username="root"
-mysql_password="secret"
-
 # export PATH=${PATH}:/usr/local/mysql/bin
 
 export $(grep -v '^#' .env.testing | xargs)
@@ -209,16 +210,6 @@ If you need to manually restore it:
 ```
 mysql -u $mysql_username -p$mysql_password $test_site_db_name < tests/_data/dump.sql
 ```
-
-#### NB
-
-The first time you log in as admin on the local install, the redirect URL is pointing to the symlinked subdirectory and logging in does not work without editing the redirect URL in your browser's location bar:
-
-```
-vendor%2Fwordpress%2Fwordpress%2Fbuild%2F
-```
-
-Maybe this could be fixed in `.htaccess`.
 
 
 ### Deployment
@@ -234,6 +225,8 @@ To configure automatic WordPress.org plugin repository deployment, add your Word
 ## Composer Notes
 
 By convention, WordPress plugins and themes installed by composer get installed into the project's `/wp-content/plugins` and `/wp-content/themes` directory. In a typical PHP project, libraries required by the project during runtime are installed in the `vendor` directory. In the case of this project, libraries are downloaded to the project's `vendor` folder, then their files copied to `src/vendor` and their namespace changed.
+
+https://stackoverflow.com/a/32407670/336146
 
 ### Mozart
 
@@ -417,6 +410,12 @@ If an included WordPress plugin or theme does not install to the project's `wp-c
    "./vendor/enhancedathlete/ea-wp-aws-sns-client-rest-endpoint/trunk": "./wp-content/plugins/ea-wp-aws-sns-client-rest-endpoint"
   }
 ```
+
+### More
+
+https://github.com/wikimedia/composer-merge-plugin
+
+https://github.com/wikimedia/composer-merge-plugin
 
 ## Notes
 
