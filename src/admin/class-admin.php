@@ -11,7 +11,7 @@
 
 namespace Plugin_Package_Name\admin;
 
-use Plugin_Package_Name\WPPB\WPPB_Object;
+use Plugin_Package_Name\BrianHenryIE\WPPB\WPPB_Object;
 
 /**
  * The admin-specific functionality of the plugin.

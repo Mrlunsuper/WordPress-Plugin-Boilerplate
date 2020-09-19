@@ -11,7 +11,7 @@
 
 namespace Plugin_Package_Name\frontend;
 
-use Plugin_Package_Name\WPPB\WPPB_Object;
+use Plugin_Package_Name\BrianHenryIE\WPPB\WPPB_Object;
 
 /**
  * The public-facing functionality of the plugin.

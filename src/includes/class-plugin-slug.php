@@ -16,8 +16,8 @@ namespace Plugin_Package_Name\includes;
 
 use Plugin_Package_Name\admin\Admin;
 use Plugin_Package_Name\frontend\Frontend;
-use Plugin_Package_Name\WPPB\WPPB_Loader_Interface;
-use Plugin_Package_Name\WPPB\WPPB_Object;
+use Plugin_Package_Name\BrianHenryIE\WPPB\WPPB_Loader_Interface;
+use Plugin_Package_Name\BrianHenryIE\WPPB\WPPB_Plugin_Abstract;
 
 /**
  * The core plugin class.
@@ -33,17 +33,7 @@ use Plugin_Package_Name\WPPB\WPPB_Object;
  * @subpackage Plugin_Package_Name/includes
  * @author     Your Name <email@example.com>
  */
-class Plugin_Package_Name extends WPPB_Object {
-
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      WPPB_Loader_Interface    $loader    Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
+class Plugin_Package_Name extends WPPB_Plugin_Abstract {
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -121,25 +111,6 @@ class Plugin_Package_Name extends WPPB_Object {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'enqueue_scripts' );
 
-	}
-
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function run() {
-		$this->loader->run();
-	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    WPPB_Loader_Interface    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
 	}
 
 }
