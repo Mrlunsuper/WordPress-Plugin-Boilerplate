@@ -48,15 +48,13 @@ class Plugin_Package_Name extends WPPB_Plugin_Abstract {
 	 */
 	public function __construct( $loader ) {
 		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+			$version = PLUGIN_NAME_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$version = '1.0.0';
 		}
-		$this->plugin_name = 'plugin-slug';
+		$plugin_name = 'plugin-slug';
 
-		parent::__construct( $this->plugin_name, $this->version );
-
-		$this->loader = $loader;
+		parent::__construct( $loader, $plugin_name, $version );
 
 		$this->set_locale();
 		$this->define_admin_hooks();
