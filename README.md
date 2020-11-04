@@ -162,6 +162,26 @@ rm -rf .git
 rm README.md
 mv README-rename.md README.md
 git init
+git add README.md
+git commit -am "Initial commit"
+```
+
+Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `gh auth login`)
+
+```
+gh repo create $PLUGIN_SLUG --public -y
+git push origin master
+git checkout --orphan gh-pages
+touch index.html
+git add index.html
+git commit -m 'Set up gh-pages branch' index.html
+git push origin gh-pages
+git checkout master
+```
+
+Start a dev branch.
+
+```
 git checkout -b dev
 git add .
 git commit -am "Initial commit"
