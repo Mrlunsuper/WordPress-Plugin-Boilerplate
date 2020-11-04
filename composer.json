@@ -65,10 +65,6 @@
     },
     "extra": {
         "patches": {
-            "coenjacobs/mozart": {
-                "DIRECTORY_SEPARATOR": "https://github.com/coenjacobs/mozart/pull/61.patch",
-                "Delete empty directories": "https://github.com/coenjacobs/mozart/pull/59.patch"
-            },
             "jaschilz/php-coverage-badger": {
                 "Allow customising the text": "https://github.com/JASchilz/PHPCoverageBadge/pull/1.patch"
             },
