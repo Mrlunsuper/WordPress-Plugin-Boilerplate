@@ -116,7 +116,7 @@ vendor/bin/wp option set siteurl http://localhost:8080/$PLUGIN_SLUG
 
 vendor/bin/wp plugin activate $PLUGIN_SLUG;
 
-vendor/bin/wp user create bob bob@example.org;
+vendor/bin/wp user create bob bob@example.org --user_pass=password
 
 mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
@@ -155,7 +155,7 @@ export $(grep -v '^#' .env.testing | xargs);
 mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
 
-Discard this repo's .git and README and start fresh:
+Discard this boilerplate repo's .git and README and start fresh:
 
 ```
 rm -rf .git
@@ -222,13 +222,14 @@ When making changes to the local WordPress installation to prep for acceptance t
 # export PATH=${PATH}:/usr/local/mysql/bin
 
 export $(grep -v '^#' .env.testing | xargs)
-mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD $TEST_SITE_DB_NAME > tests/_data/dump.sql
+mysql -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD $TEST_SITE_DB_NAME < tests/_data/dump.sql
 ```
 
 If you need to manually restore it:
 
 ```
-mysql -u $mysql_username -p$mysql_password $test_site_db_name < tests/_data/dump.sql
+export $(grep -v '^#' .env.testing | xargs)
+mysql -u $mysql_username -p$mysql_password $TEST_SITE_DB_NAME < tests/_data/dump.sql
 ```
 
 
