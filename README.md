@@ -158,9 +158,15 @@ mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > t
 Discard this boilerplate repo's .git and README and start fresh:
 
 ```
+https://cli.github.com/
+brew install gh 
+gh auth login
+
+
 rm -rf .git
 rm README.md
 mv README-rename.md README.md
+
 git init
 git add README.md
 git commit -am "Initial commit"
@@ -171,10 +177,17 @@ Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `g
 ```
 gh repo create $PLUGIN_SLUG --public -y
 git push origin master
+```
+
+Setup gh-pages branch (for code coverage html report)).
+
+```
 git checkout --orphan gh-pages
+
 touch index.html
 git add index.html
 git commit -m 'Set up gh-pages branch' index.html
+
 git push origin gh-pages
 git checkout master
 ```
@@ -184,7 +197,7 @@ Start a dev branch.
 ```
 git checkout -b dev
 git add .
-git commit -am "Initial commit"
+git commit -am "Dev"
 ```
  
 ## Usage
