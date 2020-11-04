@@ -25,6 +25,10 @@
             "type": "git"
         },
         {
+            "url": "https://github.com/BrianHenryIE/bh-wp-dev",
+            "type": "git"
+        },
+        {
             "type":"composer",
             "url":"https://wpackagist.org"
         }
@@ -36,6 +40,7 @@
     "require-dev": {
         "10up/wp_mock": "0.4.2",
         "brianhenryie/composer-phpstorm": "dev-master",
+        "brianhenryie/wp-dev": "dev-master",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "codeception/module-asserts": "^1.0",
         "codeception/module-db": "^1.0.0",
@@ -115,6 +120,9 @@
             "mkdir -p wordpress/wp-content/uploads",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
             "BrianHenryIE\\ComposerPhpStorm\\PHPUnitRunConfigurations::update"
+        ],
+        "create-plugin-archive": [
+            "BrianHenryIE\\WP_Dev\\CreatePluginArchive::createZip"
         ]
     }
 }
