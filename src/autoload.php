@@ -16,7 +16,7 @@ namespace Plugin_Package_Name;
 use Plugin_Package_Name\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
 
 
-$class_map_file = __DIR__ . '/autoload_classmap.php';
+$class_map_file = __DIR__ . '/autoload-classmap.php';
 if ( file_exists( $class_map_file ) ) {
 
 	$class_map = include $class_map_file;
