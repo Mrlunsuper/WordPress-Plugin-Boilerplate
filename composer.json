@@ -50,7 +50,7 @@
         "codeception/util-universalframework": "^1.0",
         "codeception/module-cli": "^1.0",
         "coenjacobs/mozart": "dev-master",
-        "cweagans/composer-patches": "~1.0",
+        "cweagans/composer-patches": "*",
         "jaschilz/php-coverage-badger": "^2.0",
         "kporras07/composer-symlinks": "dev-master",
         "lucatume/wp-browser": "*",
