@@ -13,7 +13,7 @@ namespace Plugin_Package_Name\includes;
  *
  * @see I18n
  */
-class Plugin_Package_Name_I18n_Test extends \Codeception\TestCase\WPTestCase {
+class I18n_Integration_Test extends \Codeception\TestCase\WPTestCase {
 
 	/**
 	 * AFAICT, this will fail until a translation has been added.
