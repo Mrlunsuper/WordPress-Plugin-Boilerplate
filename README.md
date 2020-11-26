@@ -349,6 +349,8 @@ To add a project in another local directory, ensure it has its own `composer.jso
  }
 ```
 
+https://getcomposer.org/doc/articles/repository-priorities.md
+
 ### GitHub repository containing composer.json
 
 By including plugins direct from GitHub, you may get additional files such as unit tests and JavaScript sources.
