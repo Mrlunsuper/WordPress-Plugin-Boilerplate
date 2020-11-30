@@ -12,3 +12,6 @@ RewriteRule (.*) %{REQUEST_URI}?%1%2 [R=301,L,NE]
 # Enable WP_DEBUG.
 php_flag log_errors On
 php_value error_log "wp-content/php_errors.log"
+
+# Trick WordPress into thinking we're serving over HTTPS.
+SetEnv HTTPS "on"
