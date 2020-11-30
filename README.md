@@ -111,9 +111,6 @@ export $(grep -v '^#' .env.testing | xargs);
 
 vendor/bin/wp core install --url="localhost:8080/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org;
 
-vendor/bin/wp option set home http://localhost:8080/$PLUGIN_SLUG
-vendor/bin/wp option set siteurl http://localhost:8080/$PLUGIN_SLUG
-
 vendor/bin/wp plugin activate $PLUGIN_SLUG;
 
 vendor/bin/wp user create bob bob@example.org --user_pass=password
@@ -171,7 +168,7 @@ Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `g
 
 ```
 gh repo create $PLUGIN_SLUG --public -y
-git push origin master
+git push origin master # or main
 ```
 
 Setup gh-pages branch (for code coverage html report)).
