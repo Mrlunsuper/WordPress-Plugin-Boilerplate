@@ -158,11 +158,6 @@ mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > t
 Discard this boilerplate repo's .git and README and start fresh:
 
 ```
-https://cli.github.com/
-brew install gh 
-gh auth login
-
-
 rm -rf .git
 rm README.md
 mv README-rename.md README.md
