@@ -12,7 +12,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "process-timeout": 0
+        "process-timeout": 0,
+        "sort-packages": true
     },
     "repositories": [
         {
@@ -20,7 +21,7 @@
             "type": "git"
         },
         {
-            "url": "https://github.com/pablo-sg-pacheco/wp-namespace-autoloader",
+            "url": "https://github.com/BrianHenryIE/composer-phpstorm",
             "type": "git"
         },
         {
@@ -29,6 +30,10 @@
         },
         {
             "url": "https://github.com/BrianHenryIE/composer-phpstorm",
+            "type": "git"
+        },
+        {
+            "url": "https://github.com/BrianHenryIE/bh-wp-dev",
             "type": "git"
         },
         {
@@ -44,6 +49,7 @@
     "require-dev": {
         "10up/wp_mock": "0.4.2",
         "brianhenryie/composer-phpstorm": "dev-master",
+        "brianhenryie/wp-dev": "dev-master",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "codeception/module-asserts": "^1.0",
         "codeception/module-db": "^1.0.0",
@@ -53,7 +59,7 @@
         "codeception/util-universalframework": "^1.0",
         "codeception/module-cli": "^1.0",
         "coenjacobs/mozart": "dev-master",
-        "cweagans/composer-patches": "~1.0",
+        "cweagans/composer-patches": "*",
         "jaschilz/php-coverage-badger": "^2.0",
         "kporras07/composer-symlinks": "dev-master",
         "lucatume/wp-browser": "*",
@@ -68,10 +74,6 @@
     },
     "extra": {
         "patches": {
-            "coenjacobs/mozart": {
-                "DIRECTORY_SEPARATOR": "https://github.com/coenjacobs/mozart/pull/61.patch",
-                "Delete empty directories": "https://github.com/coenjacobs/mozart/pull/59.patch"
-            },
             "jaschilz/php-coverage-badger": {
                 "Allow customising the text": "https://github.com/JASchilz/PHPCoverageBadge/pull/1.patch"
             },
@@ -123,6 +125,9 @@
             "mkdir -p wordpress/wp-content/uploads",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
             "BrianHenryIE\\ComposerPhpStorm\\PHPUnitRunConfigurations::update"
+        ],
+        "create-plugin-archive": [
+            "BrianHenryIE\\WP_Dev\\CreatePluginArchive::createZip"
         ]
     }
 }

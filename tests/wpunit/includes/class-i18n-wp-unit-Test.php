@@ -13,7 +13,7 @@ namespace Plugin_Package_Name\includes;
  *
  * @see I18n
  */
-class I18n_Test extends \Codeception\TestCase\WPTestCase {
+class I18n_WP_Unit_Test extends \Codeception\TestCase\WPTestCase {
 
 	/**
 	 * Checks if the filter run by WordPress in the load_plugin_textdomain() function is called.

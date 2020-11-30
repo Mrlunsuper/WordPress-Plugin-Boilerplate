@@ -116,7 +116,7 @@ vendor/bin/wp option set siteurl http://localhost:8080/$PLUGIN_SLUG
 
 vendor/bin/wp plugin activate $PLUGIN_SLUG;
 
-vendor/bin/wp user create bob bob@example.org;
+vendor/bin/wp user create bob bob@example.org --user_pass=password
 
 mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
@@ -155,16 +155,49 @@ export $(grep -v '^#' .env.testing | xargs);
 mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
 
-Discard this repo's .git and README and start fresh:
+Discard this boilerplate repo's .git and README and start fresh:
 
 ```
+https://cli.github.com/
+brew install gh 
+gh auth login
+
+
 rm -rf .git
 rm README.md
 mv README-rename.md README.md
+
 git init
+git add README.md
+git commit -am "Initial commit"
+```
+
+Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `gh auth login`)
+
+```
+gh repo create $PLUGIN_SLUG --public -y
+git push origin master
+```
+
+Setup gh-pages branch (for code coverage html report)).
+
+```
+git checkout --orphan gh-pages
+
+touch index.html
+git add index.html
+git commit -m 'Set up gh-pages branch' index.html
+
+git push origin gh-pages
+git checkout master
+```
+
+Start a dev branch.
+
+```
 git checkout -b dev
 git add .
-git commit -am "Initial commit"
+git commit -am "Dev"
 ```
  
 ## Usage
@@ -202,13 +235,14 @@ When making changes to the local WordPress installation to prep for acceptance t
 # export PATH=${PATH}:/usr/local/mysql/bin
 
 export $(grep -v '^#' .env.testing | xargs)
-mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD $TEST_SITE_DB_NAME > tests/_data/dump.sql
+mysql -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD $TEST_SITE_DB_NAME < tests/_data/dump.sql
 ```
 
 If you need to manually restore it:
 
 ```
-mysql -u $mysql_username -p$mysql_password $test_site_db_name < tests/_data/dump.sql
+export $(grep -v '^#' .env.testing | xargs)
+mysql -u $mysql_username -p$mysql_password $TEST_SITE_DB_NAME < tests/_data/dump.sql
 ```
 
 
@@ -314,6 +348,8 @@ To add a project in another local directory, ensure it has its own `composer.jso
   "brianhenryie/local-lib":"*",
  }
 ```
+
+https://getcomposer.org/doc/articles/repository-priorities.md
 
 ### GitHub repository containing composer.json
 
