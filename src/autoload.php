@@ -46,7 +46,7 @@ spl_autoload_register(
 		// The class name with its true namespace.
 		$bare_namespaced_class_name = preg_replace( "#$dep_namespace\\\*#", '', $namespaced_class_name );
 
-		$file_path = $autoload_directory . str_replace( '\\', '/', $bare_namespaced_class_name ) . '.php';
+		$file_path = $autoload_directory . str_replace( '\\', DIRECTORY_SEPARATOR, $bare_namespaced_class_name ) . '.php';
 
 		if ( file_exists( $file_path ) ) {
 			require_once $file_path;
