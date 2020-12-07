@@ -59,6 +59,7 @@
         "phpcompatibility/phpcompatibility-wp": "*",
         "squizlabs/php_codesniffer": "dev-master#1371c59bd5da5cfc877ab8478753362edc9bbc9b",
         "wordpress/wordpress": "^5.5",
+        "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*",
         "wpackagist-theme/twentytwenty": "*",
         "voku/portable-ascii": "dev-master"
