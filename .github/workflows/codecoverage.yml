@@ -48,7 +48,7 @@ jobs:
 #        run: php -r "file_put_contents( 'auth.json', json_encode( [ 'http-basic' => [ 'blog.brianhenry.ie' => [ 'username' => '"${{ secrets.COMPOSER_AUTH_SECRET }}"', 'password' => 'satispress' ] ] ] ) );"
 
       - name: Read .env.testing
-        uses: c-py/action-dotenv-to-setenv@v1
+        uses: c-py/action-dotenv-to-setenv@v2
         with:
           env-file: .env.testing
 
