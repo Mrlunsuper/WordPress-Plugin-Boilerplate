@@ -12,6 +12,8 @@ use Plugin_Package_Name\includes\Plugin_Package_Name;
 
 /**
  * Class Plugin_WP_Mock_Test
+ *
+ * @coversNothing
  */
 class Plugin_Unit_Test extends \Codeception\Test\Unit {
 

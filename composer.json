@@ -118,6 +118,12 @@
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
             "BrianHenryIE\\ComposerPhpStorm\\PHPUnitRunConfigurations::update"
         ],
+        "coverage-tests": [
+            "vendor/bin/codecept run unit --coverage unit.cov",
+            "vendor/bin/codecept run wpunit --coverage wpunit.cov",
+            "vendor/bin/phpcov merge --clover tests/_output/clover.xml --html tests/_output/html tests/_output --text;",
+            "open tests/_output/html/index.html"
+        ],
         "create-plugin-archive": [
             "BrianHenryIE\\WP_Dev\\CreatePluginArchive::createZip"
         ]
