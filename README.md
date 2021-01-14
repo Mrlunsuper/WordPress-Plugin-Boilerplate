@@ -37,7 +37,7 @@ There are some differences between `sed` on MacOS and Linux. See [PR6](https://g
 
 ## Setup a New Plugin
 
-Open Terminal and set the variables and your local MySQL credentials:
+Open Terminal and set the variables, your local MySQL credentials, and your WordPress.org credentials for deployment:
 
 ```
 plugin_name="Example Plugin"
@@ -46,6 +46,9 @@ your_email="BrianHenryIE@gmail.com"
 
 mysql_username="root"
 mysql_password="secret"
+
+WP_ORG_SVN_USERNAME="email@example.org"
+WP_ORG_SVN_PASSWORD="wordpressorgpassword"
 ```
 
 Run these commands to generate replacements (or define them yourself):
@@ -191,6 +194,14 @@ git checkout -b dev
 git add .
 git commit -am "Dev"
 ```
+
+Add WordPress.org username and password to GitHub Secrets for use in deployments:
+
+```
+gh secret set SVN_USERNAME -b"${WP_ORG_SVN_USERNAME}"
+gh secret set SVN_USERNAME -b"${WP_ORG_SVN_PASSWORD}"
+```
+
  
 ## Usage
 
