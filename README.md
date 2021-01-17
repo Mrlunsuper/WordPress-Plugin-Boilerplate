@@ -41,7 +41,7 @@ Open Terminal and set the variables, your local MySQL credentials, and your Word
 
 ```
 plugin_name="Example Plugin"
-your_name="Brian Henry"
+your_name="BrianHenryIE"
 your_email="BrianHenryIE@gmail.com"
 
 mysql_username="root"
