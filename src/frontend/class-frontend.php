@@ -58,6 +58,8 @@ class Frontend {
 	/**
 	 * Register the stylesheets for the frontend-facing side of the site.
 	 *
+	 * @hooked wp_enqueue_scripts
+	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
@@ -80,6 +82,8 @@ class Frontend {
 
 	/**
 	 * Register the JavaScript for the frontend-facing side of the site.
+	 *
+	 * @hooked wp_enqueue_scripts
 	 *
 	 * @since    1.0.0
 	 */

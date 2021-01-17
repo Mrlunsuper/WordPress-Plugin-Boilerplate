@@ -58,6 +58,8 @@ class Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
+	 * @hooked admin_enqueue_scripts
+	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
@@ -80,6 +82,8 @@ class Admin {
 
 	/**
 	 * Register the JavaScript for the admin area.
+	 *
+	 * @hooked admin_enqueue_scripts
 	 *
 	 * @since    1.0.0
 	 */
