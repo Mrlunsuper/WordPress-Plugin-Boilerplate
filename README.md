@@ -71,6 +71,7 @@ git clone https://github.com/BrianHenryIE/WordPress-Plugin-Boilerplate.git
 mv WordPress-Plugin-Boilerplate $plugin_slug
 cd $plugin_slug
 
+
 # Branches can be merged here.
 # git merge origin/codeception-wp-browser
 
@@ -199,7 +200,7 @@ Add WordPress.org username and password to GitHub Secrets for use in deployments
 
 ```
 gh secret set SVN_USERNAME -b"${WP_ORG_SVN_USERNAME}"
-gh secret set SVN_USERNAME -b"${WP_ORG_SVN_PASSWORD}"
+gh secret set SVN_PASSWORD -b"${WP_ORG_SVN_PASSWORD}"
 ```
 
  
