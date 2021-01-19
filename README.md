@@ -165,7 +165,7 @@ mv README-rename.md README.md
 
 git init
 git add README.md
-git commit -am "Initial commit"
+git commit -m "Initial commit"
 ```
 
 Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `gh auth login`)
