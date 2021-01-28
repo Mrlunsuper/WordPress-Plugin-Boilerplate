@@ -123,7 +123,7 @@ mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > t
 ```
 
 
-Run the tests to confirm it's working:
+Run the tests to confirm it's working (this also does code generation necessary for autocomplete):
 
 ```
 vendor/bin/codecept run acceptance;
@@ -168,7 +168,7 @@ git add README.md
 git commit -m "Initial commit"
 ```
 
-Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `gh auth login`)
+Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `gh auth login`). You might want to set the repo private here too.
 
 ```
 gh repo create $PLUGIN_SLUG --public -y
@@ -203,6 +203,11 @@ gh secret set SVN_USERNAME -b"${WP_ORG_SVN_USERNAME}"
 gh secret set SVN_PASSWORD -b"${WP_ORG_SVN_PASSWORD}"
 ```
 
+The default admin login is `username`/`password`:
+
+```
+open "http://localhost:8080/$PLUGIN_SLUG/wp-admin"
+```
  
 ## Usage
 
