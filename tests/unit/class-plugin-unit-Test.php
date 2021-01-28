@@ -21,6 +21,12 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 		\WP_Mock::setUp();
 	}
 
+	// This is required for `'times' => 1` to be verified.
+	protected function _tearDown() {
+		parent::_tearDown();
+		\WP_Mock::tearDown();
+	}
+	
 	/**
 	 * Verifies the plugin initialization.
 	 */
