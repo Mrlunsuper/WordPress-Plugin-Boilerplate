@@ -457,6 +457,18 @@ https://github.com/wikimedia/composer-merge-plugin
 
 https://github.com/wikimedia/composer-merge-plugin
 
+
+Xdebug with WP ClI. Run once in your Terminal session:
+```
+export XDEBUG_CONFIG="idekey=PHPSTORM remote_connect_back=1"
+```
+
+Xdebug with Postman. Append to the URL:
+
+```
+&XDEBUG_SESSION_START=PHPSTORM
+```
+
 ## Notes
 
 #### WPPB-Lib
