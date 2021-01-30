@@ -28,6 +28,7 @@ coverage:
         - /*/index.php
         - /*/*.txt
         - src/autoload.php
+        - src/autoload-classmap.php
         - /*/*.css
         - /*/*.js
 bootstrap: bootstrap.php
