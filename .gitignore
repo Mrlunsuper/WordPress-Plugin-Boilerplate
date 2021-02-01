@@ -52,3 +52,4 @@ scratch
 auth.json
 
 *.zip
+composer.lock
