@@ -57,7 +57,7 @@
         "phpunit/phpunit": ">=7.0",
         "phpunit/phpcov": "^5.0",
         "phpcompatibility/phpcompatibility-wp": "*",
-        "squizlabs/php_codesniffer": "dev-master#1371c59bd5da5cfc877ab8478753362edc9bbc9b",
+        "squizlabs/php_codesniffer": "dev-master",
         "wordpress/wordpress": "^5.5",
         "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*",
@@ -68,9 +68,6 @@
         "patches": {
             "jaschilz/php-coverage-badger": {
                 "Allow customising the text": "https://github.com/JASchilz/PHPCoverageBadge/pull/1.patch"
-            },
-            "squizlabs/php_codesniffer": {
-                "Add GitHub Actions Annotations report type": "https://github.com/squizlabs/PHP_CodeSniffer/pull/2918.patch"
             },
             "10up/wp_mock": {
                 "Add AnyObject matcher": "https://github.com/BrianHenryIE/wp_mock/pull/1.patch"

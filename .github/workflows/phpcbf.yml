@@ -19,6 +19,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install PHP
+          uses: shivammathur/setup-php@v2
+          with:
+            php-version: '7.4'
+            tools: composer, cs2pr
+
 #      - name: Create Composer auth.json
 #        run: php -r "file_put_contents( 'auth.json', json_encode( [ 'http-basic' => [ 'blog.brianhenry.ie' => [ 'username' => '"${{ secrets.COMPOSER_AUTH_SECRET }}"', 'password' => 'satispress' ] ] ] ) );"
 
@@ -36,4 +42,4 @@ jobs:
 
       - name: Run PHPCS to add annotations to the commit
         continue-on-error: true
-        run: vendor/bin/phpcs --report=GitHubActionsAnnotations
+        run: vendor/bin/phpcs -q -n --report=checkstyle | cs2pr
