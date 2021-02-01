@@ -95,7 +95,7 @@ class Plugin_Package_Name {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	protected function set_locale() {
+	protected function set_locale(): void {
 
 		$plugin_i18n = new I18n();
 
@@ -110,7 +110,7 @@ class Plugin_Package_Name {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	protected function define_admin_hooks() {
+	protected function define_admin_hooks(): void {
 
 		$plugin_admin = new Admin( $this->get_plugin_name(), $this->get_version() );
 
@@ -126,7 +126,7 @@ class Plugin_Package_Name {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	protected function define_frontend_hooks() {
+	protected function define_frontend_hooks(): void {
 
 		$plugin_frontend = new Frontend( $this->get_plugin_name(), $this->get_version() );
 
@@ -140,7 +140,7 @@ class Plugin_Package_Name {
 	 *
 	 * @since    1.0.0
 	 */
-	public function run() {
+	public function run(): void {
 		$this->loader->run();
 	}
 
@@ -151,7 +151,7 @@ class Plugin_Package_Name {
 	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_plugin_name() {
+	public function get_plugin_name(): string {
 		return $this->plugin_name;
 	}
 
@@ -161,7 +161,7 @@ class Plugin_Package_Name {
 	 * @since     1.0.0
 	 * @return    Loader    Orchestrates the hooks of the plugin.
 	 */
-	public function get_loader() {
+	public function get_loader(): Loader {
 		return $this->loader;
 	}
 
@@ -171,7 +171,7 @@ class Plugin_Package_Name {
 	 * @since     1.0.0
 	 * @return    string    The version number of the plugin.
 	 */
-	public function get_version() {
+	public function get_version(): string {
 		return $this->version;
 	}
 

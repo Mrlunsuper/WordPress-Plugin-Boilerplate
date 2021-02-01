@@ -48,7 +48,7 @@ define( 'PLUGIN_NAME_VERSION', '1.0.0' );
  * The code that runs during plugin activation.
  * This action is documented in includes/class-activator.php
  */
-function activate_plugin_snake() {
+function activate_plugin_snake(): void {
 
 	Activator::activate();
 }
@@ -57,7 +57,7 @@ function activate_plugin_snake() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-deactivator.php
  */
-function deactivate_plugin_snake() {
+function deactivate_plugin_snake(): void {
 
 	Deactivator::deactivate();
 }
@@ -75,7 +75,7 @@ register_deactivation_hook( __FILE__, 'Plugin_Package_Name\deactivate_plugin_sna
  *
  * @since    1.0.0
  */
-function instantiate_plugin_snake() {
+function instantiate_plugin_snake(): Plugin_Package_Name {
 
 	$plugin = new Plugin_Package_Name();
 
