@@ -27,7 +27,6 @@ namespace Plugin_Package_Name\includes;
  */
 class I18n {
 
-
 	/**
 	 * Load the plugin text domain for translation.
 	 *
@@ -40,11 +39,9 @@ class I18n {
 		load_plugin_textdomain(
 			'plugin-slug',
 			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+			dirname( plugin_basename( __FILE__ ), 2 ) . '/languages/'
 		);
 
 	}
-
-
 
 }
