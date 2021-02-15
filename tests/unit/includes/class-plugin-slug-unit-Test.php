@@ -35,6 +35,7 @@ class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 			array( new AnyInstance( I18n::class ), 'load_plugin_textdomain' )
 		);
 
+		new Plugin_Package_Name();
 	}
 
 	/**
@@ -51,6 +52,8 @@ class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 			'admin_enqueue_scripts',
 			array( new AnyInstance( Admin::class ), 'enqueue_scripts' )
 		);
+
+		new Plugin_Package_Name();
 	}
 
 	/**
@@ -67,6 +70,8 @@ class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 			'wp_enqueue_scripts',
 			array( new AnyInstance( Frontend::class ), 'enqueue_scripts' )
 		);
+
+		new Plugin_Package_Name();
 	}
 
 }
