@@ -39,7 +39,7 @@ class I18n {
 		load_plugin_textdomain(
 			'plugin-slug',
 			false,
-			dirname( plugin_basename( __FILE__ ), 2 ) . '/languages/'
+			dirname( plugin_basename( __FILE__ ), 2 ) . '/Languages/'
 		);
 
 	}

@@ -11,8 +11,6 @@
 
 namespace Plugin_Package_Name\frontend;
 
-use Plugin_Package_Name\BrianHenryIE\WPPB\WPPB_Object;
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -23,7 +21,7 @@ use Plugin_Package_Name\BrianHenryIE\WPPB\WPPB_Object;
  * @subpackage Plugin_Package_Name/frontend
  * @author     Your Name <email@example.com>
  */
-class Frontend extends WPPB_Object {
+class Frontend {
 
 	/**
 	 * Register the stylesheets for the frontend-facing side of the site.
@@ -46,7 +44,7 @@ class Frontend extends WPPB_Object {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-slug-frontend.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-slug-frontend.css', array(), PLUGIN_NAME_VERSION, 'all' );
 
 	}
 
@@ -71,7 +69,7 @@ class Frontend extends WPPB_Object {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-slug-frontend.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-slug-frontend.js', array( 'jquery' ), PLUGIN_NAME_VERSION, false );
 
 	}
 
