@@ -87,4 +87,3 @@ function instantiate_plugin_snake(): Plugin_Package_Name {
  * admin-specific hooks, and frontend-facing site hooks.
  */
 $GLOBALS['plugin_snake'] = $plugin_snake = instantiate_plugin_snake();
-$plugin_snake->run();
