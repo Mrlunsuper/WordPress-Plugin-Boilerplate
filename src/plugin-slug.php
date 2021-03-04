@@ -29,7 +29,6 @@ namespace Plugin_Package_Name;
 use Plugin_Package_Name\Includes\Activator;
 use Plugin_Package_Name\Includes\Deactivator;
 use Plugin_Package_Name\Includes\Plugin_Package_Name;
-use Plugin_Package_Name\BrianHenryIE\WPPB\WPPB_Loader;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -78,8 +77,7 @@ register_deactivation_hook( __FILE__, 'Plugin_Package_Name\deactivate_plugin_sna
  */
 function instantiate_plugin_snake(): Plugin_Package_Name {
 
-	$loader = new WPPB_Loader();
-	$plugin = new Plugin_Package_Name( $loader );
+	$plugin = new Plugin_Package_Name();
 
 	return $plugin;
 }

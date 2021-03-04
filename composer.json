@@ -25,10 +25,6 @@
             "type": "git"
         },
         {
-            "url": "https://github.com/BrianHenryIE/WPPB-lib",
-            "type": "git"
-        },
-        {
             "url": "https://github.com/BrianHenryIE/composer-phpstorm",
             "type": "git"
         },
@@ -42,8 +38,7 @@
         }
     ],
     "require": {
-        "brianhenryie/wppb-lib": "dev-master",
-        "php": ">=7.2",
+        "php": ">=7.4",
         "pablo-sg-pacheco/wp-namespace-autoloader": "dev-master"
     },
     "require-dev": {
@@ -66,7 +61,7 @@
         "phpcompatibility/phpcompatibility-wp": "*",
         "phpstan/extension-installer": "^1.1",
         "phpunit/phpcov": "^5.0",
-        "squizlabs/php_codesniffer": "dev-master",
+        "squizlabs/php_codesniffer": "*",
         "szepeviktor/phpstan-wordpress": "^0.7.2",
         "voku/portable-ascii": "dev-master",
         "wordpress/wordpress": "^5.5",

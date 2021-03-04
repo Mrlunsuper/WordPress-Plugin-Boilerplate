@@ -44,7 +44,7 @@ class Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-slug-admin.css', array(), PLUGIN_NAME_VERSION, 'all' );
+		wp_enqueue_style( 'plugin-slug', plugin_dir_url( __FILE__ ) . 'css/plugin-slug-admin.css', array(), PLUGIN_NAME_VERSION, 'all' );
 
 	}
 
@@ -69,7 +69,7 @@ class Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-slug-admin.js', array( 'jquery' ), PLUGIN_NAME_VERSION, false );
+		wp_enqueue_script( 'plugin-slug', plugin_dir_url( __FILE__ ) . 'js/plugin-slug-admin.js', array( 'jquery' ), PLUGIN_NAME_VERSION, false );
 
 	}
 

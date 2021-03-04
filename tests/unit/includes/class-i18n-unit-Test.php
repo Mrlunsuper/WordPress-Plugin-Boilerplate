@@ -1,19 +1,17 @@
 <?php
 /**
- * Tests for the root plugin file.
+ *
  *
  * @package Plugin_Package_Name
  * @author  Your Name <email@example.com>
  */
 
-namespace Plugin_Package_Name;
-
-use Plugin_Package_Name\Includes\Plugin_Package_Name;
+namespace Plugin_Package_Name\Includes;
 
 /**
  * Class Plugin_WP_Mock_Test
  *
- * @coversNothing
+ * @covers \Plugin_Package_Name\Includes\I18n
  */
 class I18n_Unit_Test extends \Codeception\Test\Unit {
 
