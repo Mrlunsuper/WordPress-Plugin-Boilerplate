@@ -4,10 +4,10 @@
  * @author  Your Name <email@example.com>
  */
 
-namespace Plugin_Package_Name\includes;
+namespace Plugin_Package_Name\Includes;
 
-use Plugin_Package_Name\admin\Admin;
-use Plugin_Package_Name\frontend\Frontend;
+use Plugin_Package_Name\Admin\Admin;
+use Plugin_Package_Name\Frontend\Frontend;
 use WP_Mock\Matcher\AnyInstance;
 
 /**

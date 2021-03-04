@@ -6,7 +6,7 @@
  * @author  Your Name <email@example.com>
  */
 
-namespace Plugin_Package_Name\includes;
+namespace Plugin_Package_Name\Includes;
 
 /**
  * Class I18n_Test

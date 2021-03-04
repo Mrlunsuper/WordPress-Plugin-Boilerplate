@@ -9,7 +9,7 @@
  * @subpackage Plugin_Package_Name/admin
  */
 
-namespace Plugin_Package_Name\admin;
+namespace Plugin_Package_Name\Admin;
 
 /**
  * The admin-specific functionality of the plugin.

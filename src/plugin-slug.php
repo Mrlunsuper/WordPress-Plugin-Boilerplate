@@ -26,9 +26,9 @@
 
 namespace Plugin_Package_Name;
 
-use Plugin_Package_Name\includes\Activator;
-use Plugin_Package_Name\includes\Deactivator;
-use Plugin_Package_Name\includes\Plugin_Package_Name;
+use Plugin_Package_Name\Includes\Activator;
+use Plugin_Package_Name\Includes\Deactivator;
+use Plugin_Package_Name\Includes\Plugin_Package_Name;
 use Plugin_Package_Name\BrianHenryIE\WPPB\WPPB_Loader;
 
 // If this file is called directly, abort.

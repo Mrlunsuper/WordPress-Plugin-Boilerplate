@@ -8,12 +8,12 @@
  * @author Brian Henry <BrianHenryIE@gmail.com>
  */
 
-namespace Plugin_Package_Name\admin;
+namespace Plugin_Package_Name\Admin;
 
 /**
  * Class Admin_Test
  *
- * @covers \Plugin_Package_Name\admin\Admin
+ * @covers \Plugin_Package_Name\Admin\Admin
  */
 class Admin_Test extends \Codeception\Test\Unit {
 
@@ -70,7 +70,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 			)
 		);
 
-		$admin = new Admin( $this->plugin_name, $this->version );
+		$admin = new Admin();
 
 		$admin->enqueue_styles();
 

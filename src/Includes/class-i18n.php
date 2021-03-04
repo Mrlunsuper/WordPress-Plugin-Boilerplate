@@ -12,7 +12,7 @@
  * @subpackage Plugin_Package_Name/includes
  */
 
-namespace Plugin_Package_Name\includes;
+namespace Plugin_Package_Name\Includes;
 
 /**
  * Define the internationalization functionality.
