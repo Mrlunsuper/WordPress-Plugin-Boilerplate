@@ -63,7 +63,7 @@ class Plugin_Package_Name {
 
 		$plugin_i18n = new I18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 
 	}
 
@@ -78,8 +78,8 @@ class Plugin_Package_Name {
 
 		$plugin_admin = new Admin();
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		add_action( 'admin_enqueue_scripts', array( $plugin_admin, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $plugin_admin, 'enqueue_scripts' ) );
 
 	}
 
@@ -94,8 +94,8 @@ class Plugin_Package_Name {
 
 		$plugin_frontend = new Frontend();
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'enqueue_scripts' );
+		add_action( 'wp_enqueue_scripts', array( $plugin_frontend, 'enqueue_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $plugin_frontend, 'enqueue_scripts' ) );
 
 	}
 

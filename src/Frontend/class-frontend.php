@@ -32,18 +32,6 @@ class Frontend {
 	 */
 	public function enqueue_styles(): void {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style( 'plugin-slug', plugin_dir_url( __FILE__ ) . 'css/plugin-slug-frontend.css', array(), PLUGIN_NAME_VERSION, 'all' );
 
 	}
@@ -56,18 +44,6 @@ class Frontend {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts(): void {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 		wp_enqueue_script( 'plugin-slug', plugin_dir_url( __FILE__ ) . 'js/plugin-slug-frontend.js', array( 'jquery' ), PLUGIN_NAME_VERSION, false );
 

@@ -73,7 +73,7 @@ cd $plugin_slug
 
 
 # Branches can be merged here.
-# git merge origin/codeception-wp-browser
+# git merge origin/no-loader
 
 open -a PhpStorm ./
 ```
