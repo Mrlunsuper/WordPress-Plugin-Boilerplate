@@ -203,7 +203,7 @@ gh secret set SVN_USERNAME -b"${WP_ORG_SVN_USERNAME}"
 gh secret set SVN_PASSWORD -b"${WP_ORG_SVN_PASSWORD}"
 ```
 
-The default admin login is `username`/`password`:
+The default admin login is `admin`/`password`:
 
 ```
 open "http://localhost:8080/$PLUGIN_SLUG/wp-admin"
