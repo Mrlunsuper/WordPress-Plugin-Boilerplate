@@ -41,8 +41,8 @@ cache
 /vendor/
 
 wordpress
-src/vendor/
-src/dependencies/
+src/Mozart/
+
 wp-content/
 
 scratch

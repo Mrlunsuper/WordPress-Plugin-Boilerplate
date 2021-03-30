@@ -25,6 +25,8 @@ export $(grep -v '^#' .env.testing | xargs)
 
 # Create the databases.
 mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED WITH mysql_native_password BY '"$TEST_DB_PASSWORD"';";
+mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED BY '"$TEST_DB_PASSWORD"';";
+
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_SITE_DB_NAME"; USE "$TEST_SITE_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_SITE_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_DB_NAME"; USE "$TEST_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
 ```
@@ -52,12 +54,14 @@ vendor/bin/codecept run integration;
 vendor/bin/codecept run acceptance;
 ```
 
-Output and merge code coverage with:
+Show code coverage (unit+wpunit):
 
 ```
-vendor/bin/codecept run unit --coverage unit.cov;
-vendor/bin/codecept run wpunit --coverage wpunit.cov;
-vendor/bin/phpcov merge --clover tests/_output/clover.xml --html tests/_output/html tests/_output --text;
+XDEBUG_MODE=coverage composer run-script coverage-tests 
+```
+
+```
+vendor/bin/phpstan analyse --memory-limit 1G
 ```
 
 To save changes made to the acceptance database:
