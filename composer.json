@@ -87,7 +87,7 @@
             "dep_namespace": "Plugin_Package_Name\\",
             "dep_directory": "/src/Mozart/PSR-04/",
             "classmap_prefix": "Plugin_Package_Name_",
-            "classmap_directory": "/src/Mozart/Classes",
+            "classmap_directory": "/src/Mozart/Classes/",
             "delete_vendor_directories": false
         },
         "symlinks": {
