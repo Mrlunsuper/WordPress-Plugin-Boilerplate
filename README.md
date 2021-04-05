@@ -58,10 +58,10 @@ plugin_slug=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g'); e
 plugin_snake=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g'); echo $plugin_snake; # example_plugin
 plugin_package_name=$(echo $plugin_name | sed 's/ /_/g'); echo $plugin_package_name; # Example_Plugin
 plugin_capitalized=$(echo $plugin_name | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g'); echo $plugin_capitalized; # EXAMPLE_PLUGIN
-test_site_db_name=${plugin_snake:0:57}"_tests" # example_plugin_tests
-test_db_name=${plugin_snake:0:51}"_integration" # example_plugin_integration
-plugin_db_username=${plugin_slug:0:31} # 32 character max for username 
-plugin_db_password=$plugin_slug
+test_site_db_name=${plugin_snake:0:57}"_tests"; # example_plugin_tests
+test_db_name=${plugin_snake:0:51}"_integration"; # example_plugin_integration
+plugin_db_username=${plugin_slug:0:31}; # 32 character max for username 
+plugin_db_password=$plugin_slug;
 ```
 
 Then this block of commands will take care of most of the downloading:
@@ -97,10 +97,17 @@ Create two local databases for tests:
 ```
 # export PATH=${PATH}:/usr/local/mysql/bin
 
-# Make .env available to bash
-export $(grep -v '^#' .env.testing | xargs)
+# Make .env available to bash or zsh
+#export $(grep -v '^#' .env.testing | xargs);
+#source .env.testing
 
-mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED WITH mysql_native_password BY '"$TEST_DB_PASSWORD"';";
+# Create the database user
+# For MySQL
+# mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED WITH mysql_native_password BY '"$TEST_DB_PASSWORD"';";
+# For MariaDB:
+# mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED BY '"$TEST_DB_PASSWORD"';";
+
+# Create the databases.
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_SITE_DB_NAME"; USE "$TEST_SITE_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_SITE_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_DB_NAME"; USE "$TEST_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
 ```
@@ -110,8 +117,9 @@ Install everything, setup WordPress, save a copy of the database:
 ```
 composer update
 
-# Make .env available to bash
-export $(grep -v '^#' .env.testing | xargs);
+# Make .env available to bash or zsh
+#export $(grep -v '^#' .env.testing | xargs);
+#source .env.testing
 
 vendor/bin/wp core install --url="localhost:8080/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org;
 
@@ -137,7 +145,7 @@ composer require wpackagist-plugin/woocommerce --dev --no-scripts;
 # composer require woocommerce/woocommerce --dev --no-scripts;
 # ... although this requires extra setup commands not included here.
 
-composer require wpackagist-theme/storefront:* --dev --no-scripts;
+composer require wpackagist-theme/storefront --dev --no-scripts;
 
 
 vendor/bin/wp plugin activate woocommerce;
@@ -172,7 +180,7 @@ Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `g
 
 ```
 gh repo create $PLUGIN_SLUG --public -y
-git push origin master # or main
+git push origin master; # or main
 ```
 
 Setup gh-pages branch (for code coverage html report)).
