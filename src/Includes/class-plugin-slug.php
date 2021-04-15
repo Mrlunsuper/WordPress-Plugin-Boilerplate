@@ -57,7 +57,6 @@ class Plugin_Package_Name {
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	protected function set_locale(): void {
 
@@ -72,7 +71,6 @@ class Plugin_Package_Name {
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	protected function define_admin_hooks(): void {
 
@@ -88,7 +86,6 @@ class Plugin_Package_Name {
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	protected function define_frontend_hooks(): void {
 

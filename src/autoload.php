@@ -15,11 +15,10 @@ namespace Plugin_Package_Name;
 
 use Plugin_Package_Name\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
 
+require_once __DIR__ . '/strauss/autoload.php';
 
 $class_map_files = array(
     __DIR__ . '/autoload-classmap.php',
-    __DIR__ . '/Mozart/PSR-04/autoload-classmap.php',
-    __DIR__ . '/Mozart/Classes/autoload-classmap.php',
 );
 foreach ( $class_map_files as $class_map_file ) {
     if ( file_exists( $class_map_file ) ) {
