@@ -34,7 +34,18 @@ class I18n_Unit_Test extends \Codeception\Test\Unit {
 
 		global $plugin_root_dir;
 
-		\WP_Mock::userFunction(
+        \WP_Mock::userFunction(
+            'plugin_basename',
+            array(
+                'args'   => array(
+                    \WP_Mock\Functions::type( 'string' )
+                ),
+                'return' => 'bh-wc-filter-orders-domestic-international',
+                'times' => 1
+            )
+        );
+
+        \WP_Mock::userFunction(
 			'load_plugin_textdomain',
 			array(
                 'times' => 1,

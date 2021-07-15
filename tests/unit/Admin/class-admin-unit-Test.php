@@ -13,7 +13,7 @@ namespace Plugin_Package_Name\Admin;
 /**
  * Class Admin_Test
  *
- * @covers \Plugin_Package_Name\Admin\Admin
+ * @coversDefaultClass \Plugin_Package_Name\Admin\Admin
  */
 class Admin_Test extends \Codeception\Test\Unit {
 
@@ -45,7 +45,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 	 * Verifies enqueue_styles() calls wp_enqueue_style() with appropriate parameters.
 	 * Verifies the .css file exists.
 	 *
-	 * @covers Admin::enqueue_styles
+	 * @covers ::enqueue_styles
 	 * @see wp_enqueue_style()
 	 */
 	public function test_enqueue_styles() {
@@ -81,7 +81,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 	 * Verifies enqueue_scripts() calls wp_enqueue_script() with appropriate parameters.
 	 * Verifies the .js file exists.
 	 *
-	 * @covers Admin::enqueue_scripts
+	 * @covers ::enqueue_scripts
 	 * @see wp_enqueue_script()
 	 */
 	public function test_enqueue_scripts() {

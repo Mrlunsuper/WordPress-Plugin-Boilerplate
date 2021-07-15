@@ -69,7 +69,7 @@ class Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( 'plugin-slug', plugin_dir_url( __FILE__ ) . 'js/plugin-slug-admin.js', array( 'jquery' ), PLUGIN_NAME_VERSION, false );
+		wp_enqueue_script( 'plugin-slug', plugin_dir_url( __FILE__ ) . 'js/plugin-slug-admin.js', array( 'jquery' ), PLUGIN_NAME_VERSION, true );
 
 	}
 

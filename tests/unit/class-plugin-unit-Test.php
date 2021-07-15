@@ -17,9 +17,6 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 
     protected function setup() : void
     {
-        // Because of @runInSeparateProcess.
-//        require_once __DIR__ . '/../bootstrap.php';
-//        require_once __DIR__ . '/_bootstrap.php';
         parent::setUp();
         \WP_Mock::setUp();
     }
@@ -32,9 +29,6 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 
     /**
      * Verifies the plugin initialization.
-     *
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
 	public function test_plugin_include() {
 

@@ -12,6 +12,7 @@ use WP_Mock\Matcher\AnyInstance;
 
 /**
  * Class Plugin_Package_Name_Unit_Test
+ * @coversDefaultClass \Plugin_Package_Name\Includes\Plugin_Package_Name
  */
 class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 
@@ -26,7 +27,7 @@ class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 	}
 
 	/**
-	 * @covers Plugin_Package_Name::set_locale
+	 * @covers ::set_locale
 	 */
 	public function test_set_locale_hooked() {
 
@@ -39,7 +40,7 @@ class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 	}
 
 	/**
-	 * @covers Plugin_Package_Name::define_admin_hooks
+	 * @covers ::define_admin_hooks
 	 */
 	public function test_admin_hooks() {
 
@@ -57,7 +58,7 @@ class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 	}
 
 	/**
-	 * @covers Plugin_Package_Name::define_frontend_hooks
+	 * @covers ::define_frontend_hooks
 	 */
 	public function test_frontend_hooks() {
 
