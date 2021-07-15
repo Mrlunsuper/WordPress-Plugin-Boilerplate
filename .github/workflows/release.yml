@@ -1,15 +1,18 @@
-name: Run PHP CodeSniffer
+name: Build and attach releases
 
-# Run PHPCBF to fix changes then annotate PHPCS
-# NB: Pull requests from forks do not have access to repository secrets so cannot commit changes.
+# When a new release is created on GitHub, this action runs, builds the plugin, adds
+# the GitHub updater, zips and attaches the zip to the release.
+
+# yahnis-elsts/plugin-update-checker
+
+# TODO: now, release name must match exactly the plugin base file's version.
 
 on:
-  push:
-    branches:
-      - master
+  release:
+    types: [published]
 
 jobs:
-  php-codesniffer:
+  release:
     runs-on: ubuntu-latest
 
     services:
@@ -29,6 +32,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: master
 
       - name: Install PHP
         uses: shivammathur/setup-php@2.11.0
@@ -47,18 +52,6 @@ jobs:
         with:
           env-file: .env.github
 
-      #      - name: Make envfile from Secrets
-      #        uses: SpicyPizza/create-envfile@v1.1
-      #        with:
-      #          envkey_SECRET_NAME: ${{ secrets.SECRET_NAME }}
-      #          directory: ${{ github.workspace }}
-      #          file_name: .env.secret
-
-      #      - name: Read .env.secret
-      #        uses: c-py/action-dotenv-to-setenv@v2
-      #        with:
-      #          env-file: .env.secret
-
       - name: Set env database host w/port
         run: echo "TEST_SITE_DB_HOST=127.0.0.1:${{ job.services.mysql.ports['3306'] }}" >> $GITHUB_ENV
 
@@ -71,35 +64,43 @@ jobs:
       - name: Create Composer auth.json
         run: php -r "file_put_contents( 'auth.json', json_encode( [ 'http-basic' => [ 'blog.brianhenry.ie' => [ 'username' => '"${{ secrets.COMPOSER_AUTH_SECRET }}"', 'password' => 'satispress' ] ] ] ) );"
 
-      - name: Run composer install
-        uses: php-actions/composer@v6
-        with:
-          args: --ignore-platform-reqs
+      #      - name: Run composer install
+      #        uses: php-actions/composer@v6
+      #        with:
+      #          args: --ignore-platform-reqs
+
+      # This appends code for yahnis-elsts/plugin-update-checker at the end of the main plugin file.
+      - name: Add updater
+        env:
+          code: |
+            \n\n$updateChecker = \$PLUGIN_USNAKE_Puc_v4_Factory::buildUpdateChecker(
+            	'https://github.com/brianhenryie/$PLUGIN_SLUG/',
+            	__FILE__,
+            	'$PLUGIN_SLUG'
+            );
+            $updateChecker->setBranch( 'master' );
+            $updateChecker->getVcsApi()->enableReleaseAssets();
+        run: |
+          composer require yahnis-elsts/plugin-update-checker erusev/parsedown;
+          printf "$code" >> src/$PLUGIN_SLUG.php;
 
       - name: Create wpconfig ... the composer.json creation didn't work
         run: |
           export $(grep -v '^#' .env.testing | xargs);
           sudo vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --dbhost=127.0.0.1:${{ job.services.mysql.ports['3306'] }} --allow-root --extra-php="define( 'WP_DEBUG', true ); define( 'WP_DEBUG_LOG', true );"
 
-      - name: Update site URL to match GA
+      - name: Create plugin archive
         run: |
-          vendor/bin/wp option update home 'http://localhost:8080'
-          vendor/bin/wp option update siteurl 'http://localhost:8080'
+          vendor/bin/wp dist-archive src --plugin-dirname=$PLUGIN_SLUG
 
-      - name: Run PHPCBF to fix what it can
-        continue-on-error: true
-        run: vendor/bin/phpcbf
+      # https://stackoverflow.com/questions/61256824/how-to-pass-the-output-of-a-bash-command-to-github-action-parameter
+      # echo "DIST_ARCHIVE_OUTPUT=$(vendor/bin/wp dist-archive src --plugin-dirname=bh-wp-account-and-login-ux) >> $GITHUB_ENV
+      # echo "${{ env.DIST_ARCHIVE_OUTPUT }}"
+      # Success: Created bh-wp-account-and-login-ux.0.1.1.zip
 
-      - name: Discard environment changes before commiting other changes
-        run: |
-          git checkout -- .env.testing
-          git checkout -- tests/_data/dump.sql
-
-      - name: Commit PHPCBF changes
-        uses: stefanzweifel/git-auto-commit-action@v4.1.1
+      - uses: meeDamian/github-release@2.0
         with:
-          commit_message: "🤖 PHPCBF"
-
-      - name: Run PHPCS to add annotations to the commit
-        continue-on-error: true
-        run: vendor/bin/phpcs -q -n --report=checkstyle | cs2pr
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: "$PLUGIN_SLUG.${{ github.event.release.tag_name }}.zip"
+          gzip: false
+          allow_override: true

@@ -10,7 +10,7 @@ on: ["push"]
 
 jobs:
 
-  ci:
+  integration:
     runs-on: ubuntu-latest
 
     services:
@@ -38,13 +38,15 @@ jobs:
           tools: composer, cs2pr
           extensions: zip
 
-      - name: Update environment config for GitHub Actions
-        env:
-          PLUGIN_SLUG: plugin-slug
-        run: |
-          find . -depth \( -name '.env.testing' \) -exec sed -i "s/TEST_SITE_DB_HOST=\"127.0.0.1\"/TEST_SITE_DB_HOST=\"127.0.0.1:${{ job.services.mysql.ports['3306'] }}\"/g" {} +
-          find . -depth \( -name '.env.testing' -o -name '*.cest' \) -exec sed -i "s/localhost:8080\/${{ env.PLUGIN_SLUG }}/localhost:8080/g" {} +
-          find . -depth \( -name 'dump.sql' \) -exec sed -i "s/localhost:8080\/${{ env.PLUGIN_SLUG }}/localhost:8080/g" {} +
+      - name: Read .env.testing
+        uses: c-py/action-dotenv-to-setenv@v2
+        with:
+          env-file: .env.testing
+
+      - name: Read .env.github
+        uses: c-py/action-dotenv-to-setenv@v2
+        with:
+          env-file: .env.github
 
       - name: Read .env.testing
         uses: c-py/action-dotenv-to-setenv@v2
@@ -63,6 +65,9 @@ jobs:
 #        with:
 #          env-file: .env.secret
 
+      - name: Set env database host w/port
+        run: echo "TEST_SITE_DB_HOST=127.0.0.1:${{ job.services.mysql.ports['3306'] }}" >> $GITHUB_ENV
+
       - name: Configure MySQL
         run: |
           mysql -h 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -u root -ppassword -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED WITH mysql_native_password BY '"$TEST_DB_PASSWORD"';";
@@ -73,7 +78,7 @@ jobs:
 #        run: php -r "file_put_contents( 'auth.json', json_encode( [ 'http-basic' => [ 'blog.brianhenry.ie' => [ 'username' => '"${{ secrets.COMPOSER_AUTH_SECRET }}"', 'password' => 'satispress' ] ] ] ) );"
 
       - name: Run composer install
-        uses: php-actions/composer@v5
+        uses: php-actions/composer@v6
         with:
           args: --ignore-platform-reqs
 
@@ -81,6 +86,14 @@ jobs:
         run: |
           export $(grep -v '^#' .env.testing | xargs);
           sudo vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --dbhost=127.0.0.1:${{ job.services.mysql.ports['3306'] }} --allow-root --extra-php="define( 'WP_DEBUG', true ); define( 'WP_DEBUG_LOG', true );"
+
+      - name: Update site URL to match GA
+        run: |
+          vendor/bin/wp option update home 'http://localhost:8080'
+          vendor/bin/wp option update siteurl 'http://localhost:8080'
+
+      - name: Allow writing to wp-content
+        run: sudo chmod -R a+w wp-content
 
       - name: Run integration tests
         run: vendor/bin/codecept run integration --report
