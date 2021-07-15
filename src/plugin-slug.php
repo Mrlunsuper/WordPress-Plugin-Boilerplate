@@ -44,27 +44,8 @@ require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
  */
 define( 'PLUGIN_NAME_VERSION', '1.0.0' );
 
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-activator.php
- */
-function activate_plugin_snake(): void {
-
-	Activator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-deactivator.php
- */
-function deactivate_plugin_snake(): void {
-
-	Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'Plugin_Package_Name\activate_plugin_snake' );
-register_deactivation_hook( __FILE__, 'Plugin_Package_Name\deactivate_plugin_snake' );
-
+register_activation_hook( __FILE__, array( Activator::class, 'activate' ) );
+register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) );
 
 /**
  * Begins execution of the plugin.
