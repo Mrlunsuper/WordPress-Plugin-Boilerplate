@@ -233,7 +233,8 @@ Use PHP Code Beautifier and Fixer to automatically correct them where possible:
 vendor/bin/phpcbf
 ```
 
-To configure WPCS checking on GitHub PRs, [generate a Personal Access Token](https://github.com/settings/tokens) with the `public_repo` permission, and under your GitHub repository's Settings's Secrets add it as `GH_BOT_TOKEN`.
+https://make.wordpress.org/core/2020/03/20/updating-the-coding-standards-for-modern-php/
+https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/php/
 
 ### Testing
 
