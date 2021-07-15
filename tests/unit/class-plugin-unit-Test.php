@@ -12,25 +12,37 @@ use Plugin_Package_Name\Includes\Plugin_Package_Name;
 
 /**
  * Class Plugin_WP_Mock_Test
- *
- * @coversNothing
  */
 class Plugin_Unit_Test extends \Codeception\Test\Unit {
 
-	protected function _before() {
-		\WP_Mock::setUp();
-	}
+    protected function setup() : void
+    {
+        // Because of @runInSeparateProcess.
+//        require_once __DIR__ . '/../bootstrap.php';
+//        require_once __DIR__ . '/_bootstrap.php';
+        parent::setUp();
+        \WP_Mock::setUp();
+    }
 
-	// This is required for `'times' => 1` to be verified.
-	protected function _tearDown() {
-		parent::_tearDown();
-		\WP_Mock::tearDown();
-	}
-	
-	/**
-	 * Verifies the plugin initialization.
-	 */
+    public function tearDown(): void
+    {
+        \WP_Mock::tearDown();
+        parent::tearDown();
+    }
+
+    /**
+     * Verifies the plugin initialization.
+     *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
 	public function test_plugin_include() {
+
+        // Prevents code-coverage counting, and removes the need to define the WordPress functions that are used in that class.
+        \Patchwork\redefine(
+            array( Plugin_Package_Name::class, '__construct' ),
+            function() {}
+        );
 
 		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
 
@@ -61,8 +73,17 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 
 	/**
 	 * Verifies the plugin does not output anything to screen.
+     *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
 	 */
 	public function test_plugin_include_no_output() {
+
+        // Prevents code-coverage counting, and removes the need to define the WordPress functions that are used in that class.
+        \Patchwork\redefine(
+            array( Plugin_Package_Name::class, '__construct' ),
+            function() {}
+        );
 
 		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
 
