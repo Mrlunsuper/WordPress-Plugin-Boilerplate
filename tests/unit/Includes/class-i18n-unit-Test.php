@@ -15,13 +15,14 @@ namespace Plugin_Package_Name\Includes;
  */
 class I18n_Unit_Test extends \Codeception\Test\Unit {
 
-	protected function _before() {
+	protected function setup(): void {
+	    parent::setup();
 		\WP_Mock::setUp();
 	}
 
 	// This is required for `'times' => 1` to be verified.
-	protected function _tearDown() {
-		parent::_tearDown();
+	protected function tearDown() {
+		parent::tearDown();
 		\WP_Mock::tearDown();
 	}
 
@@ -40,7 +41,7 @@ class I18n_Unit_Test extends \Codeception\Test\Unit {
                 'args'   => array(
                     \WP_Mock\Functions::type( 'string' )
                 ),
-                'return' => 'bh-wc-filter-orders-domestic-international',
+                'return' => 'plugin-slug',
                 'times' => 1
             )
         );
@@ -52,7 +53,7 @@ class I18n_Unit_Test extends \Codeception\Test\Unit {
 				'args'   => array(
 					'plugin-slug',
 					false,
-					$plugin_root_dir . '/languages/',
+					'plugin-slug/languages/',
 				)
 			)
 		);

@@ -16,13 +16,14 @@ use WP_Mock\Matcher\AnyInstance;
  */
 class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 
-	protected function _before() {
+	protected function setup(): void {
+	    parent::setup();
 		\WP_Mock::setUp();
 	}
 
 	// This is required for `'times' => 1` to be verified.
-	protected function _tearDown() {
-		parent::_tearDown();
+	protected function tearDown() {
+		parent::tearDown();
 		\WP_Mock::tearDown();
 	}
 
@@ -32,7 +33,7 @@ class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 	public function test_set_locale_hooked() {
 
 		\WP_Mock::expectActionAdded(
-			'plugins_loaded',
+			'init',
 			array( new AnyInstance( I18n::class ), 'load_plugin_textdomain' )
 		);
 

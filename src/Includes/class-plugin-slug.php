@@ -62,7 +62,7 @@ class Plugin_Package_Name {
 
 		$plugin_i18n = new I18n();
 
-		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
+		add_action( 'init', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 
 	}
 

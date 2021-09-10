@@ -11,6 +11,9 @@
     <!-- Show progress and sniff codes in all reports -->
     <arg value="ps"/>
 
+    <!-- Show colors -->
+    <arg name="colors"/>
+
     <exclude-pattern>/assets/</exclude-pattern>
     <exclude-pattern>/scratch/</exclude-pattern>
     <exclude-pattern>/src/strauss/*</exclude-pattern>

@@ -15,8 +15,6 @@ namespace Plugin_Package_Name;
 
 use Plugin_Package_Name\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
 
-require_once __DIR__ . '/strauss/autoload.php';
-
 $class_map_files = array(
     __DIR__ . '/autoload-classmap.php',
 );
@@ -38,5 +36,9 @@ foreach ( $class_map_files as $class_map_file ) {
     }
 }
 
+// Load strauss classes after autoload-classmap.php so classes can be substituted.
+require_once __DIR__ . '/strauss/autoload.php';
+
 $wpcs_autoloader = new WP_Namespace_Autoloader();
 $wpcs_autoloader->init();
+
