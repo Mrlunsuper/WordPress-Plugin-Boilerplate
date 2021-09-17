@@ -73,6 +73,5 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 		$this->assertInstanceOf( Plugin_Package_Name::class, $GLOBALS['plugin_snake'] );
 
 	}
-
-
+    
 }

@@ -87,6 +87,9 @@
                 "erusev/parsedown": {
                     "files": ["Parsedown.php"]
                 }
+            },
+            "exclude_from_prefix": {
+                "packages": ["yahnis-elsts/plugin-update-checker","erusev/parsedown"]
             }
         },
         "symlinks": {
@@ -141,7 +144,7 @@
             "vendor/bin/phpcs"
         ],
         "create-plugin-archive": [
-            "vendor/bin/wp dist-archive src --plugin-dirname=plugin-slug"
+            "vendor/bin/wp dist-archive src --plugin-dirname=$(basename \"$PWD\")"
         ]
     }
 }

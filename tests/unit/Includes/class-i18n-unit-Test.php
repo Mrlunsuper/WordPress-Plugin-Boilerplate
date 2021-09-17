@@ -20,8 +20,7 @@ class I18n_Unit_Test extends \Codeception\Test\Unit {
 		\WP_Mock::setUp();
 	}
 
-	// This is required for `'times' => 1` to be verified.
-	protected function tearDown() {
+	protected function tearDown(): void {
 		parent::tearDown();
 		\WP_Mock::tearDown();
 	}
