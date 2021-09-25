@@ -16,6 +16,7 @@
  * Plugin URI:        http://github.com/username/plugin-slug/
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
+ * Requires PHP:      7.4
  * Author:            Your Name
  * Author URI:        http://example.com/
  * License:           GPL-2.0+
