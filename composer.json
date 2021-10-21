@@ -137,7 +137,7 @@
             "open tests/_output/html/index.html"
         ],
         "lint": [
-            "vendor/bin/phpcbf | true",
+            "vendor/bin/phpcbf || true",
             "vendor/bin/phpcs"
         ],
         "create-plugin-archive": [
