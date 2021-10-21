@@ -47,5 +47,8 @@
     <rule ref="Squiz.PHP.DisallowMultipleAssignments.Found">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
+    <rule ref="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase">
+        <exclude-pattern>*/tests/acceptance/*</exclude-pattern>
+    </rule>
 
 </ruleset>
