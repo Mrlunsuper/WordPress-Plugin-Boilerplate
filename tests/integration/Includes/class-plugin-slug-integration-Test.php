@@ -29,8 +29,13 @@ class Plugin_Package_Name_Integration_Test extends \Codeception\TestCase\WPTestC
 
     /**
      * @dataProvider hooks
+     *
+     * @param string $action_name The name of the action.
+     * @param string $class_type The expected class.
+     * @param string $method_name The class's method.
+     * @param int    $expected_priority The priority of the action (default: 10).
      */
-    public function test_is_function_hooked_on_action( $action_name, $class_type, $method_name, $expected_priority = 10 ) {
+	public function test_is_function_hooked_on_action( string $action_name, string $class_type, string $method_name, int $expected_priority = 10 ) {
 
         global $wp_filter;
 
