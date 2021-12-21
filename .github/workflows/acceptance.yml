@@ -83,8 +83,7 @@ jobs:
 
       - name: Update site URL to match GA
         run: |
-          vendor/bin/wp option update home 'http://localhost:8080'
-          vendor/bin/wp option update siteurl 'http://localhost:8080'
+          find . -depth \( -name 'dump.sql' \) -exec sed -i "s/localhost:8080\/$PLUGIN_SLUG/localhost:8080/g" {} +
 
       - name: Start webserver
         run: |
