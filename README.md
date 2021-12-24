@@ -167,19 +167,19 @@ mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > t
 Discard this boilerplate repo's .git and README and start fresh:
 
 ```
-rm -rf .git
-rm README.md
-mv README-rename.md README.md
+rm -rf .git;
+rm README.md;
+mv README-rename.md README.md;
 
-git init
-git add README.md
-git commit -m "Initial commit"
+git init;
+git add README.md;
+git commit -m "Initial commit";
 ```
 
-Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `gh auth login`). You might want to set the repo private here too.
+Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `gh auth login`). You might want to set the repo private here too, by appending `--private`.
 
 ```
-gh repo create $PLUGIN_SLUG --public -y
+gh repo create $PLUGIN_SLUG;
 git push origin master; # or main
 ```
 
