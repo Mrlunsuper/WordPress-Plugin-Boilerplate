@@ -45,6 +45,8 @@ require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
  */
 define( 'PLUGIN_NAME_VERSION', '1.0.0' );
 
+define( 'PLUGIN_NAME_BASENAME', plugin_basename( __FILE__ ) );
+
 register_activation_hook( __FILE__, array( Activator::class, 'activate' ) );
 register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) );
 
