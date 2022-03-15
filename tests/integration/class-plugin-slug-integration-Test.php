@@ -18,7 +18,7 @@ class Plugin_Integration_Test extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Test the main plugin object is added to PHP's GLOBALS and that it is the correct class.
 	 */
-	public function test_plugin_instantiated() {
+	public function test_plugin_instantiated(): void {
 
 		$this->assertArrayHasKey( 'plugin_snake', $GLOBALS );
 

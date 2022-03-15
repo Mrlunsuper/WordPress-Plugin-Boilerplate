@@ -17,8 +17,8 @@ namespace Plugin_Package_Name\Admin;
  */
 class Admin_Test extends \Codeception\Test\Unit {
 
-	protected function setup(): void {
-	    parent::setup();
+	protected function setUp(): void {
+	    parent::setUp();
 		\WP_Mock::setUp();
 	}
 
@@ -48,7 +48,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 	 * @covers ::enqueue_styles
 	 * @see wp_enqueue_style()
 	 */
-	public function test_enqueue_styles() {
+	public function test_enqueue_styles(): void {
 
 		global $plugin_root_dir;
 
@@ -84,7 +84,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 	 * @covers ::enqueue_scripts
 	 * @see wp_enqueue_script()
 	 */
-	public function test_enqueue_scripts() {
+	public function test_enqueue_scripts(): void {
 
 		global $plugin_root_dir;
 

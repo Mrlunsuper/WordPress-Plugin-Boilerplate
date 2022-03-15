@@ -16,7 +16,7 @@ use Plugin_Package_Name\Frontend\Frontend;
  */
 class Plugin_Package_Name_Integration_Test extends \Codeception\TestCase\WPTestCase {
 
-    public function hooks() {
+    public function hooks(): array {
         $hooks = array(
             array( 'init', I18n::class, 'load_plugin_textdomain'),
             array( 'admin_enqueue_scripts', Admin::class, 'enqueue_styles' ),
@@ -35,7 +35,7 @@ class Plugin_Package_Name_Integration_Test extends \Codeception\TestCase\WPTestC
      * @param string $method_name The class's method.
      * @param int    $expected_priority The priority of the action (default: 10).
      */
-	public function test_is_function_hooked_on_action( string $action_name, string $class_type, string $method_name, int $expected_priority = 10 ) {
+	public function test_is_function_hooked_on_action( string $action_name, string $class_type, string $method_name, int $expected_priority = 10 ): void {
 
         global $wp_filter;
 

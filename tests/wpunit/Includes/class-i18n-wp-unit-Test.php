@@ -21,7 +21,7 @@ class I18n_WP_Unit_Test extends \Codeception\TestCase\WPTestCase {
 	 *
 	 * @see load_plugin_textdomain()
 	 */
-	public function test_load_plugin_textdomain_function() {
+	public function test_load_plugin_textdomain_function(): void {
 
 		$called        = false;
 		$actual_domain = null;

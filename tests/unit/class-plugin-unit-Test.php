@@ -15,7 +15,7 @@ use Plugin_Package_Name\Includes\Plugin_Package_Name;
  */
 class Plugin_Unit_Test extends \Codeception\Test\Unit {
 
-    protected function setup() : void
+    protected function setUp() : void
     {
         parent::setUp();
         \WP_Mock::setUp();
@@ -31,7 +31,7 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
      * Verifies the plugin initialization.
      * Verifies the plugin does not output anything to screen.
      */
-	public function test_plugin_include() {
+	public function test_plugin_include(): void {
 
         // Prevents code-coverage counting, and removes the need to define the WordPress functions that are used in that class.
         \Patchwork\redefine(

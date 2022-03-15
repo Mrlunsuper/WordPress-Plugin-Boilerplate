@@ -8,7 +8,7 @@ class PluginsPageCest
 	 *
 	 * @param AcceptanceTester $I
 	 */
-	public function _before( AcceptanceTester $I ) {
+	public function _before( AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 
 		$I->amOnPluginsPage();
@@ -19,7 +19,7 @@ class PluginsPageCest
 	 *
 	 * @param AcceptanceTester $I
 	 */
-	public function testPluginsPageForName( AcceptanceTester $I ) {
+	public function testPluginsPageForName( AcceptanceTester $I ): void {
 
 		$I->canSee( 'plugin_title' );
 	}
@@ -29,7 +29,7 @@ class PluginsPageCest
 	 *
 	 * @param AcceptanceTester $I
 	 */
-	public function testPluginDescriptionHasBeenSet( AcceptanceTester $I ) {
+	public function testPluginDescriptionHasBeenSet( AcceptanceTester $I ): void {
 
 		$default_plugin_description = "This is a short description of what the plugin does. It's displayed in the WordPress admin area.";
 

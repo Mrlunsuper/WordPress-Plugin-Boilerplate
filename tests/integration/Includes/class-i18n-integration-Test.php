@@ -21,7 +21,7 @@ class I18n_Integration_Test extends \Codeception\TestCase\WPTestCase {
 	 * @see load_plugin_textdomain()
 	 * @see https://gist.github.com/GaryJones/c8259da3a4501fd0648f19beddce0249
 	 */
-	public function test_load_plugin_textdomain() {
+	public function test_load_plugin_textdomain(): void {
 
 		$this->markTestSkipped( 'Needs one translation before test might pass.' );
 

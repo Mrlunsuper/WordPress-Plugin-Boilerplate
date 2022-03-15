@@ -16,8 +16,8 @@ use WP_Mock\Matcher\AnyInstance;
  */
 class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 
-	protected function setup(): void {
-	    parent::setup();
+	protected function setUp(): void {
+	    parent::setUp();
 		\WP_Mock::setUp();
 	}
 
@@ -29,7 +29,7 @@ class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 	/**
 	 * @covers ::set_locale
 	 */
-	public function test_set_locale_hooked() {
+	public function test_set_locale_hooked(): void {
 
 		\WP_Mock::expectActionAdded(
 			'init',
@@ -42,7 +42,7 @@ class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 	/**
 	 * @covers ::define_admin_hooks
 	 */
-	public function test_admin_hooks() {
+	public function test_admin_hooks(): void {
 
 		\WP_Mock::expectActionAdded(
 			'admin_enqueue_scripts',
@@ -60,7 +60,7 @@ class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 	/**
 	 * @covers ::define_frontend_hooks
 	 */
-	public function test_frontend_hooks() {
+	public function test_frontend_hooks(): void {
 
 		\WP_Mock::expectActionAdded(
 			'wp_enqueue_scripts',

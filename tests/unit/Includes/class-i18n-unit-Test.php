@@ -15,8 +15,8 @@ namespace Plugin_Package_Name\Includes;
  */
 class I18n_Unit_Test extends \Codeception\Test\Unit {
 
-	protected function setup(): void {
-	    parent::setup();
+	protected function setUp(): void {
+	    parent::setUp();
 		\WP_Mock::setUp();
 	}
 
@@ -30,7 +30,7 @@ class I18n_Unit_Test extends \Codeception\Test\Unit {
 	 *
 	 * @covers ::load_plugin_textdomain
 	 */
-	public function test_load_plugin_textdomain() {
+	public function test_load_plugin_textdomain(): void {
 
 		global $plugin_root_dir;
 
