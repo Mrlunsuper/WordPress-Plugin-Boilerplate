@@ -2,7 +2,7 @@
 /**
  * Class Plugin_Test. Tests the root plugin setup.
  *
- * @package Plugin_Package_Name
+ * @package PHP_Package_Name
  * @author     Your Name <email@example.com>
  */
 

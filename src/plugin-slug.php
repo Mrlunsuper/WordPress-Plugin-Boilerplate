@@ -9,7 +9,7 @@
  *
  * @link              http://example.com
  * @since             1.0.0
- * @package           Plugin_Package_Name
+ * @package           PHP_Package_Name
  *
  * @wordpress-plugin
  * Plugin Name:       plugin_title

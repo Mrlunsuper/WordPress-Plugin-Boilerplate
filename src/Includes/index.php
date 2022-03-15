@@ -2,7 +2,7 @@
 /**
  * Silence is golden.
  *
- * @package    Plugin_Package_Name
+ * @package    PHP_Package_Name
  */
 
 die();

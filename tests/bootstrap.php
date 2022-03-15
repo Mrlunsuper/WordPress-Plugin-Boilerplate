@@ -1,6 +1,6 @@
 <?php
 /**
- * @package           Plugin_Package_Name
+ * @package           PHP_Package_Name
  */
 
 $GLOBALS['project_root_dir']   = $project_root_dir  = dirname( __FILE__, 2 );

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Plugin_Package_Name_Unit_Name
+ * @package PHP_Package_Name_Unit_Name
  * @author  Your Name <email@example.com>
  */
 

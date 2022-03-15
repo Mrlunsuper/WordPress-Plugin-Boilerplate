@@ -2,7 +2,7 @@
 /**
  * Tests for the root plugin file.
  *
- * @package Plugin_Package_Name
+ * @package PHP_Package_Name
  * @author  Your Name <email@example.com>
  */
 

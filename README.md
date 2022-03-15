@@ -40,9 +40,11 @@ There are some differences between `sed` on MacOS and Linux. See [PR6](https://g
 Open Terminal and set the variables, your local MySQL credentials, and your WordPress.org credentials for deployment:
 
 ```
-plugin_name="Example Plugin"
 your_name="BrianHenryIE"
 your_email="BrianHenryIE@gmail.com"
+
+plugin_name="Example Plugin"
+plugin_package_name="BrianHenryIE\\Plugin_Name"
 
 mysql_username="root"
 mysql_password="secret"
@@ -56,12 +58,26 @@ Run these commands to generate replacements (or define them yourself):
 ```
 plugin_slug=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g'); echo $plugin_slug; # example-plugin
 plugin_snake=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g'); echo $plugin_snake; # example_plugin
-plugin_package_name=$(echo $plugin_name | sed 's/ /_/g'); echo $plugin_package_name; # Example_Plugin
 plugin_capitalized=$(echo $plugin_name | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g'); echo $plugin_capitalized; # EXAMPLE_PLUGIN
+php_package_name=$(echo "${plugin_package_name%%\\*}"/$plugin_slug | tr '[:upper:]' '[:lower:]')  # brianhenryie/example-plugin
 test_site_db_name=${plugin_snake:0:57}"_tests"; # example_plugin_tests
 test_db_name=${plugin_snake:0:51}"_integration"; # example_plugin_integration
 plugin_db_username=${plugin_slug:0:31}; # 32 character max for username 
 plugin_db_password=$plugin_slug;
+```
+
+
+And display them so you can change them if you need to:
+
+```
+echo plugin_slug=$plugin_slug \# Should only contain lowercase letters,numbers and hyphens;
+echo plugin_snake=$plugin_snake;
+echo plugin_package_name=$plugin_package_name;
+echo plugin_capitalized=$plugin_capitalized;
+echo test_site_db_name=$test_site_db_name;
+echo test_db_name=$test_db_name;
+echo plugin_db_username=$plugin_db_username;
+echo plugin_db_password=$plugin_db_password;
 ```
 
 Then this block of commands will take care of most of the downloading:
@@ -75,7 +91,7 @@ cd $plugin_slug
 # Branches can be merged here.
 # git merge origin/no-loader
 
-open -a PhpStorm ./
+open -a PhpStorm .
 ```
 
 This the renaming:
@@ -86,6 +102,7 @@ find . -depth \( -name '*.php' -o -name '*.txt' -o -name '.env.testing' -o -name
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name '.env.testing'  -o -name '*.yml' -o -name '.gitignore' -o -name '.htaccess' -o -name '*.md' \) -exec sed -i '' 's/plugin-slug/'$plugin_slug'/g' {} +
 find . -depth \( -name '*.php' -o -name '*.testing' \) -exec sed -i '' 's/plugin_snake/'$plugin_snake'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Package_Name/'$plugin_package_name'/g' {} \;
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/PHP_Package_Name/'$php_package_name'/g' {} \;
 find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/Your Name/$your_name/g" {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '.env.testing' \) -exec sed -i '' "s/email@example.com/$your_email/g" {} +
@@ -96,6 +113,9 @@ Create two local databases for tests:
 
 ```
 # export PATH=${PATH}:/usr/local/mysql/bin
+
+# mysql_username="root"
+# mysql_password="secret"
 
 # Make .env available to bash or zsh
 #export $(grep -v '^#' .env.testing | xargs);
@@ -146,7 +166,7 @@ composer require wpackagist-plugin/woocommerce --dev --no-scripts;
 # ... although this requires extra setup commands not included here.
 
 composer require wpackagist-theme/storefront --dev --no-scripts;
-
+composer require php-stubs/woocommerce-stubs --dev --no-scripts;
 
 vendor/bin/wp plugin activate woocommerce;
 vendor/bin/wp theme activate storefront;

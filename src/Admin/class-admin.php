@@ -5,8 +5,7 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Package_Name
- * @subpackage Plugin_Package_Name/admin
+ * @package    PHP_Package_Name
  */
 
 namespace Plugin_Package_Name\Admin;
@@ -16,10 +15,6 @@ namespace Plugin_Package_Name\Admin;
  *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
- *
- * @package    Plugin_Package_Name
- * @subpackage Plugin_Package_Name/admin
- * @author     Your Name <email@example.com>
  */
 class Admin {
 

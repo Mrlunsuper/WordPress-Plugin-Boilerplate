@@ -8,9 +8,7 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Package_Name
- * @subpackage Plugin_Package_Name/includes
- */
+ * @package    PHP_Package_Name */
 
 namespace Plugin_Package_Name\Includes;
 
@@ -25,11 +23,6 @@ use Plugin_Package_Name\Frontend\Frontend;
  *
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
- *
- * @since      1.0.0
- * @package    Plugin_Package_Name
- * @subpackage Plugin_Package_Name/includes
- * @author     Your Name <email@example.com>
  */
 class Plugin_Package_Name {
 

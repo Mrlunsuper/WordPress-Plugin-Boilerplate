@@ -8,9 +8,7 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Package_Name
- * @subpackage Plugin_Package_Name/includes
- */
+ * @package    PHP_Package_Name */
 
 namespace Plugin_Package_Name\Includes;
 
@@ -19,11 +17,6 @@ namespace Plugin_Package_Name\Includes;
  *
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
- *
- * @since      1.0.0
- * @package    Plugin_Package_Name
- * @subpackage Plugin_Package_Name/includes
- * @author     Your Name <email@example.com>
  */
 class I18n {
 

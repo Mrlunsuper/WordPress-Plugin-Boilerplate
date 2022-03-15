@@ -5,9 +5,7 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Package_Name
- * @subpackage Plugin_Package_Name/includes
- */
+ * @package    PHP_Package_Name */
 
 namespace Plugin_Package_Name\Includes;
 
@@ -15,11 +13,6 @@ namespace Plugin_Package_Name\Includes;
  * Fired during plugin activation.
  *
  * This class defines all code necessary to run during the plugin's activation.
- *
- * @since      1.0.0
- * @package    Plugin_Package_Name
- * @subpackage Plugin_Package_Name/includes
- * @author     Your Name <email@example.com>
  */
 class Activator {
 

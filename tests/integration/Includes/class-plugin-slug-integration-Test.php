@@ -2,7 +2,7 @@
 /**
  * Tests for Plugin_Package_Name main setup class. Tests the actions are correctly added.
  *
- * @package Plugin_Package_Name
+ * @package PHP_Package_Name
  * @author  Your Name <email@example.com>
  */
 
