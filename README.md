@@ -44,7 +44,7 @@ your_name="BrianHenryIE"
 your_email="BrianHenryIE@gmail.com"
 
 plugin_name="Example Plugin"
-plugin_package_name="BrianHenryIE\\Plugin_Name"
+plugin_package_name="BrianHenryIE\\\\\\Plugin_Name"
 
 mysql_username="root"
 mysql_password="secret"
@@ -57,11 +57,12 @@ Run these commands to generate replacements (or define them yourself):
 
 ```
 plugin_slug=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g'); echo $plugin_slug; # example-plugin
-plugin_snake=$(echo $plugin_name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g'); echo $plugin_snake; # example_plugin
+plugin_snake=$(echo $plugin_name | sed 's/ /_/g'); echo $plugin_snake; # Example_Plugin
+plugin_snake_lower=$(echo $plugin_snake | tr '[:upper:]' '[:lower:]'); echo $plugin_snake_lower; # example_plugin
 plugin_capitalized=$(echo $plugin_name | tr '[:lower:]' '[:upper:]' | sed 's/ /_/g'); echo $plugin_capitalized; # EXAMPLE_PLUGIN
-php_package_name=$(echo "${plugin_package_name%%\\*}"/$plugin_slug | tr '[:upper:]' '[:lower:]')  # brianhenryie/example-plugin
-test_site_db_name=${plugin_snake:0:57}"_tests"; # example_plugin_tests
-test_db_name=${plugin_snake:0:51}"_integration"; # example_plugin_integration
+php_package_name=$(echo "${plugin_package_name%%\\*}"/$plugin_slug | tr '[:upper:]' '[:lower:]'); echo $php_package_name # brianhenryie/example-plugin
+test_site_db_name=${plugin_snake_lower:0:57}"_tests"; # example_plugin_tests
+test_db_name=${plugin_snake_lower:0:51}"_integration"; # example_plugin_integration
 plugin_db_username=${plugin_slug:0:31}; # 32 character max for username 
 plugin_db_password=$plugin_slug;
 ```
@@ -72,6 +73,7 @@ And display them so you can change them if you need to:
 ```
 echo plugin_slug=$plugin_slug \# Should only contain lowercase letters,numbers and hyphens;
 echo plugin_snake=$plugin_snake;
+echo plugin_snake_lower=$plugin_snake_lower;
 echo plugin_package_name=$plugin_package_name;
 echo plugin_capitalized=$plugin_capitalized;
 echo test_site_db_name=$test_site_db_name;
@@ -94,13 +96,14 @@ cd $plugin_slug
 open -a PhpStorm .
 ```
 
-This the renaming:
+Then the renaming/replacing:
 
 ```
 find . -depth -name '*plugin-slug*' -execdir bash -c 'git mv "$1" "${1//plugin-slug/'$plugin_slug'}"' bash {} \;
 find . -depth \( -name '*.php' -o -name '*.txt' -o -name '.env.testing' -o -name '*.md' \) -exec sed -i '' "s/plugin_title/$plugin_name/g" {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' -o -name '.env.testing'  -o -name '*.yml' -o -name '.gitignore' -o -name '.htaccess' -o -name '*.md' \) -exec sed -i '' 's/plugin-slug/'$plugin_slug'/g' {} +
-find . -depth \( -name '*.php' -o -name '*.testing' \) -exec sed -i '' 's/plugin_snake/'$plugin_snake'/g' {} +
+find . -depth \( -name '*.php' -o -name '*.testing' \) -exec sed -i '' 's/plugin_snake_lower/'$plugin_snake_lower'/g' {} +
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Snake/'$plugin_snake'/g' {} \;
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Package_Name/'$plugin_package_name'/g' {} \;
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/PHP_Package_Name/'$php_package_name'/g' {} \;
 find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'/g' {} +

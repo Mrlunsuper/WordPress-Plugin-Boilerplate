@@ -29,7 +29,7 @@ namespace Plugin_Package_Name;
 
 use Plugin_Package_Name\Includes\Activator;
 use Plugin_Package_Name\Includes\Deactivator;
-use Plugin_Package_Name\Includes\Plugin_Package_Name;
+use Plugin_Package_Name\Includes\Plugin_Snake;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -59,9 +59,9 @@ register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) 
  *
  * @since    1.0.0
  */
-function instantiate_plugin_snake(): Plugin_Package_Name {
+function instantiate_plugin_snake_lower(): Plugin_Snake {
 
-	$plugin = new Plugin_Package_Name();
+	$plugin = new Plugin_Snake();
 
 	return $plugin;
 }
@@ -70,4 +70,4 @@ function instantiate_plugin_snake(): Plugin_Package_Name {
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and frontend-facing site hooks.
  */
-$GLOBALS['plugin_snake'] = instantiate_plugin_snake();
+$GLOBALS['plugin_snake_lower'] = instantiate_plugin_snake_lower();

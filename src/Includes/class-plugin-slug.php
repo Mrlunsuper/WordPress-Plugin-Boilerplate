@@ -24,7 +24,7 @@ use Plugin_Package_Name\Frontend\Frontend;
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  */
-class Plugin_Package_Name {
+class Plugin_Snake {
 
 	/**
 	 * Define the core functionality of the plugin.

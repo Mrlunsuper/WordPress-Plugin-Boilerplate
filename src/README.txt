@@ -46,7 +46,7 @@ e.g.
 
 1. Upload `plugin-slug.php` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_snake_hook'); ?>` in your templates
+1. Place `<?php do_action('plugin_snake_lower_hook'); ?>` in your templates
 
 == Frequently Asked Questions ==
 
