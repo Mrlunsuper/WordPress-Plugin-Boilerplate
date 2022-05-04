@@ -58,7 +58,7 @@
         "szepeviktor/phpstan-wordpress": "^0.7.2",
         "voku/portable-ascii": "dev-master",
         "wordpress/wordpress": "*",
-        "wp-cli/dist-archive-command": "dev-master",
+        "wp-cli/dist-archive-command": "dev-main",
         "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*  ",
         "wpackagist-theme/twentytwenty": "*"
