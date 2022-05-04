@@ -49,6 +49,16 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 			)
 		);
 
+		// Defined in `bootstrap.php`.
+		global $plugin_basename;
+		\WP_Mock::userFunction(
+			'plugin_basename',
+			array(
+				'args'   => array( \WP_Mock\Functions::type( 'string' ) ),
+				'return' => $plugin_basename,
+			)
+		);
+
 		\WP_Mock::userFunction(
 			'register_activation_hook'
 		);
