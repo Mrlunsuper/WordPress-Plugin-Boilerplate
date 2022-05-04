@@ -202,8 +202,7 @@ git commit -m "Initial commit";
 Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `gh auth login`). You might want to set the repo private here too, by appending `--private`.
 
 ```
-gh repo create $PLUGIN_SLUG;
-git push origin master; # or main
+gh repo create $PLUGIN_SLUG --public --push;
 ```
 
 Setup gh-pages branch (for code coverage html report)).
