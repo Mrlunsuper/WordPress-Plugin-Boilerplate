@@ -56,11 +56,11 @@ class Admin_Test extends \Codeception\Test\Unit {
 		\WP_Mock::userFunction(
 			'plugin_dir_url',
 			array(
-				'return' => $plugin_root_dir . '/admin/',
+				'return' => $plugin_root_dir . '/Admin/',
 			)
 		);
 
-		$css_file = $plugin_root_dir . '/admin/css/plugin-slug-admin.css';
+		$css_file = $plugin_root_dir . '/Admin/css/plugin-slug-admin.css';
 
 		\WP_Mock::userFunction(
 			'wp_enqueue_style',
@@ -92,12 +92,12 @@ class Admin_Test extends \Codeception\Test\Unit {
 		\WP_Mock::userFunction(
 			'plugin_dir_url',
 			array(
-				'return' => $plugin_root_dir . '/admin/',
+				'return' => $plugin_root_dir . '/Admin/',
 			)
 		);
 
 		$handle    = $this->plugin_name;
-		$src       = $plugin_root_dir . '/admin/js/plugin-slug-admin.js';
+		$src       = $plugin_root_dir . '/Admin/js/plugin-slug-admin.js';
 		$deps      = array( 'jquery' );
 		$ver       = $this->version;
 		$in_footer = true;
