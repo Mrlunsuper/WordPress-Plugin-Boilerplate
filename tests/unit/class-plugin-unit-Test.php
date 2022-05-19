@@ -78,9 +78,9 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 
         $this->assertEmpty( $printed_output );
 
-		$this->assertArrayHasKey( 'plugin_snake', $GLOBALS );
+		$this->assertArrayHasKey( 'plugin_snake_lower', $GLOBALS );
 
-		$this->assertInstanceOf( Plugin_Package_Name::class, $GLOBALS['plugin_snake'] );
+		$this->assertInstanceOf( Plugin_Package_Name::class, $GLOBALS['plugin_snake_lower'] );
 
 	}
     

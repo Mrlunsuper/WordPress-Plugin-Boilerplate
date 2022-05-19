@@ -105,7 +105,7 @@ find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.x
 find . -depth \( -name '*.php' -o -name '*.testing' \) -exec sed -i '' 's/plugin_snake_lower/'$plugin_snake_lower'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Snake/'$plugin_snake'/g' {} \;
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Package_Name/'$plugin_package_name'/g' {} \;
-find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/PHP_Package_Name/'$php_package_name'/g' {} \;
+find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's#PHP_Package_Name#'$php_package_name'#g' {} \;
 find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/Your Name/$your_name/g" {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '.env.testing' \) -exec sed -i '' "s/email@example.com/$your_email/g" {} +
@@ -157,6 +157,8 @@ mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > t
 Run the tests to confirm it's working (this also does code generation necessary for autocomplete):
 
 ```
+cp .env.secret.dist .env.secret
+
 vendor/bin/codecept run acceptance;
 ```
 
@@ -202,7 +204,7 @@ git commit -m "Initial commit";
 Set up GitHub using [GitHub CLI](https://cli.github.com/) (`brew install gh`, `gh auth login`). You might want to set the repo private here too, by appending `--private`.
 
 ```
-gh repo create $PLUGIN_SLUG --public --push;
+gh repo create $PLUGIN_SLUG --public --push --source . ;
 ```
 
 Setup gh-pages branch (for code coverage html report)).

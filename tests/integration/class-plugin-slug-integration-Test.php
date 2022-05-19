@@ -20,9 +20,9 @@ class Plugin_Integration_Test extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function test_plugin_instantiated(): void {
 
-		$this->assertArrayHasKey( 'plugin_snake', $GLOBALS );
+		$this->assertArrayHasKey( 'plugin_snake_lower', $GLOBALS );
 
-		$this->assertInstanceOf( Plugin_Package_Name::class, $GLOBALS['plugin_snake'] );
+		$this->assertInstanceOf( Plugin_Package_Name::class, $GLOBALS['plugin_snake_lower'] );
 	}
 
 }

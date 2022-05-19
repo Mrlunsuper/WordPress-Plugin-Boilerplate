@@ -73,9 +73,9 @@
             }
         },
         "strauss": {
-            "namespace_prefix": "Plugin_Package_Name\\",
+            "namespace_prefix": "PHP_Package_Name\\",
             "target_directory": "/src/strauss/",
-            "classmap_prefix": "Plugin_Package_Name_"
+            "classmap_prefix": "Plugin_Snake_"
         },
         "symlinks": {
             "wp-content": "wordpress/wp-content",
