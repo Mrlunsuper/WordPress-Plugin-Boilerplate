@@ -4,7 +4,7 @@
  * @author  Your Name <email@example.com>
  */
 
-namespace Plugin_Package_Name\Includes;
+namespace Plugin_Package_Name\WP_Includes;
 
 use Plugin_Package_Name\Admin\Admin;
 use Plugin_Package_Name\Frontend\Frontend;
@@ -12,7 +12,7 @@ use WP_Mock\Matcher\AnyInstance;
 
 /**
  * Class Plugin_Package_Name_Unit_Test
- * @coversDefaultClass \Plugin_Package_Name\Includes\Plugin_Package_Name
+ * @coversDefaultClass \Plugin_Package_Name\WP_Includes\Plugin_Package_Name
  */
 class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
 

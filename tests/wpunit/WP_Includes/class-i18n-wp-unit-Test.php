@@ -6,13 +6,13 @@
  * @author  Your Name <email@example.com>
  */
 
-namespace Plugin_Package_Name\Includes;
+namespace Plugin_Package_Name\WP_Includes;
 
 /**
  * Class I18n_Test
  *
  * @see I18n
- * @coversDefaultClass \Plugin_Package_Name\Includes\I18n
+ * @coversDefaultClass \Plugin_Package_Name\WP_Includes\I18n
  */
 class I18n_WP_Unit_Test extends \Codeception\TestCase\WPTestCase {
 

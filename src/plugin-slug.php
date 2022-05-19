@@ -27,9 +27,9 @@
 
 namespace Plugin_Package_Name;
 
-use Plugin_Package_Name\Includes\Activator;
-use Plugin_Package_Name\Includes\Deactivator;
-use Plugin_Package_Name\Includes\Plugin_Snake;
+use Plugin_Package_Name\WP_Includes\Activator;
+use Plugin_Package_Name\WP_Includes\Deactivator;
+use Plugin_Package_Name\WP_Includes\Plugin_Snake;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

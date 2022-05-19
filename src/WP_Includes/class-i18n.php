@@ -10,7 +10,7 @@
  *
  * @package    PHP_Package_Name */
 
-namespace Plugin_Package_Name\Includes;
+namespace Plugin_Package_Name\WP_Includes;
 
 /**
  * Define the internationalization functionality.
