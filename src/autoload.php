@@ -33,6 +33,7 @@ foreach ( $class_map_files as $class_map_file ) {
                 }
             );
         }
+	    unset( $class_map );
     }
 }
 
