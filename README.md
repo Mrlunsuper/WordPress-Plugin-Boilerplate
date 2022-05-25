@@ -122,10 +122,10 @@ Create two local databases for tests:
 # mysql_password="secret"
 
 # Make .env available to zsh or bash
-[[ $0 == "-zsh" ]] && source .env.testing; || export $(grep -v '^#' .env.testing | xargs);
+[[ $0 == "-zsh" ]] && source .env.testing || export $(grep -v '^#' .env.testing | xargs);
 
 # Create the database user: (different syntax for MariaDB and MySQL).
-[[ $(mysqld --version) =~ .*MariaDB.* ]] && mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED BY '"$TEST_DB_PASSWORD"';"; || mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED WITH mysql_native_password BY '"$TEST_DB_PASSWORD"';";
+[[ $(mysqld --version) =~ .*MariaDB.* ]] && mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED BY '"$TEST_DB_PASSWORD"';" || mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED WITH mysql_native_password BY '"$TEST_DB_PASSWORD"';";
 
 # Create the databases.
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_SITE_DB_NAME"; USE "$TEST_SITE_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_SITE_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
@@ -138,7 +138,7 @@ Install everything, setup WordPress, save a copy of the database:
 composer update
 
 # Make .env available to bash or zsh
-[[ $0 == "-zsh" ]] && source .env.testing; || export $(grep -v '^#' .env.testing | xargs);
+[[ $0 == "-zsh" ]] && source .env.testing || export $(grep -v '^#' .env.testing | xargs);
 
 vendor/bin/wp core install --url="localhost:8080/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org;
 
@@ -181,7 +181,7 @@ vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user
 vendor/bin/wp wc customer create --email='woo@woo.local' --billing='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --shipping='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --password='hunter2' --username='mrbob' --first_name='Bob' --last_name='Tester' --user=admin;
 
 # Create dump after changing site.
-[[ $0 == "-zsh" ]] && source .env.testing; || export $(grep -v '^#' .env.testing | xargs);
+[[ $0 == "-zsh" ]] && source .env.testing || export $(grep -v '^#' .env.testing | xargs);
 
 mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
 ```
@@ -273,7 +273,7 @@ When making changes to the local WordPress installation to prep for acceptance t
 ```
 # export PATH=${PATH}:/usr/local/mysql/bin
 
-[[ $0 == "-zsh" ]] && source .env.testing; || export $(grep -v '^#' .env.testing | xargs);
+[[ $0 == "-zsh" ]] && source .env.testing || export $(grep -v '^#' .env.testing | xargs);
 
 mysql -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD $TEST_SITE_DB_NAME < tests/_data/dump.sql
 ```
@@ -281,7 +281,7 @@ mysql -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD $TEST_SITE_DB_NAME < tests/
 If you need to manually restore it:
 
 ```
-[[ $0 == "-zsh" ]] && source .env.testing; || export $(grep -v '^#' .env.testing | xargs);
+[[ $0 == "-zsh" ]] && source .env.testing || export $(grep -v '^#' .env.testing | xargs);
 
 mysql -u $mysql_username -p$mysql_password $TEST_SITE_DB_NAME < tests/_data/dump.sql
 ```
