@@ -8,7 +8,7 @@
 
 namespace Plugin_Package_Name;
 
-use Plugin_Package_Name\WP_Includes\Plugin_Package_Name;
+use Plugin_Package_Name\WP_Includes\Plugin_Snake;
 
 /**
  * Class Plugin_WP_Mock_Test
@@ -35,11 +35,12 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 
         // Prevents code-coverage counting, and removes the need to define the WordPress functions that are used in that class.
         \Patchwork\redefine(
-            array( Plugin_Package_Name::class, '__construct' ),
+            array( Plugin_Snake::class, '__construct' ),
             function() {}
         );
 
-		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
+		// Defined in `bootstrap.php`.
+		global $plugin_root_dir, $plugin_name, $plugin_basename;
 
 		\WP_Mock::userFunction(
 			'plugin_dir_path',
@@ -49,8 +50,6 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 			)
 		);
 
-		// Defined in `bootstrap.php`.
-		global $plugin_basename;
 		\WP_Mock::userFunction(
 			'plugin_basename',
 			array(
@@ -60,13 +59,38 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 		);
 
 		\WP_Mock::userFunction(
-			'register_activation_hook'
+			'plugins_url',
+			array(
+				'args'   => array( \WP_Mock\Functions::type( 'string' ) ),
+				'return' => 'http://localhost:8080/' . $plugin_name,
+				'times'  => 1,
+			)
 		);
 
 		\WP_Mock::userFunction(
-			'register_deactivation_hook'
+			'trailingslashit',
+			array(
+				'args'   => array( \WP_Mock\Functions::type( 'string' ) ),
+				'return_arg' => true,
+				'times' => 1,
+			)
 		);
 
+		\WP_Mock::userFunction(
+			'register_activation_hook',
+			array(
+				'args'   => array( \WP_Mock\Functions::type( 'string' ), \WP_Mock\Functions::type( 'array' ) ),
+				'times' => 1,
+			)
+		);
+
+		\WP_Mock::userFunction(
+			'register_deactivation_hook',
+			array(
+				'args'   => array( \WP_Mock\Functions::type( 'string' ), \WP_Mock\Functions::type( 'array' ) ),
+				'times' => 1,
+			)
+		);
 
         ob_start();
 
@@ -80,7 +104,7 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 
 		$this->assertArrayHasKey( 'plugin_snake_lower', $GLOBALS );
 
-		$this->assertInstanceOf( Plugin_Package_Name::class, $GLOBALS['plugin_snake_lower'] );
+		$this->assertInstanceOf( Plugin_Snake::class, $GLOBALS['plugin_snake_lower'] );
 
 	}
     

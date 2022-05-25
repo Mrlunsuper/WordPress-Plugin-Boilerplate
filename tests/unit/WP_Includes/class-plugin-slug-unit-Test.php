@@ -12,9 +12,9 @@ use WP_Mock\Matcher\AnyInstance;
 
 /**
  * Class Plugin_Package_Name_Unit_Test
- * @coversDefaultClass \Plugin_Package_Name\WP_Includes\Plugin_Package_Name
+ * @coversDefaultClass \Plugin_Package_Name\WP_Includes\Plugin_Snake
  */
-class Plugin_Package_Name_Unit_Test extends \Codeception\Test\Unit {
+class Plugin_Snake_Unit_Test extends \Codeception\Test\Unit {
 
 	protected function setUp(): void {
 	    parent::setUp();
