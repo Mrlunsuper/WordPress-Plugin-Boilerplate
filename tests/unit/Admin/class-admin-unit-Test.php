@@ -28,20 +28,6 @@ class Admin_Test extends \Codeception\Test\Unit {
 	}
 
 	/**
-	 * The plugin name. Unlikely to change.
-	 *
-	 * @var string Plugin name.
-	 */
-	private $plugin_name = 'plugin-slug';
-
-	/**
-	 * The plugin version, matching the version these tests were written against.
-	 *
-	 * @var string Plugin version.
-	 */
-	private $version = '1.0.0';
-
-	/**
 	 * Verifies enqueue_styles() calls wp_enqueue_style() with appropriate parameters.
 	 * Verifies the .css file exists.
 	 *
@@ -50,7 +36,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 	 */
 	public function test_enqueue_styles(): void {
 
-		global $plugin_root_dir;
+		global $plugin_root_dir, $plugin_name;
 
 		// Return any old url.
 		\WP_Mock::userFunction(
@@ -66,7 +52,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 			'wp_enqueue_style',
 			array(
 				'times' => 1,
-				'args'  => array( $this->plugin_name, $css_file, array(), $this->version, 'all' ),
+				'args'  => array( $plugin_name, $css_file, array(), '1.0.0', 'all' ),
 			)
 		);
 
@@ -86,7 +72,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 	 */
 	public function test_enqueue_scripts(): void {
 
-		global $plugin_root_dir;
+		global $plugin_root_dir, $plugin_name;
 
 		// Return any old url.
 		\WP_Mock::userFunction(
@@ -96,10 +82,10 @@ class Admin_Test extends \Codeception\Test\Unit {
 			)
 		);
 
-		$handle    = $this->plugin_name;
+		$handle    = $plugin_name;
 		$src       = $plugin_root_dir . '/Admin/js/plugin-slug-admin.js';
 		$deps      = array( 'jquery' );
-		$ver       = $this->version;
+		$ver       = '1.0.0';
 		$in_footer = true;
 
 		\WP_Mock::userFunction(
@@ -110,7 +96,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 			)
 		);
 
-		$admin = new Admin( $this->plugin_name, $this->version );
+		$admin = new Admin();
 
 		$admin->enqueue_scripts();
 

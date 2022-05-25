@@ -1,6 +1,6 @@
 <?php
 /**
- * @package PHP_Package_Name_Unit_Name
+ * @package PHP_Package_Name
  * @author  Your Name <email@example.com>
  */
 
@@ -11,7 +11,7 @@ use Plugin_Package_Name\Frontend\Frontend;
 use WP_Mock\Matcher\AnyInstance;
 
 /**
- * Class Plugin_Package_Name_Unit_Test
+ * Class Plugin_Snake_Unit_Test
  * @coversDefaultClass \Plugin_Package_Name\WP_Includes\Plugin_Snake
  */
 class Plugin_Snake_Unit_Test extends \Codeception\Test\Unit {
@@ -36,7 +36,7 @@ class Plugin_Snake_Unit_Test extends \Codeception\Test\Unit {
 			array( new AnyInstance( I18n::class ), 'load_plugin_textdomain' )
 		);
 
-		new Plugin_Package_Name();
+		new Plugin_Snake();
 	}
 
 	/**
@@ -54,7 +54,7 @@ class Plugin_Snake_Unit_Test extends \Codeception\Test\Unit {
 			array( new AnyInstance( Admin::class ), 'enqueue_scripts' )
 		);
 
-		new Plugin_Package_Name();
+		new Plugin_Snake();
 	}
 
 	/**
@@ -72,7 +72,7 @@ class Plugin_Snake_Unit_Test extends \Codeception\Test\Unit {
 			array( new AnyInstance( Frontend::class ), 'enqueue_scripts' )
 		);
 
-		new Plugin_Package_Name();
+		new Plugin_Snake();
 	}
 
 }
