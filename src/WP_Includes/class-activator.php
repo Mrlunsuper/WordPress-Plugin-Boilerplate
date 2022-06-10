@@ -5,7 +5,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    PHP_Package_Name */
+ * @package    PHP_Package_Name
+ */
 
 namespace Plugin_Package_Name\WP_Includes;
 

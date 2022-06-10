@@ -7,7 +7,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    PHP_Package_Name */
+ * @package    PHP_Package_Name
+ */
 
 ?>
 

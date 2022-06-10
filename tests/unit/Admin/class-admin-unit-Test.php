@@ -4,7 +4,7 @@
  *
  * @see Admin
  *
- * @package plugin-slug
+ * @package PHP_Package_Name
  * @author Brian Henry <BrianHenryIE@gmail.com>
  */
 
