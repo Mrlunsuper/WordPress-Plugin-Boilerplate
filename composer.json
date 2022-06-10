@@ -134,7 +134,7 @@
             "updated_files=$( git status | grep 'modified:\\s.*.php$' | cut -c14- | awk '{ printf(\"%s \", $0) }' ); vendor/bin/phpcbf $(echo $updated_files); vendor/bin/phpcs $(echo $updated_files); vendor/bin/phpstan analyse $(echo $updated_files) --memory-limit 1G"
         ],
         "create-plugin-archive": [
-            "vendor/bin/wp dist-archive src --plugin-dirname=$(basename \"$PWD\")"
+            "vendor/bin/wp dist-archive src ./dist-archive --create-target-dir --plugin-dirname=$(basename \"$PWD\")"
         ]
     }
 }
