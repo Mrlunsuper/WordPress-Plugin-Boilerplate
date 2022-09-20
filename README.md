@@ -142,8 +142,8 @@ composer update
 
 vendor/bin/wp core install --url="localhost:8080/$PLUGIN_SLUG" --title="$PLUGIN_NAME" --admin_user=admin --admin_password=password --admin_email=admin@example.org;
 
-vendor/bin/wp plugin activate $PLUGIN_SLUG;
 
+vendor/bin/wp plugin activate $PLUGIN_SLUG;
 vendor/bin/wp user create bob bob@example.org --user_pass=password
 
 mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;
@@ -155,6 +155,7 @@ Run the tests to confirm it's working (this also does code generation necessary 
 ```
 cp .env.secret.dist .env.secret
 
+vendor/bin/codecept clean
 vendor/bin/codecept run acceptance;
 ```
 

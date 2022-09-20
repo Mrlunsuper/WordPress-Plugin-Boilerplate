@@ -11,10 +11,11 @@
  * @package    PHP_Package_Name
  */
 
-namespace Plugin_Package_Name\WP_Includes;
+namespace Plugin_Package_Name;
 
 use Plugin_Package_Name\Admin\Admin;
 use Plugin_Package_Name\Frontend\Frontend;
+use Plugin_Package_Name\WP_Includes\I18n;
 
 /**
  * The core plugin class.

@@ -33,13 +33,13 @@ foreach ( $class_map_files as $class_map_file ) {
                 }
             );
         }
-	    unset( $class_map );
     }
 }
+unset( $class_map_files, $class_map_file, $class_map );
 
 // Load strauss classes after autoload-classmap.php so classes can be substituted.
-require_once __DIR__ . '/strauss/autoload.php';
+require_once __DIR__ . '/vendor-prefixed/autoload.php';
 
-$wpcs_autoloader = new WP_Namespace_Autoloader();
+$wpcs_autoloader = new WP_Namespace_Autoloader( array( 'classes_dir' => array( 'src' ) ) );
 $wpcs_autoloader->init();
 

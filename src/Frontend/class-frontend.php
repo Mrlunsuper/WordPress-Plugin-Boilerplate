@@ -28,7 +28,9 @@ class Frontend {
 	public function enqueue_styles(): void {
 		$version = defined( 'PLUGIN_NAME_VERSION' ) ? PLUGIN_NAME_VERSION : time();
 
-		wp_enqueue_style( 'plugin-slug', plugin_dir_url( __FILE__ ) . 'css/plugin-slug-frontend.css', array(), $version, 'all' );
+		$plugin_dir = plugin_dir_url( PLUGIN_NAME_BASENAME );
+
+		wp_enqueue_style( 'plugin-slug', $plugin_dir . 'assets/plugin-slug-frontend.css', array(), $version, 'all' );
 
 	}
 
@@ -42,7 +44,9 @@ class Frontend {
 	public function enqueue_scripts(): void {
 		$version = defined( 'PLUGIN_NAME_VERSION' ) ? PLUGIN_NAME_VERSION : time();
 
-		wp_enqueue_script( 'plugin-slug', plugin_dir_url( __FILE__ ) . 'js/plugin-slug-frontend.js', array( 'jquery' ), $version, false );
+		$plugin_dir = plugin_dir_url( PLUGIN_NAME_BASENAME );
+
+		wp_enqueue_script( 'plugin-slug', $plugin_dir . 'assets/plugin-slug-frontend.js', array( 'jquery' ), $version, false );
 
 	}
 

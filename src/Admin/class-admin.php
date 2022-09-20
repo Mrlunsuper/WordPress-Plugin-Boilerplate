@@ -40,7 +40,9 @@ class Admin {
 		 */
 		$version = defined( 'PLUGIN_NAME_VERSION' ) ? PLUGIN_NAME_VERSION : '1.0.0';
 
-		wp_enqueue_style( 'plugin-slug', plugin_dir_url( __FILE__ ) . 'css/plugin-slug-admin.css', array(), $version, 'all' );
+		$plugin_dir = plugin_dir_url( PLUGIN_NAME_BASENAME );
+
+		wp_enqueue_style( 'plugin-slug', $plugin_dir . 'assets/plugin-slug-admin.css', array(), $version, 'all' );
 
 	}
 
@@ -66,7 +68,9 @@ class Admin {
 		 */
 		$version = defined( 'PLUGIN_NAME_VERSION' ) ? PLUGIN_NAME_VERSION : '1.0.0';
 
-		wp_enqueue_script( 'plugin-slug', plugin_dir_url( __FILE__ ) . 'js/plugin-slug-admin.js', array( 'jquery' ), $version, true );
+		$plugin_dir = plugin_dir_url( PLUGIN_NAME_BASENAME );
+
+		wp_enqueue_script( 'plugin-slug', $plugin_dir . 'assets/plugin-slug-admin.js', array( 'jquery' ), $version, true );
 
 	}
 

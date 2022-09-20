@@ -14,7 +14,7 @@ use Plugin_Package_Name\Frontend\Frontend;
 /**
  * Class Develop_Test
  */
-class Plugin_Package_Name_Integration_Test extends \Codeception\TestCase\WPTestCase {
+class Plugin_Snake_Integration_Test extends \Codeception\TestCase\WPTestCase {
 
     public function hooks(): array {
         $hooks = array(

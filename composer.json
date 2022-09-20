@@ -13,25 +13,31 @@
     "prefer-stable": true,
     "config": {
         "process-timeout": 0,
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
     },
-    "repositories": [
-        {
-            "url": "https://github.com/WordPress/wordpress-develop",
-            "type": "git"
-        },
-        {
+    "repositories": {
+        "brianhenryie/composer-phpstorm": {
             "url": "https://github.com/BrianHenryIE/composer-phpstorm",
             "type": "git"
         },
-        {
-            "type":"composer",
-            "url":"https://wpackagist.org"
+        "composer/composer": {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        },
+        "wordpress/wordpress": {
+            "url": "https://github.com/WordPress/wordpress-develop",
+            "type": "git"
         }
-    ],
+    },
     "require": {
         "php": ">=7.4",
-        "pablo-sg-pacheco/wp-namespace-autoloader": "*"
+        "pablo-sg-pacheco/wp-namespace-autoloader": "dev-master#015c9654459fd267cf12fa7846d3bf36b11c3bd7"
     },
     "require-dev": {
         "10up/wp_mock": "0.4.2",
@@ -59,6 +65,7 @@
         "voku/portable-ascii": "dev-master",
         "wordpress/wordpress": "*",
         "wp-cli/dist-archive-command": "dev-main",
+        "wp-cli/i18n-command": "^2.4",
         "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*  ",
         "wpackagist-theme/twentytwenty": "*"
@@ -70,16 +77,23 @@
             },
             "10up/wp_mock": {
                 "Add AnyObject matcher": "https://github.com/10up/wp_mock/pull/161.patch"
+            },
+            "wp-cli/dist-archive-command": {
+                "Copy non-ignored files to temp": "https://github.com/wp-cli/dist-archive-command/pull/61.patch"
+            },
+            "brianhenryie/strauss": {
+                "Fix blocked by your allow-plugins config": "https://github.com/BrianHenryIE/strauss/pull/45.patch",
+                "Static in array and ternary": "https://github.com/BrianHenryIE/strauss/pull/46.patch"
             }
         },
         "strauss": {
             "namespace_prefix": "Plugin_Package_Name\\",
-            "target_directory": "/src/strauss/",
+            "target_directory": "/vendor-prefixed/",
             "classmap_prefix": "Plugin_Snake_"
         },
         "symlinks": {
             "wp-content": "wordpress/wp-content",
-            "src": "wp-content/plugins/plugin-slug"
+            ".": "wp-content/plugins/plugin-slug"
         },
         "phpstorm": {
             "exclude_folders": {
@@ -123,8 +137,20 @@
             "patch ./wordpress/wp-includes/plugin.php ./patches/42670.diff -s -N -f --no-backup-if-mismatch --reject-file= || true;",
             "mkdir -p wordpress/wp-content/uploads"
         ],
+        "create-databases": [
+            "export $(grep -v '^#' .env.testing | xargs); [[ $(mysqld --version) =~ .*MariaDB.* ]] && mysql -e \"CREATE USER IF NOT EXISTS '\"$TEST_DB_USER\"'@'%' IDENTIFIED BY '\"$TEST_DB_PASSWORD\"';\" || mysql -e \"CREATE USER IF NOT EXISTS '\"$TEST_DB_USER\"'@'%' IDENTIFIED WITH mysql_native_password BY '\"$TEST_DB_PASSWORD\"';\";",
+            "export $(grep -v '^#' .env.testing | xargs); mysql -e \"CREATE DATABASE IF NOT EXISTS \"$TEST_SITE_DB_NAME\"; USE \"$TEST_SITE_DB_NAME\"; GRANT ALL PRIVILEGES ON \"$TEST_SITE_DB_NAME\".* TO '\"$TEST_DB_USER\"'@'%';\";",
+            "export $(grep -v '^#' .env.testing | xargs); mysql -e \"CREATE DATABASE IF NOT EXISTS \"$TEST_DB_NAME\"; USE \"$TEST_DB_NAME\"; GRANT ALL PRIVILEGES ON \"$TEST_DB_NAME\".* TO '\"$TEST_DB_USER\"'@'%';\";",
+            "@restore-acceptance-database"
+        ],
+        "delete-databases": [
+            "export $(grep -v '^#' .env.testing | xargs); DB_DIR=$(mysql -e \"select @@datadir\" -N -B); rm -rf $DB_DIR$TEST_SITE_DB_NAME; rm -rf  $DB_DIR$TEST_DB_NAME;"
+        ],
         "save-acceptance-database": [
             "export $(grep -v '^#' .env.testing | xargs); mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;"
+        ],
+        "restore-acceptance-database": [
+            "export $(grep -v '^#' .env.testing | xargs); mysql $TEST_SITE_DB_NAME < tests/_data/dump.sql"
         ],
         "coverage-tests": [
             "vendor/bin/codecept run unit --coverage unit.cov",
@@ -141,7 +167,8 @@
             "updated_files=$( git status | grep 'modified:\\s.*.php$' | cut -c14- | awk '{ printf(\"%s \", $0) }' ); vendor/bin/phpcbf $(echo $updated_files); vendor/bin/phpcs $(echo $updated_files); vendor/bin/phpstan analyse $(echo $updated_files) --memory-limit 1G"
         ],
         "create-plugin-archive": [
-            "vendor/bin/wp dist-archive src ./dist-archive --create-target-dir --plugin-dirname=$(basename \"$PWD\")"
+            "vendor/bin/wp i18n make-pot src languages/$(basename \"$PWD\").pot --domain=$(basename \"$PWD\")",
+            "vendor/bin/wp dist-archive . ./dist-archive --plugin-dirname=$(basename \"$PWD\") --create-target-dir"
         ]
     }
 }
