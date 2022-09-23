@@ -13,8 +13,8 @@
 
 namespace Plugin_Package_Name;
 
-use Plugin_Package_Name\Admin\Admin;
-use Plugin_Package_Name\Frontend\Frontend;
+use Plugin_Package_Name\Admin\Admin_Assets;
+use Plugin_Package_Name\Frontend\Frontend_Assets;
 use Plugin_Package_Name\WP_Includes\I18n;
 
 /**
@@ -69,10 +69,10 @@ class Plugin_Snake {
 	 */
 	protected function define_admin_hooks(): void {
 
-		$plugin_admin = new Admin();
+		$admin_assets = new Admin_Assets();
 
-		add_action( 'admin_enqueue_scripts', array( $plugin_admin, 'enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $plugin_admin, 'enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $admin_assets, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $admin_assets, 'enqueue_scripts' ) );
 
 	}
 
@@ -84,10 +84,10 @@ class Plugin_Snake {
 	 */
 	protected function define_frontend_hooks(): void {
 
-		$plugin_frontend = new Frontend();
+		$frontend_assets = new Frontend_Assets();
 
-		add_action( 'wp_enqueue_scripts', array( $plugin_frontend, 'enqueue_styles' ) );
-		add_action( 'wp_enqueue_scripts', array( $plugin_frontend, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $frontend_assets, 'enqueue_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $frontend_assets, 'enqueue_scripts' ) );
 
 	}
 

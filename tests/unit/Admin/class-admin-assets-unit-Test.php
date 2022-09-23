@@ -2,7 +2,7 @@
 /**
  * Tests for Admin.
  *
- * @see Admin
+ * @see Admin_Assets
  *
  * @package PHP_Package_Name
  * @author Brian Henry <BrianHenryIE@gmail.com>
@@ -13,9 +13,9 @@ namespace Plugin_Package_Name\Admin;
 /**
  * Class Admin_Test
  *
- * @coversDefaultClass \Plugin_Package_Name\Admin\Admin
+ * @coversDefaultClass \Plugin_Package_Name\Admin\Admin_Assets
  */
-class Admin_Test extends \Codeception\Test\Unit {
+class Admin_Assets_Test extends \Codeception\Test\Unit {
 
 	protected function setUp(): void {
 	    parent::setUp();
@@ -56,7 +56,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 			)
 		);
 
-		$admin = new Admin();
+		$admin = new Admin_Assets();
 
 		$admin->enqueue_styles();
 
@@ -96,7 +96,7 @@ class Admin_Test extends \Codeception\Test\Unit {
 			)
 		);
 
-		$admin = new Admin();
+		$admin = new Admin_Assets();
 
 		$admin->enqueue_scripts();
 

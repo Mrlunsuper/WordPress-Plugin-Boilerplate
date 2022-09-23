@@ -6,8 +6,8 @@
 
 namespace Plugin_Package_Name;
 
-use Plugin_Package_Name\Admin\Admin;
-use Plugin_Package_Name\Frontend\Frontend;
+use Plugin_Package_Name\Admin\Admin_Assets;
+use Plugin_Package_Name\Frontend\Frontend_Assets;
 use WP_Mock\Matcher\AnyInstance;
 
 /**
@@ -46,12 +46,12 @@ class Plugin_Snake_Unit_Test extends \Codeception\Test\Unit {
 
 		\WP_Mock::expectActionAdded(
 			'admin_enqueue_scripts',
-			array( new AnyInstance( Admin::class ), 'enqueue_styles' )
+			array( new AnyInstance( Admin_Assets::class ), 'enqueue_styles' )
 		);
 
 		\WP_Mock::expectActionAdded(
 			'admin_enqueue_scripts',
-			array( new AnyInstance( Admin::class ), 'enqueue_scripts' )
+			array( new AnyInstance( Admin_Assets::class ), 'enqueue_scripts' )
 		);
 
 		new Plugin_Snake();
@@ -64,12 +64,12 @@ class Plugin_Snake_Unit_Test extends \Codeception\Test\Unit {
 
 		\WP_Mock::expectActionAdded(
 			'wp_enqueue_scripts',
-			array( new AnyInstance( Frontend::class ), 'enqueue_styles' )
+			array( new AnyInstance( Frontend_Assets::class ), 'enqueue_styles' )
 		);
 
 		\WP_Mock::expectActionAdded(
 			'wp_enqueue_scripts',
-			array( new AnyInstance( Frontend::class ), 'enqueue_scripts' )
+			array( new AnyInstance( Frontend_Assets::class ), 'enqueue_scripts' )
 		);
 
 		new Plugin_Snake();

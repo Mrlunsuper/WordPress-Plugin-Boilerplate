@@ -16,7 +16,7 @@ namespace Plugin_Package_Name\Frontend;
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the frontend-facing stylesheet and JavaScript.
  */
-class Frontend {
+class Frontend_Assets {
 
 	/**
 	 * Register the stylesheets for the frontend-facing side of the site.

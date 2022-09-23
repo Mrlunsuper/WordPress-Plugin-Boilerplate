@@ -8,8 +8,8 @@
 
 namespace Plugin_Package_Name\WP_Includes;
 
-use Plugin_Package_Name\Admin\Admin;
-use Plugin_Package_Name\Frontend\Frontend;
+use Plugin_Package_Name\Admin\Admin_Assets;
+use Plugin_Package_Name\Frontend\Frontend_Assets;
 
 /**
  * Class Develop_Test
@@ -19,10 +19,10 @@ class Plugin_Snake_Integration_Test extends \Codeception\TestCase\WPTestCase {
     public function hooks(): array {
         $hooks = array(
             array( 'init', I18n::class, 'load_plugin_textdomain'),
-            array( 'admin_enqueue_scripts', Admin::class, 'enqueue_styles' ),
-            array( 'admin_enqueue_scripts', Admin::class, 'enqueue_scripts' ),
-            array( 'wp_enqueue_scripts',Frontend::class, 'enqueue_styles' ),
-            array( 'wp_enqueue_scripts', Frontend::class, 'enqueue_scripts' )
+            array( 'admin_enqueue_scripts', Admin_Assets::class, 'enqueue_styles' ),
+            array( 'admin_enqueue_scripts', Admin_Assets::class, 'enqueue_scripts' ),
+            array( 'wp_enqueue_scripts',Frontend_Assets::class, 'enqueue_styles' ),
+            array( 'wp_enqueue_scripts', Frontend_Assets::class, 'enqueue_scripts' )
         );
         return $hooks;
     }
