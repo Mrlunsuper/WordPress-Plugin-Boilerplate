@@ -21,6 +21,11 @@
             "phpstan/extension-installer": true
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Plugin_Package_Name\\": ["tests/integration","tests/unit","tests/wpunit"]
+        }
+    },
     "repositories": {
         "brianhenryie/composer-phpstorm": {
             "url": "https://github.com/BrianHenryIE/composer-phpstorm",
@@ -37,7 +42,7 @@
     },
     "require": {
         "php": ">=7.4",
-        "pablo-sg-pacheco/wp-namespace-autoloader": "dev-master#015c9654459fd267cf12fa7846d3bf36b11c3bd7"
+        "alleyinteractive/wordpress-autoloader": "^1.1"
     },
     "require-dev": {
         "10up/wp_mock": "0.4.2",
@@ -75,15 +80,8 @@
             "jaschilz/php-coverage-badger": {
                 "Allow customising the text": "https://github.com/JASchilz/PHPCoverageBadge/pull/1.patch"
             },
-            "10up/wp_mock": {
-                "Add AnyObject matcher": "https://github.com/10up/wp_mock/pull/161.patch"
-            },
             "wp-cli/dist-archive-command": {
-                "Copy non-ignored files to temp": "https://github.com/wp-cli/dist-archive-command/pull/61.patch"
-            },
-            "brianhenryie/strauss": {
-                "Fix blocked by your allow-plugins config": "https://github.com/BrianHenryIE/strauss/pull/45.patch",
-                "Static in array and ternary": "https://github.com/BrianHenryIE/strauss/pull/46.patch"
+                "Add Increment Version": "https://github.com/BrianHenryIE/dist-archive-command/commit/f37c375ba8069c9160d642dd0c00435e0f1c4804.patch"
             }
         },
         "strauss": {
