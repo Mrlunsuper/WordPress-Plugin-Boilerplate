@@ -85,15 +85,15 @@ echo plugin_db_password=$plugin_db_password;
 Then this block of commands will take care of most of the downloading:
 
 ```
-git clone https://github.com/BrianHenryIE/WordPress-Plugin-Boilerplate.git
-mv WordPress-Plugin-Boilerplate $plugin_slug
-cd $plugin_slug
+git clone https://github.com/BrianHenryIE/WordPress-Plugin-Boilerplate.git;
+mv WordPress-Plugin-Boilerplate $plugin_slug;
+cd $plugin_slug;
 
 
 # Branches can be merged here.
 # git merge origin/no-loader
 
-open -a PhpStorm .
+open -a PhpStorm .;
 ```
 
 Then the renaming/replacing:
@@ -105,7 +105,7 @@ find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.x
 find . -depth \( -name '*.php' -o -name '*.testing' \) -exec sed -i '' 's/plugin_snake_lower/'$plugin_snake_lower'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Snake/'$plugin_snake'/g' {} \;
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's/Plugin_Package_Name/'$plugin_package_name'/g' {} \;
-find . -type f \( -name '*.json' \) -exec sed -i '' 's/Plugin_Package_Name/'$(echo $plugin_package_name | sed "s/\\\\/\\\\\\\\/g")'/g' {} \;
+find . -type f \( -name '*.json' \) -exec sed -i '' 's/Plugin_Package_Name/'$(echo $plugin_package_name | sed 's/\\/\\\\/g')'/g' {} \;
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' -o -name '*.xml' \) -exec sed -i '' 's#PHP_Package_Name#'$php_package_name'#g' {} \;
 find . -depth -name '*.php' -exec sed -i '' 's/PLUGIN_NAME/'$plugin_capitalized'/g' {} +
 find . -type f \( -name '*.php' -o -name '*.txt' -o -name '*.json' \) -exec sed -i '' "s/Your Name/$your_name/g" {} +
