@@ -41,6 +41,6 @@ unset( $class_map_files, $class_map_file, $class_map );
 require_once __DIR__ . '/vendor-prefixed/autoload.php';
 
 Autoloader::generate(
-	'BrianHenryIE\\WC_Set_Gateway_By_URL',
+	'Plugin_Package_Name',
 	__DIR__ . '/src',
 )->register();
