@@ -42,17 +42,18 @@ class Admin_Assets_Test extends \Codeception\Test\Unit {
 		\WP_Mock::userFunction(
 			'plugin_dir_url',
 			array(
-				'return' => $plugin_root_dir . '/Admin/',
+				'return' => "https://example.org/wp-content/plugins/{$plugin_name}/",
 			)
 		);
 
-		$css_file = $plugin_root_dir . '/Admin/css/plugin-slug-admin.css';
+		$css_file = $plugin_root_dir . '/assets/plugin-slug-admin.css';
+		$css_url  = $plugin_root_dir . '/assets/plugin-slug-admin.css';
 
 		\WP_Mock::userFunction(
 			'wp_enqueue_style',
 			array(
 				'times' => 1,
-				'args'  => array( $plugin_name, $css_file, array(), '1.0.0', 'all' ),
+				'args'  => array( $plugin_name, $css_url, array(), '1.0.0', 'all' ),
 			)
 		);
 
@@ -78,12 +79,13 @@ class Admin_Assets_Test extends \Codeception\Test\Unit {
 		\WP_Mock::userFunction(
 			'plugin_dir_url',
 			array(
-				'return' => $plugin_root_dir . '/Admin/',
+				'return' => "https://example.org/wp-content/plugins/{$plugin_name}/",
 			)
 		);
 
 		$handle    = $plugin_name;
-		$src       = $plugin_root_dir . '/Admin/js/plugin-slug-admin.js';
+		$js_file   = $plugin_root_dir . '/assets/plugin-slug-admin.js';
+		$js_url    = "https://example.org/wp-content/plugins/{$plugin_name}/assets/plugin-slug-admin.js";
 		$deps      = array( 'jquery' );
 		$ver       = '1.0.0';
 		$in_footer = true;
@@ -92,7 +94,7 @@ class Admin_Assets_Test extends \Codeception\Test\Unit {
 			'wp_enqueue_script',
 			array(
 				'times' => 1,
-				'args'  => array( $handle, $src, $deps, $ver, $in_footer ),
+				'args'  => array( $handle, $js_url, $deps, $ver, $in_footer ),
 			)
 		);
 
@@ -100,6 +102,6 @@ class Admin_Assets_Test extends \Codeception\Test\Unit {
 
 		$admin->enqueue_scripts();
 
-		$this->assertFileExists( $src );
+		$this->assertFileExists( $js_file );
 	}
 }
