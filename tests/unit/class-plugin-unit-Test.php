@@ -8,8 +8,6 @@
 
 namespace Plugin_Package_Name;
 
-use Plugin_Package_Name\WP_Includes\Plugin_Snake;
-
 /**
  * Class Plugin_WP_Mock_Test
  */
