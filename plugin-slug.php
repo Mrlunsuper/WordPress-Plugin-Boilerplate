@@ -36,7 +36,7 @@ use Plugin_Package_Name\WP_Includes\Plugin_Snake;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die;
+	throw new \Exception('WordPress required but not loaded');
 }
 
 require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
