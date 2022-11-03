@@ -6,10 +6,11 @@
  * @author  Your Name <email@example.com>
  */
 
-namespace Plugin_Package_Name\WP_Includes;
+namespace Plugin_Package_Name;
 
 use Plugin_Package_Name\Admin\Admin_Assets;
 use Plugin_Package_Name\Frontend\Frontend_Assets;
+use Plugin_Package_Name\WP_Includes\I18n;
 
 /**
  * Class Develop_Test
