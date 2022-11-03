@@ -175,8 +175,9 @@ vendor/bin/wp theme activate storefront;
 
 vendor/bin/wp wc tool run install_pages --user=admin;
 
-# Create a product
-vendor/bin/wp wc product create --name="Dummy Product" --regular_price=10 --user=admin;
+# Import sample products
+vendor/bin/wp plugin install wordpress-importer --activate
+vendor/bin/wp import wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=create
 
 # Create a customer
 vendor/bin/wp wc customer create --email='woo@woo.local' --billing='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --shipping='{"first_name":"Bob","last_name":"Tester","company":"Woo", "address_1": "123 Main St.", "city":"New York", "state:": "NY", "country":"USA"}' --password='hunter2' --username='mrbob' --first_name='Bob' --last_name='Tester' --user=admin;
