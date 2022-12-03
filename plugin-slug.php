@@ -30,8 +30,8 @@
 
 namespace Plugin_Package_Name;
 
-use Plugin_Package_Name\WP_Includes\Activator;
-use Plugin_Package_Name\WP_Includes\Deactivator;
+use Plugin_Package_Name\Activator;
+use Plugin_Package_Name\Deactivator;
 
 
 // If this file is called directly, abort.
