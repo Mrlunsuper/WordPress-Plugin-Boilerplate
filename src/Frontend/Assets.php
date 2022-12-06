@@ -16,7 +16,13 @@ namespace Plugin_Package_Name\Frontend;
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the frontend-facing stylesheet and JavaScript.
  */
-class Frontend_Assets {
+class Assets {
+
+
+	public function init_hooks(): void { 
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+	}
 
 	/**
 	 * Register the stylesheets for the frontend-facing side of the site.

@@ -80,5 +80,9 @@
     <rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
-
+	<!-- Allow short array syntax -->
+	<rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"/>
 </ruleset>

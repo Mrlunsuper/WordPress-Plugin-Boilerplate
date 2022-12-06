@@ -16,7 +16,12 @@ namespace Plugin_Package_Name\Admin;
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  */
-class Admin_Assets {
+class Assets {
+
+	public function init_hooks(): void { 
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_styles' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+	}
 
 	/**
 	 * Register the stylesheets for the admin area.
@@ -42,7 +47,7 @@ class Admin_Assets {
 
 		$plugin_dir = plugin_dir_url( PLUGIN_NAME_BASENAME );
 
-		wp_enqueue_style( 'plugin-slug', $plugin_dir . 'assets/plugin-slug-admin.css', array(), $version, 'all' );
+		wp_enqueue_style( 'plugin-slug', $plugin_dir . 'assets/css/plugin-slug-admin.css', array(), $version, 'all' );
 
 	}
 
@@ -70,7 +75,7 @@ class Admin_Assets {
 
 		$plugin_dir = plugin_dir_url( PLUGIN_NAME_BASENAME );
 
-		wp_enqueue_script( 'plugin-slug', $plugin_dir . 'assets/plugin-slug-admin.js', array( 'jquery' ), $version, true );
+		wp_enqueue_script( 'plugin-slug', $plugin_dir . 'assets/js/plugin-slug-admin.js', array( 'jquery' ), $version, true );
 
 	}
 

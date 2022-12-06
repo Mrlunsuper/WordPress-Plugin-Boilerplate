@@ -50,6 +50,7 @@ define( 'PLUGIN_NAME_VERSION', '1.0.0' );
 define( 'PLUGIN_NAME_BASENAME', plugin_basename( __FILE__ ) );
 define( 'PLUGIN_NAME_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PLUGIN_NAME_URL', trailingslashit( plugins_url( __DIR__ ) ) );
+define( 'PLUGIN_NAME_MIN_PHP_VER', '7.4.0' );
 
 register_activation_hook( __FILE__, array( Activator::class, 'activate' ) );
 register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) );
@@ -63,10 +64,9 @@ register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) 
  *
  * @since    1.0.0
  */
-function instantiate_plugin_snake_lower(): Plugin_Snake {
+function instantiate_plugin_snake_lower(): PluginCamel {
 
-	$plugin = new Plugin_Snake();
-
+	$plugin = new PluginCamel();
 	return $plugin;
 }
 

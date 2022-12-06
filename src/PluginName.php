@@ -13,9 +13,9 @@
 
 namespace Plugin_Package_Name;
 
-use Plugin_Package_Name\Admin\Admin_Assets;
-use Plugin_Package_Name\Frontend\Frontend_Assets;
-use Plugin_Package_Name\WP_Includes\I18n;
+use Plugin_Package_Name\Admin;
+use Plugin_Package_Name\Frontend;
+use Plugin_Package_Name\I18n;
 
 /**
  * The core plugin class.
@@ -26,7 +26,7 @@ use Plugin_Package_Name\WP_Includes\I18n;
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  */
-class Plugin_Snake {
+class PluginCamel {
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -40,8 +40,8 @@ class Plugin_Snake {
 	public function __construct() {
 
 		$this->set_locale();
-		$this->define_admin_hooks();
-		$this->define_frontend_hooks();
+		$this->include_helpers();
+		$this->init_classes();
 
 	}
 
@@ -53,12 +53,17 @@ class Plugin_Snake {
 	 *
 	 * @since    1.0.0
 	 */
-	protected function set_locale(): void {
+	private function set_locale(): void {
 
 		$plugin_i18n = new I18n();
+		add_action( 'init',  [ $plugin_i18n, 'load_plugin_textdomain' ] );
 
-		add_action( 'init', array( $plugin_i18n, 'load_plugin_textdomain' ) );
+	}
 
+	private function init_classes(): void {
+		if ( $this->is_request( 'frontend' ) ) {
+			$this->init_frontend_classes();
+		}
 	}
 
 	/**
@@ -67,13 +72,8 @@ class Plugin_Snake {
 	 *
 	 * @since    1.0.0
 	 */
-	protected function define_admin_hooks(): void {
-
-		$admin_assets = new Admin_Assets();
-
-		add_action( 'admin_enqueue_scripts', array( $admin_assets, 'enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $admin_assets, 'enqueue_scripts' ) );
-
+	private function init_admin_classes(): void {
+		$admin_assets = ( new Admin\Assets() )->init_hooks();
 	}
 
 	/**
@@ -82,13 +82,47 @@ class Plugin_Snake {
 	 *
 	 * @since    1.0.0
 	 */
-	protected function define_frontend_hooks(): void {
+	private function init_frontend_classes(): void {
+		$frontend_assets = ( new Frontend\Assets() )->init_hooks();
+	}
 
-		$frontend_assets = new Frontend_Assets();
+	
+	/**
+	 * What type of request is this?
+	 *
+	 * @param string $type admin, ajax, cron or frontend.
+	 *
+	 * @return bool
+	 */
+	private function is_request( $type ) {
+		switch ( $type ) {
+			case 'admin':
+				return is_admin();
+			case 'ajax':
+				return defined( 'DOING_AJAX' );
+			case 'cron':
+				return defined( 'DOING_CRON' );
+			case 'frontend':
+				return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
+		}
+	}
 
-		add_action( 'wp_enqueue_scripts', array( $frontend_assets, 'enqueue_styles' ) );
-		add_action( 'wp_enqueue_scripts', array( $frontend_assets, 'enqueue_scripts' ) );
+	/**
+	 * Checks the environment for compatibility problems.  Returns a string with the first incompatibility
+	 * found or false if the environment has no problems.
+	 *
+	 * @noinspection PhpUndefinedConstantInspection
+	 */
+	private function get_environment_warning() {
+		$output = '';
 
+		if ( version_compare( phpversion(), PLUGIN_NAME_MIN_PHP_VER, '<' ) ) {
+			/* translators: %1$s: the minimum PHP version, %2$s: the current PHP version. */
+			$message = __( 'WC Vendors - The minimum PHP version required for this plugin is %1$s. You are running %2$s.', 'wc-vendors' );
+			$output  = sprintf( $message, PLUGIN_NAME_MIN_PHP_VER, phpversion() );
+		}
+		
+		return $output;
 	}
 
 }
